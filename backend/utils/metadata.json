@@ -1,0 +1,16 @@
+{
+  "description": "Authenticated - SP", 
+  "external_url": "https://alyra.fr", 
+  "image": "https://bafybeiczg4buj6geo22mbt7vbvjgxm6olhg4ztx5xgtrb5siu3v7ez65uy.ipfs.nftstorage.link/", 
+  "name": "SPTESTNFT1",
+  "attributes": [ 
+    {
+      "trait_type": "Base", 
+      "value": "Starfish"
+    }, 
+    {
+      "trait_type": "Eyes", 
+      "value": "Big"
+    }
+  ]
+}
