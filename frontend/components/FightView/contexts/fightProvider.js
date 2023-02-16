@@ -3,10 +3,6 @@ import React, { useState, createContext } from "react";
 const FightContext = createContext(null)
 
 export const FightProvider = ({ children }) => {
-
-  //Rendering
-  const [isLoading, setIsLoading] = useState(false)
-
   //States
   const [round, setRound] = useState(1)
   const [isRoundFinished, setRoundFinished] = useState(false)
@@ -30,8 +26,6 @@ export const FightProvider = ({ children }) => {
       fightType,
       maxRound,
       isFightInProgress,
-      isLoading, 
-      setIsLoading
     }}>
       {children}
     </FightContext.Provider>

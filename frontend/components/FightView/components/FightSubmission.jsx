@@ -3,11 +3,10 @@ import { Button } from "@chakra-ui/react";
 import useFightProvider from "../hooks/useFightProvider";
 
 export default function FightSubmission({text, startNextRound, isFightInProgress}) {
-  const {setIsLoading, results} = useFightProvider()
+  const {results} = useFightProvider()
   const toast = useToast()
 
   const submitResults = async () => {
-    setIsLoading(true)
     try {
       // const contractInstance = new ethers.Contract(contract.address, contract.abi, signer)
       // let transaction = await contractInstance.addProposal(description)
@@ -15,7 +14,8 @@ export default function FightSubmission({text, startNextRound, isFightInProgress
   
       toast(toastSuccess("Add proposal", "Transaction successful")) 
     } catch (error) {
-      setIsLoading(false)
+
+
       toast(toastError("Add proposal", error.data.message))
     }
   }
