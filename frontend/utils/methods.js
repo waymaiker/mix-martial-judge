@@ -1,3 +1,4 @@
+import { countriesList } from "./constants";
 
 export const toastSuccess = (title, reason) => {
   return { 
@@ -17,4 +18,27 @@ export const toastError = (title, reason) => {
     duration: 5000, 
     isClosable: true 
   }
+}
+
+export function isEmail(val) {
+  let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if(!regEmail.test(val)){
+    return 'Invalid Email';
+  }
+}
+
+export const isCountry = (val) => {
+  let isCountryExist = countriesList.find(country => country.name.includes(val))
+  return isCountryExist == undefined ||  isCountryExist == false || val.length < 4 ? false : true;
+}
+
+export const dateToTimeStamp = (strDate) => { 
+  const dt = Date.parse(strDate); 
+  return dt / 1000; 
+} 
+
+export const timestampToDate = (timestamp) => {
+  const timestampConvertion = timestamp * 1000 
+  const date = new Date(timestampConvertion).toLocaleDateString()
+  return date;
 }

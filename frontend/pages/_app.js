@@ -11,10 +11,11 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 import { OwnerProvider } from '@/contexts/ownerProvider';
 import { NavigationProvider } from '@/contexts/NavigationProvider';
+import { DataProvider } from '@/contexts/dataProvider';
 import theme from '@/utils/theme';
 
 const { chains, provider } = configureChains(
-  [goerli],
+  [hardhat],
   [
     publicProvider()
   ]
@@ -37,9 +38,11 @@ export default function App({ Component, pageProps }) {
       <RainbowKitProvider chains={chains}  modalSize="compact">
         <ChakraProvider theme={theme}>
          <NavigationProvider>
-          <OwnerProvider>
-            <Component {...pageProps} />              
-          </OwnerProvider>
+          <DataProvider>
+            <OwnerProvider>
+              <Component {...pageProps} />              
+            </OwnerProvider>
+          </DataProvider>
          </NavigationProvider>
         </ChakraProvider>
       </RainbowKitProvider>
