@@ -2,80 +2,46 @@
 pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract User is IERC721Receiver, Ownable {
-
-  struct Person {
-    bytes32 firstname;
-    bytes32 lastname;
-    bytes32 email;
+contract User is IERC721Receiver {
+  struct Participant {
+    address userAddress;
+    string firstname;
+    string lastname;
+    string email;
+    string country;
     uint256 dob;
-    uint256 password;
   }
 
-  address owner;
-  Person user;
-  address[] eventParticipated;
+  Participant participant;
   uint256[] tokenIds;
-  
-  event UserUpdated(address indexed _address, bytes32 indexed _pseudo, bytes32 _firstname, bytes32 _lastname, bytes32 _email, uint256 _dob);
 
-  ///@notice Verify user submitted data.
-  ///@param _firstname Firstname of the user
-  ///@param _lastname Lastname of the user
-  ///@param _email Email of the user
-  ///@param _dob Date of Birth of the user, stored as a timestamp   
-  modifier onlyValidData(
-    address indexed _userAddress, 
-    bytes32 indexed _pseudo, 
-    bytes32 _firstname, 
-    bytes32 _lastname, 
-    bytes32 _email, 
-    uint256 _dob
-  ){
+  /**
+   * @notice Create a user. Initialize all his information and emit a event
+   * @param _firstname  User's firstname
+   * @param _lastname User's lastname
+   * @param _email User's email
+   * @param _country User's country
+   * @param _dob User's date of birth stored as a timestamp
+   */
+  function create(string memory _firstname, string memory _lastname, string memory _email, string memory _country, uint256 _dob)  external {
+    require(participant.userAddress == address(0), "You already have an account");
     require(bytes(_firstname).length != 0, "firstname cant be empty");
     require(bytes(_lastname).length != 0, "lastname cant be empty");
-    require(bytes(_birthplace).length != 0, "birthplace cant be empty");
-    require(bytes(_birthplace).length != 0, "birthplace cant be empty");
-    require(keccak256(bytes(_sexe)) == keccak256(bytes("M")) || keccak256(bytes(_sexe)) == keccak256(bytes("F")),"Sexe is only equals to M or F");
-    _;
+    require(bytes(_email).length != 0, "email cant be empty");
+    require(bytes(_country).length != 0, "country cant be empty");
+
+    participant = Participant(msg.sender, _firstname, _lastname, _email, _country, _dob);
   }
-
-  /*************************************/
-  /************ Constructor ************/
-  /*************************************/
-
-  constructor(address _owner){
-    owner = _owner;
-  }
-
-  ///@notice Update a user.
-  ///@param _firstname Firstname of the user
-  ///@param _middlename Middlename of the user
-  ///@param _lastname Lastname of the user
-  ///@param _birthday Birthday of the user, stored as a timestamp
-  ///@param _birthplace Birth place of the user
-  ///@param _sexe Sexe of the user
-  function create(
-    bytes32 calldata _firstname,
-    bytes32 calldata _middlename,
-    bytes32 calldata _lastname,
-    uint256 _birthday,
-    bytes32 calldata _birthplace,
-    bytes32 calldata _sexe
-  ) onlyValidData(_firstname, _middlename, _lastname, _birthday, _birthplace, _sexe) external {
-    require(owner == address(0), "This user already exist");
-    user = Person(_birthday, _firstname,_middlename,_lastname,_birthplace,_sexe);
-
-    emit UserUpdated(msg.sender, _firstname, _middlename, _lastname, _birthday, _birthplace, _sexe, false, false);
-  }
-
-  function getTokenIds(address _contactAddress) onlyOwner external {
+  function getTokenIds(address _contactAddress) external {
 
   }
 
-  function onIERC721Received(address operator, address from, uint256 tokenId, bytes32 data) external returns(bytes) {
-
+  /**
+   * @notice This contract can receive ERC721 NFTs
+   * @dev TODO could implement the fact that it can only receive NFT from Event contract
+   */
+  function onERC721Received(address, address, uint256, bytes calldata) external pure returns (bytes4) {
+    return IERC721Receiver.onERC721Received.selector;
   }
 }
