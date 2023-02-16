@@ -1,17 +1,19 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 
-export default function CardButton({title, getMyTicket}){
-  const onClickButton = getMyTicket == undefined ? () => {} : () => getMyTicket()
+export default function CardButton({title, action, secondaryAction}){
+  const onClickAction = action == undefined ? () => {} : () => action()
+
   return (
-    <Flex
+    <Button
       mt='1'
+      p={"7"}
       justifyContent="center"
-      border="1px"
       borderColor="gray.400"
-      borderRadius="l"
-      onClick={onClickButton}
+      borderRadius="10"
+      backgroundColor="gray.50"
+      onClick={onClickAction}
     >
       <Text m="2" fontWeight="bold"> {title} </Text>
-    </Flex>
+    </Button>
   )
 }
