@@ -4,11 +4,11 @@ import { useSigner } from 'wagmi';
 
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 
-import { Button, Card, CardBody, CardFooter, Divider, Flex, Spinner, Stack, Text, useToast } from '@chakra-ui/react';
+import { Button, Card, CardBody, CardFooter, Divider, Flex, Stack, Text, useToast } from '@chakra-ui/react';
 import { CustomInput } from '../CustomInput/CustomInput';
 
 import { dateToTimeStamp, isCountry, isEmail, toastError, toastSuccess } from '@/utils/methods';
-import { userFactory } from '@/utils/constants';
+import { userFactoryContract } from '@/utils/constants';
 import Loading from '../Loading/Loading';
 
 export default function RegisterView() {
@@ -18,11 +18,10 @@ export default function RegisterView() {
   const [country, setCountry] = useState("")
   const [lastname, setLastname] = useState("")
   const [postalCode, setPostalCode] = useState(0)
-  const [users, setUsers] = useState([{}])
 
   const toast = useToast()
   const { data: signer } = useSigner()
-  const { setIsLoading, isLoading } = useNavigationProvider()
+  const { setIsLoading, isLoading, setCurrentPage } = useNavigationProvider()
 
   const isError = name.length >= 2
     && lastname.length >= 2
@@ -33,44 +32,17 @@ export default function RegisterView() {
   const submit = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(userFactory.address, userFactory.abi, signer);
-      const transaction = await contract.create(name, lastname, email, country, dateToTimeStamp(dob), {value: 5100000000000 });
+      const contract = new ethers.Contract(userFactoryContract.address, userFactoryContract.abi, signer);
+      const transaction = await contract.create(name, lastname, email, country, dateToTimeStamp(dob),  {value: 5100000000000 });
       await transaction.wait()    
       
       setIsLoading(false)
       toast(toastSuccess("UserCreated", "Transaction validated"))    
     } catch (error) {
+      setIsLoading(false)
       toast(toastError("UserCreated", error.message))
     }
   }
-
-  // const getUserEventEmitted = async () => {
-  //   const filter = { address: userContract.contract, fromBlock: 0 }
-  //   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  //   const contractInstance = new ethers.Contract(userContract.contract, contract.abi, provider)
-  //   const userEvents = await contractInstance.queryFilter(filter)
-
-  //   userEvents.forEach((userEvent) => {
-  //     try {
-  //       if(userEvent.event === "UserCreated"){
-  //         setUsers(users => [
-  //           ...users, {
-  //             dob: userEvent.dob,
-  //             name: userEvent.name,
-  //             email: userEvent.email,
-  //             country: userEvent.country,
-  //             lastname: userEvent.lastname,
-  //             postalCode: userEvent.postalCode,
-  //           }
-  //         ])
-  //         setIsLoading(false)
-  //         toast(toastSuccess("UserCreated", "Transaction validated"))
-  //       }
-  //     } catch (error) {
-  //       toast(toastError("UserCreated", "Transaction rejected"))
-  //     }
-  //   }) 
-  // }
 
   useEffect(()=>{}, [isLoading])
 
@@ -87,7 +59,7 @@ export default function RegisterView() {
                 isDisabled={isLoading}
                 title={"Name"}
                 type={"text"}
-                textHelper={"2 letters minimum"}
+                textHelper={name.length < 2 ? "2 letters minimum" : ""}
                 input={name}
                 handleInputChange={setName}
                 isError={name.length < 2}
@@ -96,7 +68,7 @@ export default function RegisterView() {
                 isDisabled={isLoading}
                 title={"Last Name"}
                 type={"text"}
-                textHelper={"2 letters minimum"}
+                textHelper={lastname.length < 2 ? "2 letters minimum" : ""}
                 input={lastname}
                 handleInputChange={setLastname}
                 isError={lastname.length < 2}
@@ -120,6 +92,7 @@ export default function RegisterView() {
                 input={email}
                 handleInputChange={setEmail}
                 isError={isEmail(email)}
+                defaultCase={true}
               />            
             </Stack>
             <Stack direction={"row"} alignItems='center' mt={"10"}>
@@ -128,9 +101,10 @@ export default function RegisterView() {
                 title={"Country"} 
                 type="text"
                 input={country}
-                textHelper={"This country does not exist"}
+                textHelper={!isCountry(country) ? "This country does not exist" : ""}
                 handleInputChange={setCountry}
                 isError={!isCountry(country)}
+                defaultCase={true}
               />
               <CustomInput
                 isDisabled={isLoading}
@@ -151,7 +125,7 @@ export default function RegisterView() {
               fontSize={"2xl"} 
               variant='solid' 
               colorScheme='red'
-              onClick={() => submit()}
+              onClick={() =>{ submit(); setCurrentPage('')}}
             >
               SUBMIT
             </Button>

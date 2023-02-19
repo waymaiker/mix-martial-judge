@@ -2,28 +2,31 @@ import { Flex, Text } from '@chakra-ui/react';
 
 import { useEffect } from 'react';
 import { useAccount } from 'wagmi';
-import useNavigationProvider from '@/hooks/useNavigationProvider';
 
-import CardEvent from './CardEvent';
-import CardAddEvent from './CardAddEvent';
+import useNavigationProvider from '@/hooks/useNavigationProvider';
+import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
+
+import CardEvent from './components/CardEvent';
+import CardAddEvent from './components/CardAddEvent';
 import Loading from '../Loading/Loading';
 
 export default function EventsView({events}){
-  const { isConnected } = useAccount()
+  const { isConnected, address } = useAccount()
   const { isLoading } = useNavigationProvider()
+  const { isAdminConnected } = useWhoIsConnectedProvider()
 
-  useEffect(()=>{}, [isLoading])
+  useEffect(()=>{}, [isConnected, address])
 
   return (
     <>  
-      {isConnected ? <CardAddEvent/> : <></>}
+      {isAdminConnected ? <CardAddEvent/> : <></>}
       {
         isLoading
         ? <Loading />
         : <>
           { !events.length == 0 
             ? <>
-                <Flex justifyContent="center" mt="5">
+                <Flex justifyContent="center" mt="20">
                   <Text fontWeight="bold" fontSize="7xl" fontStyle="italic"> UPCOMING </Text>
                 </Flex>
                 <Flex justifyContent="center" mt="5">
@@ -34,7 +37,7 @@ export default function EventsView({events}){
                     <CardEvent
                       key={index}
                       fightType={event.fightType ? "championship" : "regular"}
-                      fightersImage={event.filename}
+                      marketingImage={event.fileLink}
                       title={event.fighterOne + " vs "+ event.fighterTwo}
                       arena={event.arena}
                       location={event.location}
