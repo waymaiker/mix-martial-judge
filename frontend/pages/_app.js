@@ -9,7 +9,7 @@ import { hardhat, goerli } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react'
 
-import { OwnerProvider } from '@/contexts/ownerProvider';
+import { WhoIsConnectedProvider } from '@/contexts/whoIsConnectedProvider';
 import { NavigationProvider } from '@/contexts/NavigationProvider';
 import { DataProvider } from '@/contexts/dataProvider';
 import theme from '@/utils/theme';
@@ -39,9 +39,9 @@ export default function App({ Component, pageProps }) {
         <ChakraProvider theme={theme}>
          <NavigationProvider>
           <DataProvider>
-            <OwnerProvider>
+            <WhoIsConnectedProvider>
               <Component {...pageProps} />              
-            </OwnerProvider>
+            </WhoIsConnectedProvider>
           </DataProvider>
          </NavigationProvider>
         </ChakraProvider>

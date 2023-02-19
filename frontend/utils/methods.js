@@ -1,7 +1,8 @@
 import { countriesList } from "./constants";
 
-export const toastSuccess = (title, reason) => {
+export const toastSuccess = (title, reason, position) => {
   return { 
+    position: position !=undefined ? position : "bottom",
     title: "Success - "+title, 
     description: reason, 
     status: 'success', 
@@ -28,7 +29,7 @@ export function isEmail(val) {
 }
 
 export const isCountry = (val) => {
-  let isCountryExist = countriesList.find(country => country.name.includes(val))
+  let isCountryExist = countriesList.find(country => country.name.toLowerCase().includes(val.toLowerCase()))
   return isCountryExist == undefined ||  isCountryExist == false || val.length < 4 ? false : true;
 }
 
