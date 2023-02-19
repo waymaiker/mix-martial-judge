@@ -2,7 +2,7 @@ import { useEffect, createContext, useState } from "react";
 import { useAccount } from 'wagmi'
 import { ethers } from "ethers";
 
-import { eventContract, userContract } from "@/utils/constants";
+import { fightContract, userContract } from "@/utils/constants";
 import { useToast } from "@chakra-ui/react";
 
 const DataContext = createContext(null)
@@ -21,17 +21,19 @@ export const DataProvider = ({ children }) => {
   const getData = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const contractEvent = new ethers.Contract(eventContract.address, eventContract.abi, provider)
+      const contractEvent = new ethers.Contract(fightContract.address, fightContract.abi, provider)
       const contractUser = new ethers.Contract(userContract.address, userContract.abi, provider)
-      const dataEvents = await contractEvent.queryFilter({ address: eventContract.address, fromBlock: 0 })
+      const dataEvents = await contractEvent.queryFilter({ address: fightContract.address, fromBlock: 0 })
       const dataUsers = await contractUser.queryFilter({ address: userContract.address, fromBlock: 0 })
+
+      console.log(dataUsers);
 
       resetDatas()
       catchEventCreatedEvent(dataEvents, setEvents)
       catchUserCreatedEvent(dataUsers, setUsers)
-  
+
       console.log(users);
-      console.log(events);
+      // console.log(events);
     } catch (error) {
       toast({ title: "Error - GetData", description: error.reason, status: 'error', duration: 5000, isClosable: true })
     }
@@ -72,15 +74,17 @@ const catchUserCreatedEvent = (usersEvents, setUsers) => {
 
 const catchEventCreatedEvent = (eventsEvents, setEvents) => {
   eventsEvents.forEach((event) => {
-    if(event.event === "EventCreated"){
+    if(event.event === "FightCreated"){
       setEvents(events =>[{
-          address:  event.args.address,
+          fightId: event.args.fightId,
+          adminAddress: event.args.adminAddress,
           fighterOne: event.args.fighterOne,
           fighterTwo: event.args.fighterTwo,
           arena: event.args.arena,
           location: event.args.location,
           fightType: event.args.fightType,
-          filename: event.args.filename
+          fileLink: event.args.fileLink,
+          fileCID: event.args.fileCID
         }, ...events
       ])
     }
