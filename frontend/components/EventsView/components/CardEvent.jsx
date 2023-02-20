@@ -1,23 +1,19 @@
-import { useAccount } from 'wagmi';
 import { useState } from 'react';
-import { Flex, Image, Text, useDisclosure } from '@chakra-ui/react';
+import { Flex, Image, Text, Tooltip, useDisclosure } from '@chakra-ui/react';
 
 import useDataProvider from '@/hooks/useDataProvider';
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 
 import CardButton from './CardButton';
-import CustomModal from '../../CustomModal/CustomModal';
-import FightAccess from '../../FightView/components/FightAccess';
-import CreateFightToken from './CreateTokenFight';
+import { EventsModalsCustomContent } from './EventModalsCustomContent';
 
-export default function CardEvent({fightType, marketingImage, title, arena, location}) {
-  const { isConnected } = useAccount()
+export default function CardEvent({fightId, fightType, marketingImage, title, arena, location }) {
+  const { winners, users } = useDataProvider()
   const { setCurrentPage } = useNavigationProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { isSuperAdminConnected, isAdminConnected, isRegisteredUserConnected } = useWhoIsConnectedProvider()
+  const { isGuestUserConnected, isAdminConnected, isRegisteredUserConnected } = useWhoIsConnectedProvider()
   const [modalTypeContent, setModalTypeContent] = useState("")
-  const isRegisteredUserOpen = isRegisteredUserConnected ? onOpen : () => setCurrentPage("register") 
 
   return (
     <Flex justifyContent="center" alignItems="center" p="10">
@@ -42,16 +38,29 @@ export default function CardEvent({fightType, marketingImage, title, arena, loca
         </Flex>
       </Flex>
         { 
-          isAdminConnected
-          ? <Flex direction="column" p="10" w="30vh">
+          isAdminConnected &&
+            <Flex direction="column" p="10" w="30vh">
+              <Tooltip label={'Wait for the winner to be declared'} color='black'>
+                <CardButton
+                  title={"CREATE TOKEN FIGHT"}
+                  action={onOpen}                
+                  adminBackgroundColor={true}
+                  secondaryAction={() => setModalTypeContent("create token")}
+                  isDisabled={!winners.find(winner => winner.fightId == fightId)}
+                />
+              </Tooltip>
               <CardButton
-                title={"CREATE TOKEN FIGHT"}
-                action={onOpen}
+                title={"GET THE JUDGE WINNER"}
+                action={onOpen}                
                 adminBackgroundColor={true}
-                secondaryAction={() => setModalTypeContent("create token")}
+                secondaryAction={() => setModalTypeContent("")}
+                isDisabled={false}
               />
             </Flex>
-          : <Flex direction="column" p="10" w="30vh">
+        }
+        {
+          isRegisteredUserConnected &&
+           <Flex direction="column" p="10" w="30vh">
               <CardButton
                 title={"HOW TO WATCH"}
                 action={onOpen}
@@ -59,56 +68,23 @@ export default function CardEvent({fightType, marketingImage, title, arena, loca
               />
               <CardButton
                 title={"BE A JUDGE"}
-                action={
-                  isConnected 
-                  ? isSuperAdminConnected ? ()=>{} : () => isRegisteredUserOpen()
-                  : onOpen
-                }
-                secondaryAction={isSuperAdminConnected ? () => {setModalTypeContent("superAdmin"); onOpen()} : () => setModalTypeContent("fight access")}
+                action={() => setCurrentPage("judge")}
+                secondaryAction={() => setModalTypeContent("fight access")}
               />
             </Flex>
-      }
-      <CustomModalContent 
+        }
+        { 
+          isGuestUserConnected &&
+          <CardButton
+            title={"Register"}
+            action={() => setCurrentPage("register")}
+          />    
+        }
+      <EventsModalsCustomContent 
         type={modalTypeContent}
         isOpen={isOpen}
         onClose={onClose}
       />
     </Flex>
   )
-}
-
-const CustomModalContent = ({type, isOpen, onClose}) => {
-  switch (type) {
-    case "create token":
-      return <CustomModal
-        isOpen={isOpen}
-        onClose={onClose}
-        isCustomSize={true}
-        isCustomFooter={true}
-        children={<CreateFightToken onClose={onClose} />}
-      />    
-    case "fight access":
-      return <CustomModal
-        isOpen={isOpen}
-        onClose={onClose}
-        isCustomFooter={false}
-        children={<FightAccess />}
-      />    
-    case "ads":
-      return <CustomModal
-        isOpen={isOpen}
-        onClose={onClose}
-        isCustomFooter={false}
-        children={<Text color={"green"}> ADVERTISEMENT SPACE FOR OUR STREAMING PLATFORM </Text>}
-      />
-    case "superAdmin":
-      return <CustomModal
-        isOpen={isOpen}
-        onClose={onClose}
-        isCustomFooter={true}
-        children={<Text color={"green"}> As a SuperAdmin you dont have access to this feature, contact an admin </Text>}
-      />    
-    default:
-      break;
-  }
 }

@@ -33,7 +33,7 @@ export default function RegisterView() {
     setIsLoading(true);
     try {
       const contract = new ethers.Contract(userFactoryContract.address, userFactoryContract.abi, signer);
-      const transaction = await contract.create(name, lastname, email, country, dateToTimeStamp(dob),  {value: 5100000000000 });
+      const transaction = await contract.create(name, lastname, email, country, dateToTimeStamp(dob), {value: 5100000000000 });
       await transaction.wait()    
       
       setIsLoading(false)

@@ -32,6 +32,16 @@ export default function CardAddEvent() {
     || location.toString().length < 4
     || fileData.Link.length == 0
 
+
+  const resetState = () => {
+    setArena("")
+    setLocation("")
+    setFightType(0)
+    setFighterOne("")
+    setFighterTwo("")
+    setFileData({"CID":"", "Link":""})
+  }
+
   const submit = async () => {
     setIsLoading(true);
     try {    
@@ -40,7 +50,7 @@ export default function CardAddEvent() {
       await transaction.wait()    
       
       await getData()
-
+      resetState()
       setIsLoading(false)
       toast(toastSuccess("EventCreated", "Transaction validated"))    
     } catch (error) {

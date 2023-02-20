@@ -12,9 +12,10 @@ import SuperAdminView from '@/components/SuperAdminView/SuperAdminView';
 import { FightProvider } from '@/components/FightView/contexts/fightProvider';
 
 export default function Home() {
-  const { isSuperAdminConnected } = useWhoIsConnectedProvider()
+  const { isSuperAdminConnected, isAdminConnected } = useWhoIsConnectedProvider()
   const { currentPage } = useNavigationProvider()
   const { events } = useDataProvider()
+  const isRegisteredUserConnected = !isSuperAdminConnected && !isAdminConnected
 
   return (
     <>
@@ -26,10 +27,9 @@ export default function Home() {
       </Head>
       <Layout>
         { isSuperAdminConnected && <SuperAdminView /> }
-        { currentPage == "register" && <RegisterView/> }
-        {/* { currentPage == "events" && <EventsView events={events}/> }
-        { currentPage == "judge" && <FightProvider> <FightView /> </FightProvider> } */}
-        <EventsView events={events}/>
+        { isRegisteredUserConnected && currentPage == "register" && <RegisterView/> }
+        { currentPage == "judge" && <FightProvider> <FightView /> </FightProvider> }
+        { currentPage != "judge" && <EventsView events={events}/> }
       </Layout>
     </>
   )

@@ -15,6 +15,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
   const [admins, setAdmins] = useState([])
   const [isRegisteredUserConnected, setIsRegisteredUserConnected] = useState(false)
   const [isSuperAdminConnected, setIsSuperAdminConnected] = useState(false)
+  const [isGuestUserConnected, setIsGuestUserConnected] = useState(false)
   const [isAdminConnected, setIsAdminConnected] = useState(false)
 
   const { address, isConnected } = useAccount()
@@ -42,23 +43,24 @@ export const WhoIsConnectedProvider = ({ children }) => {
       const superAdmin = await contractEvent.owner()      
       const _isSuperAdminConnected = address == superAdmin
       const _isAdminConnected = admins.includes(address)
-      const _isRegisteredUserConnected = users.includes(address)
-
+      const _isRegisteredUserConnected = users.findIndex(user => user.address == address) != -1
+      const _isGuestUserConnected = !_isSuperAdminConnected && !_isAdminConnected && !_isRegisteredUserConnected
+      
       setIsRegisteredUserConnected(_isRegisteredUserConnected)
       setIsAdminConnected(_isAdminConnected)
       setIsSuperAdminConnected(_isSuperAdminConnected)
+      setIsGuestUserConnected(_isGuestUserConnected)
       
       if(_isSuperAdminConnected || _isAdminConnected) {
         toast(toastSuccess("Account connected", _isSuperAdminConnected ? "SUPER ADMIN" : "ADMIN", "top"))
       }
     } catch (error) {
-      console.log(error);
       toast(toastError("Connected Account", error.reason))
     }
   }
 
   useEffect(()=>{
-    if(isConnected) getAdmins()
+    getAdmins()
   }, [isLoading])
 
   useEffect(()=>{
@@ -71,6 +73,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
     <WhoIsConnectedContext.Provider value={{
       isRegisteredUserConnected,
       isSuperAdminConnected,
+      isGuestUserConnected,
       isAdminConnected,
       admins
     }}>
