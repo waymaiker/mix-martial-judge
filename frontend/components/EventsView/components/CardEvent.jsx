@@ -1,19 +1,44 @@
+import { ethers } from 'ethers';
 import { useState } from 'react';
-import { Flex, Image, Text, Tooltip, useDisclosure } from '@chakra-ui/react';
+import { useAccount, useSigner } from 'wagmi';
+import { Flex, Image, Text, Tooltip, useDisclosure, useToast } from '@chakra-ui/react';
 
 import useDataProvider from '@/hooks/useDataProvider';
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
+import { toastError, toastSuccess } from '@/utils/methods';
+import { fightContract } from '@/utils/constants';
 
-import CardButton from './CardButton';
 import { EventsModalsCustomContent } from './EventModalsCustomContent';
+import CardButton from './CardButton';
 
 export default function CardEvent({fightId, fightType, marketingImage, title, arena, location }) {
-  const { winners, users } = useDataProvider()
-  const { setCurrentPage } = useNavigationProvider()
+  const { data: signer } = useSigner()
+  const { address, isConnected } = useAccount()
+  const { winners, getData } = useDataProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { setCurrentPage, setIsLoading } = useNavigationProvider()
   const { isGuestUserConnected, isAdminConnected, isRegisteredUserConnected } = useWhoIsConnectedProvider()
   const [modalTypeContent, setModalTypeContent] = useState("")
+  const toast = useToast()
+
+  const userJoinFight = async () => {
+    setIsLoading(true);
+    try {
+      const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
+      const transaction = await contract.userJoinAFightAsJudgeEnthusiast(fightId, address, {value: ethers.utils.parseEther("0.059")});
+      await transaction.wait()
+
+      await getData()
+      setIsLoading(false)
+      setCurrentPage("judge")
+
+      toast(toastSuccess("New Judge Added", "Transaction validated"))
+    } catch (error) {
+      setIsLoading(false)
+      toast(toastError("New Judge NOT Added", error.message))
+    }
+  }
 
   return (
     <Flex justifyContent="center" alignItems="center" p="10">
@@ -37,13 +62,13 @@ export default function CardEvent({fightId, fightType, marketingImage, title, ar
           <Text color="gray.600"> {location} </Text>
         </Flex>
       </Flex>
-        { 
+        {
           isAdminConnected &&
             <Flex direction="column" p="10" w="30vh">
               <Tooltip label={'Wait for the winner to be declared'} color='black'>
                 <CardButton
                   title={"CREATE TOKEN FIGHT"}
-                  action={onOpen}                
+                  action={onOpen}
                   adminBackgroundColor={true}
                   secondaryAction={() => setModalTypeContent("create token")}
                   isDisabled={!winners.find(winner => winner.fightId == fightId)}
@@ -51,7 +76,7 @@ export default function CardEvent({fightId, fightType, marketingImage, title, ar
               </Tooltip>
               <CardButton
                 title={"GET THE JUDGE WINNER"}
-                action={onOpen}                
+                action={onOpen}
                 adminBackgroundColor={true}
                 secondaryAction={() => setModalTypeContent("")}
                 isDisabled={false}
@@ -68,22 +93,26 @@ export default function CardEvent({fightId, fightType, marketingImage, title, ar
               />
               <CardButton
                 title={"BE A JUDGE"}
-                action={() => setCurrentPage("judge")}
-                secondaryAction={() => setModalTypeContent("fight access")}
+                action={onOpen}
+                secondaryAction={() => setModalTypeContent("join the fight")}
               />
             </Flex>
         }
-        { 
+        {
           isGuestUserConnected &&
           <CardButton
-            title={"Register"}
-            action={() => setCurrentPage("register")}
-          />    
+            title={"REGISTER"}
+            action={onOpen}
+            secondaryAction={isConnected
+            ? () => setCurrentPage("register")
+            : () => setModalTypeContent("connect")}
+          />
         }
-      <EventsModalsCustomContent 
+      <EventsModalsCustomContent
         type={modalTypeContent}
         isOpen={isOpen}
         onClose={onClose}
+        customOKButton={userJoinFight}
       />
     </Flex>
   )

@@ -1,32 +1,26 @@
-import { Flex, Icon, Image, Text } from "@chakra-ui/react";
 import { useAccount } from "wagmi";
+import { Flex } from "@chakra-ui/react";
+
+import useNavigationProvider from "@/hooks/useNavigationProvider";
+import useDataProvider from "@/hooks/useDataProvider";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import EventsView from "../EventsView/EventsView";
 
 export default function Layout({children}) {
   const { isConnected } = useAccount()
+  const { events } = useDataProvider()
+  const { currentPage } = useNavigationProvider()
 
   return (
-    <Flex>
-      <Flex w={"1000vh"} h="100vh" direction="column">
-        <Header/>
-        <Flex grow="1" direction="column">
-          {children}
-        </Flex>
-        <Footer/>
+    <Flex grow="1" h="100vh" direction="column">
+      <Header/>
+      <Flex grow="1" direction="column">
+        { isConnected && children }
+        { currentPage != "judge" && <EventsView events={events}/> }
       </Flex>
+      <Footer/>
     </Flex>
   )
 }
-// { isConnected ? <ViewConnected children={children} />  : <ViewDisconnected children={children} /> }
-
-const ViewConnected = ({children}) =>
-  <Flex grow="1" direction="column">
-    {children}
-  </Flex>
-
-const ViewDisconnected = ({children}) =>
-  <Flex grow="1" direction="column">
-    {children}
-  </Flex>

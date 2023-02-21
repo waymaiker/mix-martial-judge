@@ -88,7 +88,7 @@ export default WhoIsConnectedContext;
 const catchAdminAddedEvent = (dataEvents, setAdmins) =>{
   dataEvents.forEach((event) => {
    if(event.event === "AdminAdded"){
-     setAdmins(admins => [event.args._adminAddress, ...admins])
+     setAdmins(admins => [event.args.adminAddress, ...admins])
    }
  })
 }

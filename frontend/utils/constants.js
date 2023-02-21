@@ -18,7 +18,7 @@ export const fightContract = {
         {
           "indexed": true,
           "internalType": "address",
-          "name": "_adminAddress",
+          "name": "adminAddress",
           "type": "address"
         }
       ],
@@ -81,7 +81,7 @@ export const fightContract = {
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "_fightId",
+          "name": "fightId",
           "type": "uint256"
         },
         {
@@ -142,25 +142,25 @@ export const fightContract = {
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "_fightId",
+          "name": "fightId",
           "type": "uint256"
         },
         {
           "indexed": true,
           "internalType": "address",
-          "name": "_userAddress",
+          "name": "userAddress",
           "type": "address"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_fightTicketId",
+          "name": "fightTicketId",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_roundNumber",
+          "name": "roundNumber",
           "type": "uint256"
         },
         {
@@ -198,7 +198,7 @@ export const fightContract = {
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_fightId",
+          "name": "fightId",
           "type": "uint256"
         },
         {
@@ -242,13 +242,13 @@ export const fightContract = {
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "_fightId",
+          "name": "fightId",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_fightTicketId",
+          "name": "fightTicketId",
           "type": "uint256"
         },
         {
@@ -260,6 +260,19 @@ export const fightContract = {
       ],
       "name": "UserHasJoinedAFight",
       "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "MAX_SUPPLY",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
       "inputs": [
@@ -452,6 +465,11 @@ export const fightContract = {
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "_fightId",
+          "type": "uint256"
+        },
+        {
           "internalType": "address",
           "name": "_to",
           "type": "address"
@@ -631,11 +649,6 @@ export const fightContract = {
           "type": "uint256"
         },
         {
-          "internalType": "uint256",
-          "name": "_fightTicketId",
-          "type": "uint256"
-        },
-        {
           "internalType": "address",
           "name": "_userAddress",
           "type": "address"
@@ -688,31 +701,31 @@ export const userFactoryContract = {
         {
           "indexed": true,
           "internalType": "address",
-          "name": "_userContractAddress",
+          "name": "userContractAddress",
           "type": "address"
         },
         {
           "indexed": true,
           "internalType": "address",
-          "name": "_userAddress",
+          "name": "userAddress",
           "type": "address"
         },
         {
           "indexed": false,
           "internalType": "string",
-          "name": "_firstname",
+          "name": "firstname",
           "type": "string"
         },
         {
           "indexed": false,
           "internalType": "string",
-          "name": "_lastname",
+          "name": "lastname",
           "type": "string"
         },
         {
           "indexed": false,
           "internalType": "string",
-          "name": "_email",
+          "name": "email",
           "type": "string"
         },
         {
@@ -724,7 +737,7 @@ export const userFactoryContract = {
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_dob",
+          "name": "dob",
           "type": "uint256"
         }
       ],
@@ -737,13 +750,13 @@ export const userFactoryContract = {
         {
           "indexed": true,
           "internalType": "address",
-          "name": "_previousUserProxyContractAddress",
+          "name": "previousUserProxyContractAddress",
           "type": "address"
         },
         {
           "indexed": true,
           "internalType": "address",
-          "name": "_newUserProxyContractAddress",
+          "name": "newUserProxyContractAddress",
           "type": "address"
         }
       ],
@@ -845,9 +858,10 @@ export const userFactoryContract = {
   ],
 }
 
+
 export const userContract = {
   "address":"0x5FbDB2315678afecb367f032d93F642f64180aa3",
-  "abi": [
+  "abi":  [
     {
       "anonymous": false,
       "inputs": [

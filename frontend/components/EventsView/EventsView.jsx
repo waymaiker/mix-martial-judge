@@ -6,7 +6,6 @@ import { useAccount } from 'wagmi';
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 
-import CardEvent from './components/CardEvent';
 import CardAddEvent from './components/CardAddEvent';
 import Loading from '../Loading/Loading';
 import EventsContent from './components/EventsContent';

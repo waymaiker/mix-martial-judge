@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from '@chakra-ui/react';
+import { Button, Text } from '@chakra-ui/react';
 
 export default function CardButton({title, action, secondaryAction, adminBackgroundColor, isDisabled}){
   const onClickAction = action == undefined ? () => {} : () => action()
