@@ -10,7 +10,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react'
 
 import { WhoIsConnectedProvider } from '@/contexts/whoIsConnectedProvider';
-import { NavigationProvider } from '@/contexts/NavigationProvider';
+import { NavigationProvider } from '@/contexts/navigationProvider';
 import { DataProvider } from '@/contexts/dataProvider';
 import theme from '@/utils/theme';
 
