@@ -1,9 +1,9 @@
 import { useEffect, createContext, useState } from "react";
 import { useAccount } from 'wagmi'
 import { ethers } from "ethers";
+import { useToast } from "@chakra-ui/react";
 
 import { fightContract, userFactoryContract } from "@/utils/constants";
-import { useToast } from "@chakra-ui/react";
 
 const DataContext = createContext(null)
 

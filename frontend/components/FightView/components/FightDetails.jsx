@@ -3,16 +3,18 @@ import {
   Flex,
   Text
 } from '@chakra-ui/react';
+
 import useFightProvider from '../hooks/useFightProvider';
+
 import FightClock from './FightClock';
 
-export default function FightDetails (){  
-  const { 
-    setRound, 
-    setRoundFinished, 
-    round, 
-    maxRound, 
-    isFightInProgress 
+export default function FightDetails (){
+  const {
+    setRound,
+    setRoundFinished,
+    round,
+    maxRound,
+    isFightInProgress
   } = useFightProvider()
 
   const textDuringTheFight = isFightInProgress ? round : maxRound

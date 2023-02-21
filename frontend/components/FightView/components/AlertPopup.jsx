@@ -6,14 +6,15 @@ import {
   Flex,
   Text
 } from '@chakra-ui/react';
-import FightSubmission from './FightSubmission';
 
 import useFightProvider from '../hooks/useFightProvider';
+
+import FightSubmission from './FightSubmission';
 
 export default function AlertPopup() {
   const {setRoundFinished, round, maxRound} = useFightProvider()
   const roundRectified = round - 1
-  
+
   const chooseAnExpression = () => {
     switch (roundRectified) {
       case 2:
@@ -58,9 +59,9 @@ export default function AlertPopup() {
             : <Text> The Fight is finished. Sumbit your participation and wait for the result </Text>
          }
         </AlertDescription>
-        <FightSubmission 
+        <FightSubmission
           text={ roundRectified < maxRound ? "START THE NEXT ROUND" : "SUBMIT YOUR RESULT" }
-          startNextRound={() => setRoundFinished(false)}  
+          startNextRound={() => setRoundFinished(false)}
           isFightInProgress={roundRectified < maxRound}
         />
       </Alert>

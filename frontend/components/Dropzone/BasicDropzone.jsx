@@ -1,8 +1,8 @@
 import React from 'react';
+import { Flex, Input, Text } from '@chakra-ui/react';
+
 import {useDropzone} from 'react-dropzone';
 import { NFTStorage, Blob } from 'nft.storage'
-
-import { Flex, Input, Text } from '@chakra-ui/react';
 
 export default function BasicDropzone({storeNFT, setImage, setFileData}) {
   const client = new NFTStorage({ token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY })

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSigner } from 'wagmi';
 import { ethers } from 'ethers';
 import { Button, Flex, Stack, Text, useToast } from '@chakra-ui/react';
@@ -19,13 +19,13 @@ export default function SuperAdminView(){
 
   const submit = async () => {
     setIsLoading(true);
-    try {    
+    try {
       const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
       const transaction = await contract.addAdmin(adminAddressProvided);
-      await transaction.wait()    
-      
+      await transaction.wait()
+
       setIsLoading(false)
-      toast(toastSuccess("AdminAdded", "Transaction validated"))    
+      toast(toastSuccess("AdminAdded", "Transaction validated"))
     } catch (error) {
       setIsLoading(false)
       toast(toastError("AdminAdded", error.message))
@@ -37,7 +37,7 @@ export default function SuperAdminView(){
       <Text color='red' fontWeight="extrabold" mt="2%"> PAGE </Text>
       <Text fontWeight="bold" fontSize="7xl" fontStyle="italic">  ADD A PLATFORM ADMINISTRATOR</Text>
       <Stack direction='column' alignItems={"center"} shadow={"xl"} borderRadius="10" w="100vh" p="20" mt="5" mb="5">
-        <CustomInput 
+        <CustomInput
           title={'Admin Address'}
           type="text"
           textHelper={"Address will be granted admin priviledges"}
@@ -45,23 +45,23 @@ export default function SuperAdminView(){
           handleInputChange={setAdminAddressProvided}
           isError={adminAddressProvided.length === 0}
           defaultCase={true}
-        />              
+        />
         <Button
           isLoading={isLoading}
           isDisabled={adminAddressProvided.length === 0}
           fontSize="xl"
           colorScheme='red'
           onClick={() => submit()}
-        >          
+        >
           SUBMIT
-        </Button>        
+        </Button>
         <Flex direction={"column"} w="85vh" alignContent={"flex-start"}>
           <Text>
-            Registered administrators: 
+            Registered administrators:
           </Text>
-          { 
+          {
             admins.length > 0 ? admins.map(admin => <Text> {admin}</Text>) : <Text> NO ADMINS </Text>
-          }          
+          }
         </Flex>
       </Stack>
     </Flex>

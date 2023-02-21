@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
-import CardEvent from "./CardEvent";
 
+import CardEvent from "./CardEvent";
 
 export default function EventsContent({events}){
   return(

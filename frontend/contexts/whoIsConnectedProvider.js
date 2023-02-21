@@ -4,10 +4,10 @@ import { ethers } from "ethers";
 import { useToast } from "@chakra-ui/react";
 
 import useDataProvider from "@/hooks/useDataProvider";
+import useNavigationProvider from "@/hooks/useNavigationProvider";
 
 import { fightContract } from "@/utils/constants";
 import { toastError, toastSuccess } from "@/utils/methods";
-import useNavigationProvider from "@/hooks/useNavigationProvider";
 
 const WhoIsConnectedContext = createContext(null)
 
@@ -31,7 +31,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const contractEvent = new ethers.Contract(fightContract.address, fightContract.abi, provider)
     const dataEvents = await contractEvent.queryFilter({ address: fightContract.address, fromBlock: 0 })
-  
+
     resetDatas([])
     catchAdminAddedEvent(dataEvents, setAdmins)
   }
@@ -40,17 +40,17 @@ export const WhoIsConnectedProvider = ({ children }) => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const contractEvent = new ethers.Contract(fightContract.address, fightContract.abi, provider)
-      const superAdmin = await contractEvent.owner()      
+      const superAdmin = await contractEvent.owner()
       const _isSuperAdminConnected = address == superAdmin
       const _isAdminConnected = admins.includes(address)
       const _isRegisteredUserConnected = users.findIndex(user => user.address == address) != -1
       const _isGuestUserConnected = !_isSuperAdminConnected && !_isAdminConnected && !_isRegisteredUserConnected
-      
+
       setIsRegisteredUserConnected(_isRegisteredUserConnected)
       setIsAdminConnected(_isAdminConnected)
       setIsSuperAdminConnected(_isSuperAdminConnected)
       setIsGuestUserConnected(_isGuestUserConnected)
-      
+
       if(_isSuperAdminConnected || _isAdminConnected) {
         toast(toastSuccess("Account connected", _isSuperAdminConnected ? "SUPER ADMIN" : "ADMIN", "top"))
       }

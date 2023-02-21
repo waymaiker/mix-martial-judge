@@ -1,11 +1,11 @@
 import { Flex, Image, Text } from '@chakra-ui/react';
 
 export default function FighterRight({
-  headRight, 
-  bodyRight, 
-  legsRight, 
-  setHeadRight, 
-  setBodyRight, 
+  headRight,
+  bodyRight,
+  legsRight,
+  setHeadRight,
+  setBodyRight,
   setLegsRight
 }) {
   return (

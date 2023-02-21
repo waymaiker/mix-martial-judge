@@ -16,8 +16,8 @@ export default function FightSubmission({text, startNextRound, isFightInProgress
       // const contractInstance = new ethers.Contract(contract.address, contract.abi, signer)
       // let transaction = await contractInstance.addProposal(description)
       // await transaction.wait()
-  
-      toast(toastSuccess("Add proposal", "Transaction successful")) 
+
+      toast(toastSuccess("Add proposal", "Transaction successful"))
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
@@ -27,9 +27,9 @@ export default function FightSubmission({text, startNextRound, isFightInProgress
 
   return (
     <Button
-      p="5" 
+      p="5"
       onClick={isFightInProgress ? startNextRound : () => submitResults() }
-    > 
+    >
       {text}
     </Button>
   )

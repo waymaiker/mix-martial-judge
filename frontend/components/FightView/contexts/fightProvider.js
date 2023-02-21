@@ -16,12 +16,12 @@ export const FightProvider = ({ children }) => {
   const isFightInProgress = round <= maxRound;
 
   return (
-    <FightContext.Provider value={{ 
-      round, 
+    <FightContext.Provider value={{
+      round,
       setRound,
-      isRoundFinished, 
+      isRoundFinished,
       setRoundFinished,
-      results, 
+      results,
       setResults,
       fightType,
       maxRound,

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Flex, Image } from '@chakra-ui/react';
 
+import useFightProvider from '../hooks/useFightProvider';
+
 import LeftFighter from './FighterLeft';
 import FighterRight from './FighterRight';
-
-import useFightProvider from '../hooks/useFightProvider';
 
 export default function FightersView() {
   const [headRight, setHeadRight] = useState(0)
@@ -55,7 +55,7 @@ export default function FightersView() {
   return (
     <Flex grow="1" h="82vh" direction="column">
       <InformationPart fightType={fightType} round={round} />
-      <FightersPart 
+      <FightersPart
         headLeft={headLeft}
         bodyLeft={bodyLeft}
         legsLeft={legsLeft}
@@ -76,14 +76,14 @@ export default function FightersView() {
 const InformationPart = ({fightType, round}) => {
   return (
     <Flex justifyContent="center" mt="2%"  mb="2%">
-        <Image 
+        <Image
         src={
-          fightType 
-          ? '/regular.png' 
+          fightType
+          ? '/regular.png'
           : '/championship.png'
-        } 
-        mr="5"          
-      />     
+        }
+        mr="5"
+      />
     </Flex>
   )
 }

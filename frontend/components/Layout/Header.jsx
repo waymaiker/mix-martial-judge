@@ -12,9 +12,9 @@ export default function Header() {
 
   return (
     isConnected
-    ? <ConnectedHeader 
-        currentPage={currentPage} 
-        setCurrentPage={setCurrentPage}         
+    ? <ConnectedHeader
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
     : <NonConnectedHeader />
   )
