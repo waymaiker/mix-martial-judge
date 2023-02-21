@@ -1,27 +1,38 @@
+import { useAccount } from "wagmi";
 import { Button, useToast } from "@chakra-ui/react";
 import { toastError, toastSuccess } from "@/utils/methods";
+import { fightContract } from "@/utils/constants";
 
+import useDataProvider from "@/hooks/useDataProvider";
 import useNavigationProvider from "@/hooks/useNavigationProvider";
 import useFightProvider from "../hooks/useFightProvider";
 
 export default function FightSubmission({text, startNextRound, isFightInProgress}) {
-  const { setCurrentPage, setIsLoading } = useNavigationProvider()
-  const {results} = useFightProvider()
+  const { address } = useAccount()
+  const { setCurrentPage, setIsLoading, eventIdSelected } = useNavigationProvider()
+  const { results } = useFightProvider()
+  const { setWinners, winners } = useDataProvider()
   const toast = useToast()
 
   const submitResults = async () => {
     setIsLoading(true)
     try {
       setCurrentPage("events")
-      // const contractInstance = new ethers.Contract(contract.address, contract.abi, signer)
-      // let transaction = await contractInstance.addProposal(description)
+      setWinners(winners => [{
+        fightId: parseInt(eventIdSelected),
+        userAddress: address ,
+      }, ...winners])
+
+      console.log(winners);
+      // const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer)
+      // let transaction = await contract.participantSubmitResult(description)
       // await transaction.wait()
 
-      toast(toastSuccess("Add proposal", "Transaction successful"))
+      toast(toastSuccess("Result submitted", "Transaction successful"))
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
-      toast(toastError("Add proposal", error.data.message))
+      toast(toastError("Result submitted", error.message))
     }
   }
 

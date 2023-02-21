@@ -1,8 +1,10 @@
 import {
   Button,
   Flex,
+  IconButton,
   Text
 } from '@chakra-ui/react';
+import { FaPause, FaPlay } from 'react-icons/fa';
 
 import useFightProvider from '../hooks/useFightProvider';
 
@@ -11,10 +13,12 @@ import FightClock from './FightClock';
 export default function FightDetails (){
   const {
     setRound,
+    setIsPaused,
     setRoundFinished,
     round,
     maxRound,
-    isFightInProgress
+    isFightInProgress,
+    isPaused
   } = useFightProvider()
 
   const textDuringTheFight = isFightInProgress ? round : maxRound
@@ -41,7 +45,12 @@ export default function FightDetails (){
       >
        {isFightInProgress ?  "Round " + textDuringTheFight : textAtTheEnd}
       </Text>
-      <FightClock initMinutes={isFightInProgress ? 5 : 0} />
+      <FightClock initMinutes={isFightInProgress ? 5 : 0} isPaused={isPaused} />
+      <IconButton
+        mb={"5"}
+        onClick={() => setIsPaused(!isPaused)}
+        icon={ isPaused ? <FaPause /> : <FaPlay />}
+      > Icon </IconButton>
       <Button isDisabled={!isFightInProgress} onClick={
         isFightInProgress
           ? () => {

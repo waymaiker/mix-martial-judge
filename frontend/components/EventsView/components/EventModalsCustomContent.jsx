@@ -4,14 +4,14 @@ import CreateFightToken from "./CreateTokenFight"
 import CustomModal from "@/components/CustomModal/CustomModal"
 import FightAccess from "@/components/FightView/components/FightAccess"
 
-export const EventsModalsCustomContent = ({type, isOpen, onClose, customOKButton}) => {
+export const EventsModalsCustomContent = ({type, isOpen, onClose, customActionButton}) => {
   switch (type) {
     case "create token":
       return <CustomModal
         isOpen={isOpen}
         onClose={onClose}
         isCustomSize={true}
-        isCustomFooter={true}
+        isCustomFooter={false}
         children={<CreateFightToken onClose={onClose} />}
       />
     case "join the fight":
@@ -19,7 +19,7 @@ export const EventsModalsCustomContent = ({type, isOpen, onClose, customOKButton
         isOpen={isOpen}
         onClose={onClose}
         isCustomFooter={true}
-        customOKButton={customOKButton}
+        customActionButton={customActionButton}
         children={<FightAccess/>}
       />
     case "ads":
@@ -27,6 +27,7 @@ export const EventsModalsCustomContent = ({type, isOpen, onClose, customOKButton
         isOpen={isOpen}
         onClose={onClose}
         isCustomFooter={false}
+        mainButtonLabel={"SUBSCRIBE"}
         children={<Text fontSize={"xl"}> ADVERTISEMENT SPACE FOR OUR STREAMING PLATFORM </Text>}
       />
     case "superAdmin":
@@ -41,6 +42,7 @@ export const EventsModalsCustomContent = ({type, isOpen, onClose, customOKButton
         isOpen={isOpen}
         onClose={onClose}
         isCustomFooter={false}
+        mainButtonLabel={"OK"}
         children={<Text fontSize={"xl"}> Come on! <Text>Connect and buy a ticket.</Text></Text>}
       />
     default:

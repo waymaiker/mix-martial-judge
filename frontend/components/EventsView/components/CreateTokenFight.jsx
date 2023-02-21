@@ -17,7 +17,7 @@ import BasicDropzone from "@/components/Dropzone/BasicDropzone";
 export default function CreateFightToken({onClose}){
   const [tokenDescription, setTokenDescription] = useState("")
   const [image, setImage] = useState([])
-  const { setIsLoading, isLoading } = useNavigationProvider()
+  const { setIsLoading, isLoading, eventIdSelected } = useNavigationProvider()
   const { data: signer } = useSigner()
   const { events } = useDataProvider()
   const toast = useToast()
@@ -39,7 +39,7 @@ export default function CreateFightToken({onClose}){
       const nftCID = await client.storeBlob(nftBlob);
     
       const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
-      const transaction = await contract.safeMint(to, "ipfs://"+nftCID);
+      const transaction = await contract.safeMint(eventIdSelected, to, "ipfs://"+nftCID);
       await transaction.wait()
 
       setIsLoading(false)

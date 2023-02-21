@@ -43,3 +43,9 @@ export const timestampToDate = (timestamp) => {
   const date = new Date(timestampConvertion).toLocaleDateString()
   return date;
 }
+
+export const isUserAtLeast18YearsOld = (dob) => {
+  const _dob = new Date(dob);
+  const today = Date.now();
+  return today - _dob > 18 
+}

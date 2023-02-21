@@ -5,14 +5,14 @@ import { Button, Card, CardBody, CardFooter, Divider, Flex, Stack, Text, useToas
 
 import useDataProvider from '@/hooks/useDataProvider';
 import useNavigationProvider from '@/hooks/useNavigationProvider';
-import { dateToTimeStamp, isCountry, isEmail, toastError, toastSuccess } from '@/utils/methods';
+import { dateToTimeStamp, isCountry, isEmail, isUserAtLeast18YearsOld, toastError, toastSuccess } from '@/utils/methods';
 import { userFactoryContract } from '@/utils/constants';
 
 import { CustomInput } from '../CustomInput/CustomInput';
 import Loading from '../Loading/Loading';
 
 export default function RegisterView() {
-  const [dob, setDob] = useState(0)
+  const [dob, setDob] = useState("")
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [country, setCountry] = useState("")
@@ -29,6 +29,7 @@ export default function RegisterView() {
     && !isEmail(email)
     && country.length > 3
     && postalCode.toString().length > 4
+    && isUserAtLeast18YearsOld(dob)
 
   const submit = async () => {
     setIsLoading(true);
@@ -81,10 +82,10 @@ export default function RegisterView() {
                 isDisabled={isLoading}
                 title={"DOB"}
                 type="date"
-                textHelper={"mm/dd/yyyy"}
+                textHelper={"You should at least have 18 yo"}
                 input={dob}
                 handleInputChange={setDob}
-                isError={dob == 0}
+                isError={!isUserAtLeast18YearsOld(dob)}
               />
               <CustomInput
                 isDisabled={isLoading}

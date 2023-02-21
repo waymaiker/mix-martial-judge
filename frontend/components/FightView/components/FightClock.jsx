@@ -2,24 +2,27 @@ import React, { useState, useEffect } from 'react';
 
 import { Text } from '@chakra-ui/react';
 
-export default function FightClock({initMinutes}) {
+export default function FightClock({initMinutes, isPaused}) {
   const [minutes, setMinutes] = useState(initMinutes);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(()=>{
-    let myInterval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(myInterval)
-        } else {
-          setMinutes(minutes - 1);
-          setSeconds(59);
+    let myInterval
+    if(isPaused){
+       myInterval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
         }
-      }
-    }, 1000)
+        if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(myInterval)
+          } else {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          }
+        }
+      }, 1000)
+    }
 
     return ()=> {
       clearInterval(myInterval);

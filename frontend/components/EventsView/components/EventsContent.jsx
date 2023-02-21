@@ -16,7 +16,7 @@ export default function EventsContent({events}){
           <CardEvent
             key={index}
             arena={event.arena}
-            fightId={event.fightId}
+            eventId={event.fightId}
             location={event.location}
             marketingImage={event.fileLink}
             title={event.fighterOne + " vs "+ event.fighterTwo}

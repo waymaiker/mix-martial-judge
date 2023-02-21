@@ -32,6 +32,7 @@ export const DataProvider = ({ children }) => {
       catchEventCreatedEvent(dataEvents, setEvents)
       catchUserCreatedEvent(dataUsers, setUsers)
 
+      console.log(users);
     } catch (error) {
       toast({ title: "Error - GetData", description: error.reason, status: 'error', duration: 5000, isClosable: true })
     }
@@ -43,6 +44,7 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider value={{
+      setWinners,
       getData,
       winners,
       events,
@@ -59,6 +61,7 @@ const catchUserCreatedEvent = (usersEvents, setUsers) => {
   usersEvents.forEach((event) => {
     if(event.event === "UserCreated"){
       setUsers(users =>[{
+          userContractAddress: event.args.userContractAddress,
           address: event.args.userAddress,
           firstname: event.args.firstname,
           lastname: event.args.lastname,

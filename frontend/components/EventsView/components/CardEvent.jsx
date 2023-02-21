@@ -12,12 +12,12 @@ import { fightContract } from '@/utils/constants';
 import { EventsModalsCustomContent } from './EventModalsCustomContent';
 import CardButton from './CardButton';
 
-export default function CardEvent({fightId, fightType, marketingImage, title, arena, location }) {
+export default function CardEvent({eventId, fightType, marketingImage, title, arena, location }) {
   const { data: signer } = useSigner()
   const { address, isConnected } = useAccount()
   const { winners, getData } = useDataProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { setCurrentPage, setIsLoading } = useNavigationProvider()
+  const { setCurrentPage, setIsLoading, setEventIdSelected } = useNavigationProvider()
   const { isGuestUserConnected, isAdminConnected, isRegisteredUserConnected } = useWhoIsConnectedProvider()
   const [modalTypeContent, setModalTypeContent] = useState("")
   const toast = useToast()
@@ -25,12 +25,12 @@ export default function CardEvent({fightId, fightType, marketingImage, title, ar
   const userJoinFight = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
-      const transaction = await contract.userJoinAFightAsJudgeEnthusiast(fightId, address, {value: ethers.utils.parseEther("0.059")});
-      await transaction.wait()
+      // const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
+      // const transaction = await contract.userJoinAFightAsJudgeEnthusiast(eventId, address, {value: ethers.utils.parseEther("0.059")});
+      // await transaction.wait()
 
-      await getData()
-      setIsLoading(false)
+      // await getData()
+      // setIsLoading(false)
       setCurrentPage("judge")
 
       toast(toastSuccess("New Judge Added", "Transaction validated"))
@@ -39,6 +39,8 @@ export default function CardEvent({fightId, fightType, marketingImage, title, ar
       toast(toastError("New Judge NOT Added", error.message))
     }
   }
+
+  console.log(winners.findIndex(winner => winner.fightId == parseInt(eventId)));
 
   return (
     <Flex justifyContent="center" alignItems="center" p="10">
@@ -71,7 +73,7 @@ export default function CardEvent({fightId, fightType, marketingImage, title, ar
                   action={onOpen}
                   adminBackgroundColor={true}
                   secondaryAction={() => setModalTypeContent("create token")}
-                  isDisabled={!winners.find(winner => winner.fightId == fightId)}
+                  isDisabled={winners.findIndex(winner => winner.fightId == parseInt(eventId)) == -1}
                 />
               </Tooltip>
               <CardButton
@@ -94,7 +96,10 @@ export default function CardEvent({fightId, fightType, marketingImage, title, ar
               <CardButton
                 title={"BE A JUDGE"}
                 action={onOpen}
-                secondaryAction={() => setModalTypeContent("join the fight")}
+                secondaryAction={() => { 
+                  setModalTypeContent("join the fight");
+                  setEventIdSelected(eventId);
+                }}
               />
             </Flex>
         }
@@ -112,7 +117,7 @@ export default function CardEvent({fightId, fightType, marketingImage, title, ar
         type={modalTypeContent}
         isOpen={isOpen}
         onClose={onClose}
-        customOKButton={userJoinFight}
+        customActionButton={userJoinFight}
       />
     </Flex>
   )

@@ -24,6 +24,7 @@
     "react-animation": "^1.2.2",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-icons": "^4.7.1",
     "wagmi": "^0.10.12"
   }
 }

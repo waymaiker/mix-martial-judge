@@ -10,11 +10,12 @@ import {
   Text,
 } from "@chakra-ui/react"
 
-export default function CustomModal({ isOpen, onClose, children, customOKButton, isCustomSize, isCustomFooter }) {
-  const customButton = customOKButton == undefined ? () => onClose() : () => onClickCustomButton()
+export default function CustomModal({ mainButtonLabel, isOpen, onClose, children, customActionButton, isCustomSize, isCustomLabel, isCustomFooter }) {
+  const customButton = customActionButton == undefined ? () => onClose() : () => onClickCustomButton()
+  const buttonLabel = mainButtonLabel === undefined ? <Text>Register</Text> : <Text>{mainButtonLabel}</Text> 
   const onClickCustomButton = () => {
     onClose()
-    customOKButton()
+    customActionButton()
   }
 
   return (
@@ -26,25 +27,29 @@ export default function CustomModal({ isOpen, onClose, children, customOKButton,
         <ModalBody>
           {children}
         </ModalBody>
-        <ModalFooter>
-          <Button
-            colorScheme='red'
-            mr={3}
-            onClick={() => customButton()}
-          >
-            {
-            isCustomFooter
-              ? <Text>YES</Text>
-              : <Text> Register </Text>
-            }
-          </Button>
-          <Button
-            onClick={onClose}
-            variant='ghost'
-          >
-            Cancel
-          </Button>
-        </ModalFooter>
+        
+        {
+          isCustomFooter &&
+          <ModalFooter>
+            <Button
+              colorScheme='red'
+              mr={3}
+              onClick={() => customButton()}
+            >
+              {
+                isCustomLabel
+                ? <Text>YES</Text>
+                :  buttonLabel
+              }
+            </Button>
+            <Button
+              onClick={onClose}
+              variant='ghost'
+            >
+              Cancel
+            </Button>
+          </ModalFooter>
+        }
 
       </ModalContent>
     </Modal>

@@ -5,6 +5,7 @@ const NavigationContext = createContext(null)
 export const NavigationProvider = ({ children }) => {
   //Rendering
   const [currentPage, setCurrentPage] = useState("events")
+  const [eventIdSelected, setEventIdSelected] = useState(-1)
   const [isLoading, setIsLoading] = useState(false)
 
   return (
@@ -12,7 +13,9 @@ export const NavigationProvider = ({ children }) => {
       currentPage,
       setCurrentPage,
       isLoading,
-      setIsLoading
+      setIsLoading,
+      eventIdSelected,
+      setEventIdSelected
     }}>
       {children}
     </NavigationContext.Provider>

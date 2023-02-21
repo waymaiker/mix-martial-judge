@@ -7,13 +7,14 @@ import LeftFighter from './FighterLeft';
 import FighterRight from './FighterRight';
 
 export default function FightersView() {
-  const [headRight, setHeadRight] = useState(0)
-  const [bodyRight, setBodyRight] = useState(0)
-  const [legsRight, setLegsRight] = useState(0)
-  const [headLeft, setHeadLeft] = useState(0)
-  const [bodyLeft, setBodyLeft] = useState(0)
-  const [legsLeft, setLegsLeft] = useState(0)
-  const {round, fightType, setResults} = useFightProvider()
+  const {
+    headRight, setHeadRight,
+    bodyRight, setBodyRight,
+    legsRight, setLegsRight,
+    headLeft, setHeadLeft,
+    bodyLeft, setBodyLeft,
+    legsLeft, setLegsLeft,
+    round, fightType, setResults} = useFightProvider()
 
   const reset = () => {
     setHeadRight(0)
