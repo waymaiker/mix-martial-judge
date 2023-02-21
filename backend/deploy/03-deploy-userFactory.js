@@ -8,8 +8,8 @@ module.exports = async({ getNamedAccounts, deployments }) => {
 
   log("Deployment in progress ...");
 
-  arguments = []
-  const User = await deploy("User", {
+  arguments = [process.env.USER_SCADDRESS_GOERLI]
+  const UserFactory = await deploy("UserFactory", {
     from: deployer,
     args: arguments,
     log: true,
@@ -17,12 +17,13 @@ module.exports = async({ getNamedAccounts, deployments }) => {
   })
 
   log("Deployment done !")
+  log("Contract address :", UserFactory.address)
 
   //Verify the smart contract
   if(!developmentChains.includes(network.name) && process.env.ETHERSCAN) {
     log("Verifying...")
-    await verify(User.address, arguments)
+    await verify(UserFactory.address, arguments)
   }
 }
 
-module.exports.tags = ["all", "user", "main"]
+module.exports.tags = ["all", "userFactory", "main"]

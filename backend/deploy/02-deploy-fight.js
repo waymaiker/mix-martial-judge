@@ -5,17 +5,16 @@ const { verify } = require("../utils/verify")
 module.exports = async({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments
   const { deployer } = await getNamedAccounts()
-  const SUPERADMIN = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
   log("Deployment in progress ...");
 
-  arguments = [SUPERADMIN]
+  arguments = [process.env.SUPERADMIN_WALLET_ADDRESS]
   const Fight = await deploy("Fight", {
     from: deployer,
     args: arguments,
     log: true,
-    waitConfirmations: 0
+    waitConfirmations: 4
   })
-  
+
   log("Deployment done !")
 
   //Verify the smart contract
