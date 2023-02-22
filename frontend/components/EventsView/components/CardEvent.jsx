@@ -25,12 +25,12 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   const userJoinFight = async () => {
     setIsLoading(true);
     try {
-      // const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
-      // const transaction = await contract.userJoinAFightAsJudgeEnthusiast(eventId, address, {value: ethers.utils.parseEther("0.059")});
-      // await transaction.wait()
+      const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
+      const transaction = await contract.userJoinAFightAsJudgeEnthusiast(eventId, address, {value: ethers.utils.parseEther("0.059")});
+      await transaction.wait()
 
-      // await getData()
-      // setIsLoading(false)
+      await getData()
+      setIsLoading(false)
       setCurrentPage("judge")
 
       toast(toastSuccess("New Judge Added", "Transaction validated"))
