@@ -8,12 +8,12 @@ module.exports = async({ getNamedAccounts, deployments }) => {
 
   log("Deployment in progress ...");
 
-  arguments = [process.env.USER_SCADDRESS_GOERLI]
+  arguments = [process.env.USER_SCADDRESS_LOCALHOST]
   const UserFactory = await deploy("UserFactory", {
     from: deployer,
     args: arguments,
     log: true,
-    waitConfirmations: 4
+    waitConfirmations: 0
   })
 
   log("Deployment done !")

@@ -7,12 +7,12 @@ module.exports = async({ getNamedAccounts, deployments }) => {
   const { deployer } = await getNamedAccounts()
   log("Deployment in progress ...");
 
-  arguments = [process.env.SUPERADMIN_WALLET_ADDRESS]
+  arguments = [process.env.SUPERADMIN_WALLET_ADDRESS_LOCALHOST]
   const Fight = await deploy("Fight", {
     from: deployer,
     args: arguments,
     log: true,
-    waitConfirmations: 4
+    waitConfirmations: 0
   })
 
   log("Deployment done !")

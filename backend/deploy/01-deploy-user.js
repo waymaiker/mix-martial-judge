@@ -13,7 +13,7 @@ module.exports = async({ getNamedAccounts, deployments }) => {
     from: deployer,
     args: arguments,
     log: true,
-    waitConfirmations: 4
+    waitConfirmations: 0
   })
 
   log("Deployment done !")
