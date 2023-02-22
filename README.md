@@ -1,6 +1,6 @@
 # mix-martial-judge
 
-vercel link: https://mix-martial-judge-f67rw1vzs-wdevblockchain-gmailcom.vercel.app/.
+vercel link: https://mix-martial-judge.vercel.app/
 
 (Tout ce qui est en dessous a été ajouté au README après la date limite).
 
