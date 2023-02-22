@@ -29,26 +29,41 @@ export default function CustomModal({ mainButtonLabel, isOpen, onClose, children
         </ModalBody>
         
         {
-          isCustomFooter &&
-          <ModalFooter>
-            <Button
-              colorScheme='red'
-              mr={3}
-              onClick={() => customButton()}
-            >
-              {
-                isCustomLabel
-                ? <Text>YES</Text>
-                :  buttonLabel
-              }
-            </Button>
-            <Button
-              onClick={onClose}
-              variant='ghost'
-            >
-              Cancel
-            </Button>
-          </ModalFooter>
+          isCustomFooter 
+          ? <ModalFooter>
+              <Button
+                colorScheme='red'
+                mr={3}
+                onClick={() => customButton()}
+              >
+                {
+                  isCustomLabel
+                  ? <Text>YES</Text>
+                  :  buttonLabel
+                }
+              </Button>
+              <Button
+                onClick={onClose}
+                variant='ghost'
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          : <ModalFooter>
+              <Button
+                colorScheme='red'
+                mr={3}
+                onClick={onClose}
+              >
+                REGISTER
+              </Button>
+              <Button
+                onClick={onClose}
+                variant='ghost'
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
         }
 
       </ModalContent>

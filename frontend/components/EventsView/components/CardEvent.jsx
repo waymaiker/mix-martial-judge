@@ -40,8 +40,6 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
     }
   }
 
-  console.log(winners.findIndex(winner => winner.fightId == parseInt(eventId)));
-
   return (
     <Flex justifyContent="center" alignItems="center" p="10">
       <Image

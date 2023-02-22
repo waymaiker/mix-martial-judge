@@ -31,8 +31,6 @@ export const DataProvider = ({ children }) => {
       catchWinnerEvent(dataEvents, setWinners)
       catchEventCreatedEvent(dataEvents, setEvents)
       catchUserCreatedEvent(dataUsers, setUsers)
-
-      console.log(users);
     } catch (error) {
       toast({ title: "Error - GetData", description: error.reason, status: 'error', duration: 5000, isClosable: true })
     }

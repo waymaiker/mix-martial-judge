@@ -141,43 +141,6 @@ export const fightContract = {
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
-          "name": "fightId",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "userAddress",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fightTicketId",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "roundNumber",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "bool",
-          "name": "roundWinner",
-          "type": "bool"
-        }
-      ],
-      "name": "JudgeEnthusiatRoundResult",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
           "internalType": "address",
           "name": "previousOwner",
           "type": "address"
@@ -190,25 +153,6 @@ export const fightContract = {
         }
       ],
       "name": "OwnershipTransferred",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "fightId",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "bool",
-          "name": "fightWinner",
-          "type": "bool"
-        }
-      ],
-      "name": "ProfessionalJudgesResultAdded",
       "type": "event"
     },
     {
@@ -259,6 +203,25 @@ export const fightContract = {
         }
       ],
       "name": "UserHasJoinedAFight",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        }
+      ],
+      "name": "Withdrawal",
       "type": "event"
     },
     {
@@ -319,6 +282,32 @@ export const fightContract = {
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "collectionName",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "collectionSymbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
         }
       ],
       "stateMutability": "view",
@@ -658,6 +647,13 @@ export const fightContract = {
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
 }
@@ -861,7 +857,26 @@ export const userFactoryContract = {
 
 export const userContract = {
   "address":"0xF576558Cb8404FEd1443f18D4F7e9A9e84e0B2C9",
-  "abi":  [
+  "abi":   [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousERC721ContractAddressEmitter",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newERC721ContractAddressEmitter",
+          "type": "address"
+        }
+      ],
+      "name": "ERC721ContractAddressEmitterUpdated",
+      "type": "event"
+    },
     {
       "anonymous": false,
       "inputs": [
@@ -934,19 +949,6 @@ export const userContract = {
         }
       ],
       "name": "create",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_contactAddress",
-          "type": "address"
-        }
-      ],
-      "name": "getTokenIds",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

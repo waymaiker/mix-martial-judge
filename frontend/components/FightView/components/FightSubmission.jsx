@@ -23,7 +23,6 @@ export default function FightSubmission({text, startNextRound, isFightInProgress
         userAddress: address ,
       }, ...winners])
 
-      console.log(winners);
       // const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer)
       // let transaction = await contract.participantSubmitResult(description)
       // await transaction.wait()
