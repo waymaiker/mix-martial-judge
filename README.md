@@ -2,7 +2,8 @@
 
 vercel link: https://mix-martial-judge-f67rw1vzs-wdevblockchain-gmailcom.vercel.app/.
 
-(Tout ce qui est en dessous a été ajouté au README après la date limite)
+(Tout ce qui est en dessous a été ajouté au README après la date limite).
+
 videos de présentation : 
 - [Partie 1](https://www.loom.com/share/3d0f4bbd0c8e44df8eeca8087dc450eb)
 - [Partie 2](https://www.loom.com/share/5364328a7ec641cfb86411cfc52961b7)
