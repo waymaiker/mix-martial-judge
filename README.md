@@ -2,7 +2,6 @@
 
 vercel link: https://mix-martial-judge.vercel.app/
 
-(Tout ce qui est en dessous a été ajouté au README après la date limite).
 
 videos de présentation : 
 - [Partie 1](https://www.loom.com/share/3d0f4bbd0c8e44df8eeca8087dc450eb)
