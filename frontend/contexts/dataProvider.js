@@ -3,7 +3,8 @@ import { useAccount } from 'wagmi'
 import { ethers } from "ethers";
 import { useToast } from "@chakra-ui/react";
 
-import { fightContract, userFactoryContract } from "@/utils/constants";
+import FightContract from '../contracts/Fight.json';
+import UserFactoryContract from '../contracts/UserFactory.json';
 
 const DataContext = createContext(null)
 
@@ -22,10 +23,10 @@ export const DataProvider = ({ children }) => {
   const getData = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const contractEvents = new ethers.Contract(fightContract.address, fightContract.abi, provider)
-      const contractUserFactory = new ethers.Contract(userFactoryContract.address, userFactoryContract.abi, provider)
-      const dataEvents = await contractEvents.queryFilter({ address: fightContract.address, fromBlock: 0 })
-      const dataUsers = await contractUserFactory.queryFilter({ address: userFactoryContract.address, fromBlock: 0 })
+      const contractEvents = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, provider)
+      const contractUserFactory = new ethers.Contract(process.env.NEXT_PUBLIC_USERFACTORY_SCADDRESS_LOCALHOST, UserFactoryContract.abi, provider)
+      const dataEvents = await contractEvents.queryFilter({ address: process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, fromBlock: 0 })
+      const dataUsers = await contractUserFactory.queryFilter({ address: process.env.NEXT_PUBLIC_USERFACTORY_SCADDRESS_LOCALHOST, fromBlock: 0 })
 
       resetDatas()
       catchWinnerEvent(dataEvents, setWinners)

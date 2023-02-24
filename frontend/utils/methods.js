@@ -1,4 +1,3 @@
-import { countriesList } from "./constants";
 
 export const toastSuccess = (title, reason, position) => {
   return { 
@@ -28,10 +27,7 @@ export function isEmail(val) {
   }
 }
 
-export const isCountry = (val) => {
-  let isCountryExist = countriesList.find(country => country.name.toLowerCase().includes(val.toLowerCase()))
-  return isCountryExist == undefined ||  isCountryExist == false || val.length < 4 ? false : true;
-}
+
 
 export const dateToTimeStamp = (strDate) => { 
   const dt = Date.parse(strDate); 

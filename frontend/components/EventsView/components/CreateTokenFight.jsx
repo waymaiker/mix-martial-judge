@@ -4,11 +4,12 @@ import { useSigner } from "wagmi";
 import { NFTStorage } from "nft.storage";
 import { Button, Flex, Image, Text, useToast } from "@chakra-ui/react";
 
+import FightContract from '../../../contracts/Fight.json';
+
 import useNavigationProvider from "@/hooks/useNavigationProvider";
 import useDataProvider from "@/hooks/useDataProvider";
 
 import { toastError, toastSuccess } from "@/utils/methods";
-import { fightContract } from "@/utils/constants";
 
 import { CustomInput } from "@/components/CustomInput/CustomInput";
 import BasicDropzone from "@/components/Dropzone/BasicDropzone";
@@ -25,7 +26,7 @@ export default function CreateFightToken({onClose}){
   const mintToken = async (to, fileName) => {
     setIsLoading(true);
     try {
-      const client = new NFTStorage({ token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY })
+      const client = new NFTStorage({ token: process.env.NFT_STORAGE_API_KEY })
       const imageCID = await client.storeBlob(image)
       const nftName = "UFJ - "+fileName      
       const nft = {        
@@ -38,7 +39,7 @@ export default function CreateFightToken({onClose}){
       const nftBlob = new Blob([formatData], { type: 'application/json'})
       const nftCID = await client.storeBlob(nftBlob);
     
-      const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
       const transaction = await contract.safeMint(eventIdSelected, to, "ipfs://"+nftCID);
       await transaction.wait()
 

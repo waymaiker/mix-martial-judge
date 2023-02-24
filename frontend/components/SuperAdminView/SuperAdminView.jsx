@@ -3,11 +3,12 @@ import { useSigner } from 'wagmi';
 import { ethers } from 'ethers';
 import { Button, Flex, Stack, Text, useToast } from '@chakra-ui/react';
 
+import FightContract from '../../contracts/Fight.json';
+
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 
 import { CustomInput } from '@/components/CustomInput/CustomInput';
-import { fightContract } from '@/utils/constants';
 import { toastError, toastSuccess } from '@/utils/methods';
 
 export default function SuperAdminView(){
@@ -20,7 +21,7 @@ export default function SuperAdminView(){
   const submit = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
       const transaction = await contract.addAdmin(adminAddressProvided);
       await transaction.wait()
 

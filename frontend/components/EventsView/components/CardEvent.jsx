@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { useAccount, useSigner } from 'wagmi';
 import { Flex, Image, Text, Tooltip, useDisclosure, useToast } from '@chakra-ui/react';
 
+import FightContract from '../../../contracts/Fight.json';
+
 import useDataProvider from '@/hooks/useDataProvider';
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 import { toastError, toastSuccess } from '@/utils/methods';
-import { fightContract } from '@/utils/constants';
 
 import { EventsModalsCustomContent } from './EventModalsCustomContent';
 import CardButton from './CardButton';
@@ -25,7 +26,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   const userJoinFight = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
       const transaction = await contract.userJoinAFightAsJudgeEnthusiast(eventId, address, {value: ethers.utils.parseEther("0.059")});
       await transaction.wait()
 

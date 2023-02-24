@@ -5,7 +5,7 @@ import {useDropzone} from 'react-dropzone';
 import { NFTStorage, Blob } from 'nft.storage'
 
 export default function BasicDropzone({storeNFT, setImage, setFileData}) {
-  const client = new NFTStorage({ token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY })
+  const client = new NFTStorage({ token: process.env.NFT_STORAGE_API_KEY })
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
     onDropAccepted: async (files) => {
       const fileBlob = new Blob([files[0]])

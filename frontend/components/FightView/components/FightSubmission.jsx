@@ -1,7 +1,6 @@
 import { useAccount } from "wagmi";
 import { Button, useToast } from "@chakra-ui/react";
 import { toastError, toastSuccess } from "@/utils/methods";
-import { fightContract } from "@/utils/constants";
 
 import useDataProvider from "@/hooks/useDataProvider";
 import useNavigationProvider from "@/hooks/useNavigationProvider";
@@ -23,7 +22,7 @@ export default function FightSubmission({text, startNextRound, isFightInProgress
         userAddress: address ,
       }, ...winners])
 
-      // const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer)
+      // const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer)
       // let transaction = await contract.participantSubmitResult(description)
       // await transaction.wait()
 

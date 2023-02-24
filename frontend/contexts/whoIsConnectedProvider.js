@@ -3,10 +3,11 @@ import { useAccount } from 'wagmi'
 import { ethers } from "ethers";
 import { useToast } from "@chakra-ui/react";
 
+import FightContract from '../contracts/Fight.json';
+
 import useDataProvider from "@/hooks/useDataProvider";
 import useNavigationProvider from "@/hooks/useNavigationProvider";
 
-import { fightContract } from "@/utils/constants";
 import { toastError, toastSuccess } from "@/utils/methods";
 
 const WhoIsConnectedContext = createContext(null)
@@ -29,8 +30,8 @@ export const WhoIsConnectedProvider = ({ children }) => {
 
   const getAdmins = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const contractEvent = new ethers.Contract(fightContract.address, fightContract.abi, provider)
-    const dataEvents = await contractEvent.queryFilter({ address: fightContract.address, fromBlock: 0 })
+    const contractEvent = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, provider)
+    const dataEvents = await contractEvent.queryFilter({ address: process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, fromBlock: 0 })
 
     resetDatas([])
     catchAdminAddedEvent(dataEvents, setAdmins)
@@ -39,7 +40,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
   const whoIsConnected = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const contractEvent = new ethers.Contract(fightContract.address, fightContract.abi, provider)
+      const contractEvent = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, provider)
       const superAdmin = await contractEvent.owner()
       const _isSuperAdminConnected = address == superAdmin
       const _isAdminConnected = admins.includes(address)

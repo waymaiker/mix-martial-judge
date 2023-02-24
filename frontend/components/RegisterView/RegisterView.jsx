@@ -3,10 +3,13 @@ import { ethers } from 'ethers';
 import { useSigner } from 'wagmi';
 import { Button, Card, CardBody, CardFooter, Divider, Flex, Stack, Text, useToast } from '@chakra-ui/react';
 
+import UserFactoryContract from '../../contracts/UserFactory.json';
+
 import useDataProvider from '@/hooks/useDataProvider';
 import useNavigationProvider from '@/hooks/useNavigationProvider';
-import { dateToTimeStamp, isCountry, isEmail, isUserAtLeast18YearsOld, toastError, toastSuccess } from '@/utils/methods';
-import { userFactoryContract } from '@/utils/constants';
+
+import { dateToTimeStamp, isEmail, isUserAtLeast18YearsOld, toastError, toastSuccess } from '@/utils/methods';
+import { isCountry } from '@/utils/cities';
 
 import { CustomInput } from '../CustomInput/CustomInput';
 import Loading from '../Loading/Loading';
@@ -34,7 +37,7 @@ export default function RegisterView() {
   const submit = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(userFactoryContract.address, userFactoryContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_USERFACTORY_SCADDRESS_LOCALHOST, UserFactoryContract.abi, signer);
       const transaction = await contract.create(name, lastname, email, country, dateToTimeStamp(dob));
       await transaction.wait()
 

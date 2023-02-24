@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useSigner } from 'wagmi';
 import { ethers } from 'ethers';
-
 import { Button, Flex, FormControl, Image, Stack, Switch, Text, useToast } from '@chakra-ui/react';
+
+import FightContract from '../../../contracts/Fight.json';
 
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useDataProvider from '@/hooks/useDataProvider';
 
-import { fightContract } from '@/utils/constants';
 import { toastError, toastSuccess } from '@/utils/methods';
 
 import { CustomInput } from '../../CustomInput/CustomInput';
@@ -46,7 +46,7 @@ export default function CardAddEvent() {
   const submit = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(fightContract.address, fightContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
       const transaction = await contract.createFight(fighterOne, fighterTwo, arena, location, fightType, fileData.Link, fileData.CID);
       await transaction.wait()
 
