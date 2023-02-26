@@ -8,6 +8,7 @@ import FightContract from '../../../contracts/Fight.json';
 
 import useNavigationProvider from "@/hooks/useNavigationProvider";
 import useDataProvider from "@/hooks/useDataProvider";
+import { storeNFT } from "@/helpers/helpers";
 
 import { toastError, toastSuccess } from "@/utils/methods";
 
@@ -20,27 +21,16 @@ export default function CreateFightToken({onClose}){
   const [image, setImage] = useState([])
   const { setIsLoading, isLoading, eventIdSelected } = useNavigationProvider()
   const { data: signer } = useSigner()
-  const { events } = useDataProvider()
+  const { events, winners } = useDataProvider()
   const toast = useToast()
 
-  const mintToken = async (to, fileName) => {
+  const mintToken = async (fightId, fileName) => {
     setIsLoading(true);
     try {
-      const client = new NFTStorage({ token: process.env.NFT_STORAGE_API_KEY })
-      const imageCID = await client.storeBlob(image)
-      const nftName = "UFJ - "+fileName      
-      const nft = {        
-        image: "https://"+ imageCID +".ipfs.nftstorage.link/",
-        external_url: "https://www.ufc.com/",
-        name: nftName,
-        description: tokenDescription,        
-      }
-      const formatData = JSON.stringify(nft)
-      const nftBlob = new Blob([formatData], { type: 'application/json'})
-      const nftCID = await client.storeBlob(nftBlob);
-    
+      const winnerAddress = winners.findIndex(winner => winner.fightId = fightId)
+      const NFTmetadata = await storeNFT(image, fileName, tokenDescription)
       const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
-      const transaction = await contract.safeMint(eventIdSelected, to, "ipfs://"+nftCID);
+      const transaction = await contract.safeMint(eventIdSelected, winnerAddress, NFTmetadata);
       await transaction.wait()
 
       setIsLoading(false)
@@ -65,7 +55,7 @@ export default function CreateFightToken({onClose}){
               <Flex>
                 <Text fontSize={"xl"} fontWeight={'bold'}> CID: </Text>
                 <Text fontSize={"xl"} ml={"5"}> {event.fileCID} </Text>
-              </Flex>  
+              </Flex>
               <Text fontSize={"xl"} fontWeight={'bold'}> Image preview: </Text>
               <Flex direction={"column"} alignItems="center">
                 <Image
@@ -90,19 +80,23 @@ export default function CreateFightToken({onClose}){
                 setImage={setImage}
               />
               <Flex justifyContent={"flex-end"}>
-                <Button 
-                  isDisabled={tokenDescription.length < 4 || image.length == 0}
-                  colorScheme={"red"} 
-                  w={"15vh"} 
-                  h="5vh" 
-                  mt={"5"} 
+                <Button
+                  isDisabled={
+                    tokenDescription.length < 4
+                    || image.length == 0
+                    || winners.findIndex(winner => winner.fightId = fightId) == -1
+                  }
+                  colorScheme={"red"}
+                  w={"15vh"}
+                  h="5vh"
+                  mt={"5"}
                   onClick={() => mintToken(
-                    "0xBcd4042DE499D14e55001CcbB24a551F3b954096",
+                    event.fightId,
                     event.fighterOne + " vs " + event.fighterTwo
                   )}
                 >
                   MINT TOKEN
-                </Button> 
+                </Button>
               </Flex>
             </Flex>
             )

@@ -2,14 +2,13 @@ import React from 'react';
 import { Flex, Input, Text } from '@chakra-ui/react';
 
 import {useDropzone} from 'react-dropzone';
-import { NFTStorage, Blob } from 'nft.storage'
+import { storeBlob } from '@/helpers/helpers';
+
 
 export default function BasicDropzone({storeNFT, setImage, setFileData}) {
-  const client = new NFTStorage({ token: process.env.NFT_STORAGE_API_KEY })
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
     onDropAccepted: async (files) => {
-      const fileBlob = new Blob([files[0]])
-      const fileCID = await client.storeBlob(fileBlob)
+      const fileCID = await storeBlob(files)
       storeNFT == undefined
        ? setFileData({ "CID": fileCID, "Link": "https://"+fileCID+".ipfs.dweb.link/"})
        : setImage(files[0])
