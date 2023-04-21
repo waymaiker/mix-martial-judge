@@ -76,11 +76,11 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
                 />
               </Tooltip>
               <CardButton
-                title={"GET THE JUDGE WINNER"}
+                title={"GET THE WINNER"}
                 action={onOpen}
                 adminBackgroundColor={true}
                 secondaryAction={() => setModalTypeContent("")}
-                isDisabled={false}
+                isDisabled={winners.findIndex(winner => winner.fightId == parseInt(eventId)) == -1}
               />
             </Flex>
         }
