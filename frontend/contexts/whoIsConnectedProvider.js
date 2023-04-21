@@ -68,7 +68,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
     if(isConnected){
       whoIsConnected()
     }
-  }, [isConnected, address, users])
+  }, [isConnected, address])
 
   return (
     <WhoIsConnectedContext.Provider value={{
