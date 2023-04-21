@@ -20,10 +20,10 @@ module.exports = async({ getNamedAccounts, deployments }) => {
   log("Contract address :", UserFactory.address)
 
   //Verify the smart contract
-  if(!developmentChains.includes(network.name) && process.env.ETHERSCAN) {
-    log("Verifying...")
-    await verify(UserFactory.address, arguments)
-  }
+  // if(!developmentChains.includes(network.name) && process.env.ETHERSCAN) {
+  //   log("Verifying...")
+  //   await verify(UserFactory.address, arguments)
+  // }
 }
 
 module.exports.tags = ["all", "userFactory", "main"]

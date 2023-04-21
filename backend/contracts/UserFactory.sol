@@ -20,7 +20,7 @@ contract UserFactory is CloneFactory, Ownable {
   mapping(address => bool) private registeredUsers;
 
   event UserProxyContractAddressUpdated(address indexed previousUserProxyContractAddress, address indexed newUserProxyContractAddress);
-  event UserCreated(address indexed userContractAddress, address indexed userAddress, string firstname, string lastname, string email, string country, uint256 dob);
+  event UserCreated(address indexed userContractAddress, address indexed userAddress, string pseudo);
 
   constructor(address _userProxyContractAddress) {
     userProxyContractAddress = _userProxyContractAddress;
@@ -28,28 +28,18 @@ contract UserFactory is CloneFactory, Ownable {
 
   /**
    * @notice Create a user. Initialize all his information and emit a event
-   * @param _firstname  User's firstname
-   * @param _lastname User's lastname
-   * @param _email User's email
-   * @param _country User's country
-   * @param _dob User's date of birth stored as a timestamp
+   * @param _pseudo  User's pseudo
    */
-  function create(
-    string memory _firstname,
-    string memory _lastname,
-    string memory _email,
-    string memory _country,
-    uint256 _dob
-  ) external payable {
+  function create(string memory _pseudo) external payable {
     require(registeredUsers[msg.sender] == false, "You already have an account");
 
     address user = createClone(userProxyContractAddress);
-    User(user).create(_firstname, _lastname, _email, _country, _dob);
+    User(user).create(_pseudo);
 
     registeredUsers[msg.sender] = true;
     registeredUsersContracts[user] = true;
 
-    emit UserCreated(user, msg.sender,  _firstname, _lastname, _email, _country, _dob);
+    emit UserCreated(user, msg.sender,  _pseudo);
   }
 
   /**

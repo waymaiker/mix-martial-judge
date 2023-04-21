@@ -13,35 +13,24 @@ import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 contract User is IERC721Receiver {
   struct Participant {
     address userAddress;
-    string firstname;
-    string lastname;
-    string email;
-    string country;
-    uint256 dob;
+    string pseudo;
   }
 
   Participant participant;
   mapping(uint256 => uint256) tokenIds;
 
-  event UserCreated(address indexed _userAddress, string _firstname, string _lastname, string _email, string country, uint256 _dob);
+  event UserCreated(address indexed _userAddress, string _pseudo);
   event ERC721ContractAddressEmitterUpdated(address indexed previousERC721ContractAddressEmitter, address indexed newERC721ContractAddressEmitter);
 
   /**
    * @notice Create a user. Initialize all his information and emit a event
-   * @param _firstname  User's firstname
-   * @param _lastname User's lastname
-   * @param _email User's email
-   * @param _country User's country
-   * @param _dob User's date of birth stored as a timestamp
+   * @param _pseudo  User's pseudo
    */
-  function create(string memory _firstname, string memory _lastname, string memory _email, string memory _country, uint256 _dob) external {
+  function create(string memory _pseudo) external {
     require(participant.userAddress == address(0), "You already have an account");
-    require(bytes(_firstname).length != 0, "firstname cant be empty");
-    require(bytes(_lastname).length != 0, "lastname cant be empty");
-    require(bytes(_email).length != 0, "email cant be empty");
-    require(bytes(_country).length != 0, "country cant be empty");
+    require(bytes(_pseudo).length != 0, "pseudo cant be empty");
 
-    participant = Participant(msg.sender, _firstname, _lastname, _email, _country, _dob);
+    participant = Participant(msg.sender, _pseudo);
   }
 
   /**
