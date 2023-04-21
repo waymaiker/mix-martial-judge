@@ -3,10 +3,6 @@
 vercel link: https://mix-martial-judge.vercel.app/
 
 
-videos de présentation : 
-- [Partie 1](https://www.loom.com/share/3d0f4bbd0c8e44df8eeca8087dc450eb)
-- [Partie 2](https://www.loom.com/share/5364328a7ec641cfb86411cfc52961b7)
-
 ## Addresses des différents contrats
 User - 0xF576558Cb8404FEd1443f18D4F7e9A9e84e0B2C9.
 
