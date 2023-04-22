@@ -61,7 +61,7 @@ export default function SuperAdminView(){
             Registered administrators:
           </Text>
           {
-            admins.length > 0 ? admins.map(admin => <Text> {admin}</Text>) : <Text> NO ADMINS </Text>
+            admins.length > 0 ? admins.map((admin, index) => <Text key={index}> {admin}</Text>) : <Text> NO ADMINS </Text>
           }
         </Flex>
       </Stack>
