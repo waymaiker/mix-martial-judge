@@ -9,11 +9,13 @@ import useDataProvider from "@/hooks/useDataProvider";
 import useNavigationProvider from "@/hooks/useNavigationProvider";
 
 import { toastError, toastSuccess } from "@/utils/methods";
+import { getRegisteredUserCurrentlyConnectedFirebase } from "@/services/firestore_services";
 
 const WhoIsConnectedContext = createContext(null)
 
 export const WhoIsConnectedProvider = ({ children }) => {
   const [admins, setAdmins] = useState([])
+  const [currentUser, setCurrentUser] = useState({address:'', pseudo: '', email:'', registeredEvents:[]})
   const [isRegisteredUserConnected, setIsRegisteredUserConnected] = useState(false)
   const [isSuperAdminConnected, setIsSuperAdminConnected] = useState(false)
   const [isGuestUserConnected, setIsGuestUserConnected] = useState(false)
@@ -55,6 +57,10 @@ export const WhoIsConnectedProvider = ({ children }) => {
       if(_isSuperAdminConnected || _isAdminConnected) {
         toast(toastSuccess("Account connected", _isSuperAdminConnected ? "SUPER ADMIN" : "ADMIN", "top"))
       }
+      if(_isRegisteredUserConnected && currentUser.address.length == 0){
+        let user = await getRegisteredUserCurrentlyConnectedFirebase(address)
+        setCurrentUser({pseudo: user.pseudo, address: address, email: user.email, registeredEvents: user.events})
+      }
     } catch (error) {
       toast(toastError("Connected Account", error.reason))
     }
@@ -68,7 +74,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
     if(isConnected){
       whoIsConnected()
     }
-  }, [isConnected, address])
+  }, [isConnected, address, currentUser])
 
   return (
     <WhoIsConnectedContext.Provider value={{
@@ -77,6 +83,8 @@ export const WhoIsConnectedProvider = ({ children }) => {
       isGuestUserConnected,
       isAdminConnected,
       whoIsConnected,
+      setCurrentUser,
+      currentUser,
       admins
     }}>
       {children}
