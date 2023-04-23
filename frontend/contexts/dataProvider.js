@@ -62,7 +62,6 @@ const catchUserCreatedEvent = (usersEvents, setUsers) => {
       setUsers(users =>[{
           userContractAddress: event.args.userContractAddress,
           address: event.args.userAddress,
-          pseudo: event.args.pseudo,
         }, ...users
       ])
     }
