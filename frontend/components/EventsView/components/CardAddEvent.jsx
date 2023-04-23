@@ -61,10 +61,10 @@ export default function CardAddEvent() {
   }
 
   return (
-    <Flex direction={"column"} alignItems="center" mt="5">
-      <Text color='red' fontWeight="extrabold" mt="2%"> PAGE </Text>
-      <Text fontWeight="bold" fontSize="7xl" fontStyle="italic">  CREATE AN EVENT</Text>
-      <Stack direction='column' alignItems={"center"} shadow={"xl"} borderRadius="10" w="100vh" p="20" mt="5" mb="5" >
+    <Flex direction={"column"} alignItems="center" backgroundColor={"red.600"} shadow={"xl"}>
+      <Text fontWeight="extrabold" mt="2%"> PAGE </Text>
+      <Text fontWeight="bold" fontSize="7xl" fontStyle="italic" color={"white"}>  CREATE AN EVENT</Text>
+      <Stack direction='column' alignItems={"center"} shadow={"xl"} backgroundColor={"white"} borderRadius="10" w="100vh" p="20" mt="5" mb="20" >
         <Flex direction={"row"} w="75%" mb={"10"} alignItems={"center"} justifyContent="space-around">
           <Image
             src={"/regular.png"}

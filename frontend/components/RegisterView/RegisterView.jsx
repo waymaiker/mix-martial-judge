@@ -67,7 +67,7 @@ export default function RegisterView() {
   return (
     isLoading
     ? <Loading />
-    : <Flex grow="1" direction="column" justifyContent='center' alignItems="center">
+    : <Flex grow="1" direction="column" justifyContent='center' alignItems="center"  backgroundColor={"red.600"}>
         <Text color='red' fontWeight="extrabold" mt="2%"> PAGE </Text>
         <Text fontSize="8xl" fontWeight="extrabold" fontStyle="italic">JOIN OUR COMMUNITY</Text>
         <Card w="50%" p="10" shadow={"2xl"}>
