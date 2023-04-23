@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { useSigner } from 'wagmi';
+import { useAccount, useSigner } from 'wagmi';
 import { Button, Card, CardBody, CardFooter, Divider, Flex, Stack, Text, useToast } from '@chakra-ui/react';
 
 import UserFactoryContract from '../../contracts/UserFactory.json';
 
+import { addFirstUserFirebase, addUserFirebase } from '@/services/firestore_services';
+
 import useDataProvider from '@/hooks/useDataProvider';
 import useNavigationProvider from '@/hooks/useNavigationProvider';
+import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 
 import { dateToTimeStamp, isEmail, isUserAtLeast18YearsOld, toastError, toastSuccess } from '@/utils/methods';
 import { isCountry } from '@/utils/cities';
@@ -16,32 +19,41 @@ import Loading from '../Loading/Loading';
 
 export default function RegisterView() {
   const [dob, setDob] = useState("")
-  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [pseudo, setPseudo] = useState("")
   const [country, setCountry] = useState("")
   const [lastname, setLastname] = useState("")
   const [postalCode, setPostalCode] = useState(0)
 
   const toast = useToast()
+  const { address } = useAccount()
   const { data: signer } = useSigner()
   const { getData } = useDataProvider()
-  const { setIsLoading, isLoading, setCurrentPage } = useNavigationProvider()
+  const { isRegisteredUserConnected } = useWhoIsConnectedProvider()
+  const { setIsLoading, isLoading, setCurrentPage, eventIdSelected } = useNavigationProvider()
 
-  const isError = name.length >= 2
-    && lastname.length >= 2
+  const isError = pseudo.length >= 2
     && !isEmail(email)
     && country.length > 3
-    && postalCode.toString().length > 4
+    && lastname.length >= 2
     && isUserAtLeast18YearsOld(dob)
+    && postalCode.toString().length > 4
 
   const submit = async () => {
     setIsLoading(true);
     try {
       const contract = new ethers.Contract(process.env.NEXT_PUBLIC_USERFACTORY_SCADDRESS_LOCALHOST, UserFactoryContract.abi, signer);
-      const transaction = await contract.create(name, lastname, email, country, dateToTimeStamp(dob));
+      const transaction = await contract.create(pseudo);
       await transaction.wait()
 
       await getData()
+
+      if(!isRegisteredUserConnected){
+        addFirstUserFirebase(address, pseudo, lastname, email, country, dateToTimeStamp(dob), parseInt(eventIdSelected))
+      } else {
+        addUserFirebase(address, pseudo, lastname, email, country, dateToTimeStamp(dob), parseInt(eventIdSelected))
+      }
+
       setIsLoading(false)
       toast(toastSuccess("UserCreated", "Transaction validated"))
     } catch (error) {
@@ -63,12 +75,12 @@ export default function RegisterView() {
             <Stack direction={"row"} alignItems='center'>
               <CustomInput
                 isDisabled={isLoading}
-                title={"Name"}
+                title={"Pseudo"}
                 type={"text"}
-                textHelper={name.length < 2 ? "2 letters minimum" : ""}
-                input={name}
-                handleInputChange={setName}
-                isError={name.length < 2}
+                textHelper={pseudo.length < 2 ? "2 letters minimum" : ""}
+                input={pseudo}
+                handleInputChange={setPseudo}
+                isError={pseudo.length < 2}
               />
               <CustomInput
                 isDisabled={isLoading}
