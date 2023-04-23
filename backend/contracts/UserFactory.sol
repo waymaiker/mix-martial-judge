@@ -27,7 +27,7 @@ contract UserFactory is CloneFactory, Ownable {
   }
 
   /**
-   * @notice Create a user. Initialize all his information and emit a event
+   * @notice Create a user and emit a event
    * @param _pseudo  User's pseudo
    */
   function create(string memory _pseudo) external payable {
