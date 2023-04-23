@@ -5,9 +5,12 @@ import { Flex, Image, Text, Tooltip, useDisclosure, useToast } from '@chakra-ui/
 
 import FightContract from '../../../contracts/Fight.json';
 
+import { getRegisteredUserCurrentlyConnectedFirebase, userSubscribeToThisEventFirebase } from '@/services/firestore_services';
+
 import useDataProvider from '@/hooks/useDataProvider';
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
+
 import { toastError, toastSuccess } from '@/utils/methods';
 
 import { EventsModalsCustomContent } from './EventModalsCustomContent';
@@ -19,11 +22,18 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   const { winners, getData } = useDataProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { setCurrentPage, setIsLoading, setEventIdSelected } = useNavigationProvider()
-  const { isGuestUserConnected, isAdminConnected, isRegisteredUserConnected } = useWhoIsConnectedProvider()
-  const [modalTypeContent, setModalTypeContent] = useState("")
+  const { isGuestUserConnected, isAdminConnected, isRegisteredUserConnected, currentUser, setCurrentUser } = useWhoIsConnectedProvider()
+
+  const [modalType, showThisModalType] = useState("")
   const toast = useToast()
 
-  const userJoinFight = async () => {
+  const isCurrentUserPaidAccessToThisEvent = currentUser.registeredEvents.findIndex((id) => eventId == id) != -1;
+
+  const showGetAccessModal = () => {
+    showThisModalType("getAccess");
+  }
+
+  const accessPayment = async () => {
     setIsLoading(true);
     try {
       const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
@@ -31,14 +41,96 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
       await transaction.wait()
 
       await getData()
+      await getAccessToAnEvent()
       setIsLoading(false)
-      setCurrentPage("judge")
 
-      toast(toastSuccess("New Judge Added", "Transaction validated"))
+      toast(toastSuccess("Payment accepted", "Transaction validated"))
     } catch (error) {
       setIsLoading(false)
-      toast(toastError("New Judge NOT Added", error.message))
+      toast(toastError("Payment denied", error.message))
     }
+  }
+
+  const getAccessToAnEvent = async () => {
+    try {
+      setTimeout(async () => {
+        //Add this event to the list of event we have paid to access
+        userSubscribeToThisEventFirebase(address, [...currentUser.registeredEvents, parseInt(eventId)])
+
+        //Get the data we just added, from the DB
+        let user = await getRegisteredUserCurrentlyConnectedFirebase(address)
+        setCurrentUser({pseudo: user.pseudo, address: address, email: user.email, registeredEvents: user.events})
+
+        toast(toastSuccess("Access granted to "+ title + " event", "Transaction validated"))
+      }, "3000");
+    } catch (error) {
+      setLoadingButton(false)
+      toast(toastError("Access denied", error.message))
+    }
+  }
+
+  /***************************** Widgets ********************************/
+  const adminUserButtons = () => {
+    return <Flex direction="column" p="10" w="30vh">
+      <Tooltip label={'Wait for the winner to be declared'} color='black'>
+        <CardButton
+          title={"CREATE TOKEN FIGHT"}
+          action={onOpen}
+          adminBackgroundColor={true}
+          secondaryAction={() => showThisModalType("create token")}
+          isDisabled={winners.findIndex(winner => winner.fightId == parseInt(eventId)) == -1}
+        />
+      </Tooltip>
+      <CardButton
+        title={"GET THE WINNER"}
+        action={onOpen}
+        adminBackgroundColor={true}
+        secondaryAction={() => showThisModalType("")}
+        isDisabled={winners.findIndex(winner => winner.fightId == parseInt(eventId)) == -1}
+      />
+    </Flex>
+  }
+
+  const registeredUserWithAccess = () => {
+    return <Flex direction="column" p="10" w="30vh">
+      <CardButton
+        title={"HOW TO WATCH"}
+        action={onOpen}
+        secondaryAction={() => showThisModalType("ads")}
+      />
+      <CardButton
+        title={"BE A JUDGE"}
+        action={onOpen}
+        secondaryAction={() => {
+          setCurrentPage("judge")
+          setEventIdSelected(eventId)
+        }}
+      />
+    </Flex>
+  }
+
+  const registeredUserWithNoAccess = () => {
+    return <Flex direction="column" p="10" w="30vh">
+      <CardButton
+        title={"GET ACCESS"}
+        action={onOpen}
+        secondaryAction={() => showGetAccessModal()}
+      />
+    </Flex>
+  }
+
+  const guestUserButton = () => {
+    return <CardButton
+      title={"REGISTER"}
+      action={onOpen}
+      secondaryAction={
+        isConnected
+        ? () => {
+            setCurrentPage("register");
+            setEventIdSelected(eventId);
+          }
+        : () => showThisModalType("connect")}
+    />
   }
 
   return (
@@ -63,60 +155,20 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
           <Text color="gray.600"> {location} </Text>
         </Flex>
       </Flex>
-        {
-          isAdminConnected &&
-            <Flex direction="column" p="10" w="30vh">
-              <Tooltip label={'Wait for the winner to be declared'} color='black'>
-                <CardButton
-                  title={"CREATE TOKEN FIGHT"}
-                  action={onOpen}
-                  adminBackgroundColor={true}
-                  secondaryAction={() => setModalTypeContent("create token")}
-                  isDisabled={winners.findIndex(winner => winner.fightId == parseInt(eventId)) == -1}
-                />
-              </Tooltip>
-              <CardButton
-                title={"GET THE WINNER"}
-                action={onOpen}
-                adminBackgroundColor={true}
-                secondaryAction={() => setModalTypeContent("")}
-                isDisabled={winners.findIndex(winner => winner.fightId == parseInt(eventId)) == -1}
-              />
-            </Flex>
-        }
-        {
-          isRegisteredUserConnected &&
-           <Flex direction="column" p="10" w="30vh">
-              <CardButton
-                title={"HOW TO WATCH"}
-                action={onOpen}
-                secondaryAction={() => setModalTypeContent("ads")}
-              />
-              <CardButton
-                title={"BE A JUDGE"}
-                action={onOpen}
-                secondaryAction={() => { 
-                  setModalTypeContent("join the fight");
-                  setEventIdSelected(eventId);
-                }}
-              />
-            </Flex>
-        }
-        {
-          isGuestUserConnected &&
-          <CardButton
-            title={"REGISTER"}
-            action={onOpen}
-            secondaryAction={isConnected
-            ? () => setCurrentPage("register")
-            : () => setModalTypeContent("connect")}
-          />
-        }
+      {isAdminConnected && adminUserButtons()}
+      {
+        isRegisteredUserConnected
+        ? isCurrentUserPaidAccessToThisEvent
+          ? registeredUserWithAccess()
+          : registeredUserWithNoAccess()
+        : <></>
+      }
+      {isGuestUserConnected && guestUserButton()}
       <EventsModalsCustomContent
-        type={modalTypeContent}
+        type={modalType}
         isOpen={isOpen}
         onClose={onClose}
-        customActionButton={userJoinFight}
+        customActionButton={accessPayment}
       />
     </Flex>
   )

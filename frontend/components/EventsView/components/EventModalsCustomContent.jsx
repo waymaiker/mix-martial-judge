@@ -14,7 +14,7 @@ export const EventsModalsCustomContent = ({type, isOpen, onClose, customActionBu
         isCustomFooter={false}
         children={<CreateFightToken onClose={onClose} />}
       />
-    case "join the fight":
+    case "getAccess":
       return <CustomModal
         isOpen={isOpen}
         onClose={onClose}
