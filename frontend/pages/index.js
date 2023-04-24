@@ -7,10 +7,11 @@ import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 import FightView from '@/components/FightView/FightView';
 import RegisterView from '@/components/RegisterView/RegisterView';
 import SuperAdminView from '@/components/SuperAdminView/SuperAdminView';
+import CardAddEvent from '@/components/EventsView/components/CardAddEvent';
 import { FightProvider } from '@/components/FightView/contexts/fightProvider';
 
 export default function Home() {
-  const { isSuperAdminConnected, isGuestUserConnected } = useWhoIsConnectedProvider()
+  const { isSuperAdminConnected, isAdminConnected, isGuestUserConnected } = useWhoIsConnectedProvider()
   const { currentPage } = useNavigationProvider()
 
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       </Head>
       <Layout>
         { isSuperAdminConnected && <SuperAdminView /> }
+        { isAdminConnected ? <CardAddEvent/> : <></>}
         { isGuestUserConnected && currentPage == "register" && <RegisterView/> }
         { currentPage == "judge" && <FightProvider> <FightView /> </FightProvider> }
       </Layout>
