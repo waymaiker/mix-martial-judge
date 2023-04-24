@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ethers } from 'ethers';
 import { useAccount, useSigner } from 'wagmi';
 import { Button, Card, CardBody, CardFooter, Divider, Flex, Stack, Text, useToast } from '@chakra-ui/react';
@@ -15,7 +15,6 @@ import { dateToTimeStamp, isEmail, isUserAtLeast18YearsOld, toastError, toastSuc
 import { isCountry } from '@/utils/cities';
 
 import { CustomInput } from '../CustomInput/CustomInput';
-import Loading from '../Loading/Loading';
 
 export default function RegisterView() {
   const [dob, setDob] = useState("")
@@ -29,7 +28,7 @@ export default function RegisterView() {
   const { address } = useAccount()
   const { data: signer } = useSigner()
   const { getData } = useDataProvider()
-  const { isRegisteredUserConnected } = useWhoIsConnectedProvider()
+  const { isRegisteredUserConnected, setCurrentUser } = useWhoIsConnectedProvider()
   const { setIsLoading, isLoading, setCurrentPage, eventIdSelected } = useNavigationProvider()
 
   const isError = pseudo.length >= 2
@@ -54,6 +53,7 @@ export default function RegisterView() {
         addUserFirebase(address, pseudo, lastname, email, country, dateToTimeStamp(dob), parseInt(eventIdSelected))
       }
 
+      setCurrentUser({address: address, pseudo: pseudo, email:email, registeredEvents:[parseInt(eventIdSelected)]})
       setIsLoading(false)
       toast(toastSuccess("UserCreated", "Transaction validated"))
     } catch (error) {
@@ -62,93 +62,90 @@ export default function RegisterView() {
     }
   }
 
-  useEffect(()=>{}, [isLoading])
-
   return (
-    isLoading
-    ? <Loading />
-    : <Flex grow="1" direction="column" justifyContent='center' alignItems="center"  backgroundColor={"red.600"}>
-        <Text color='red' fontWeight="extrabold" mt="2%"> PAGE </Text>
-        <Text fontSize="8xl" fontWeight="extrabold" fontStyle="italic">JOIN OUR COMMUNITY</Text>
-        <Card w="50%" p="10" shadow={"2xl"}>
-          <CardBody>
-            <Stack direction={"row"} alignItems='center'>
-              <CustomInput
-                isDisabled={isLoading}
-                title={"Pseudo"}
-                type={"text"}
-                textHelper={pseudo.length < 2 ? "2 letters minimum" : ""}
-                input={pseudo}
-                handleInputChange={setPseudo}
-                isError={pseudo.length < 2}
-              />
-              <CustomInput
-                isDisabled={isLoading}
-                title={"Last Name"}
-                type={"text"}
-                textHelper={lastname.length < 2 ? "2 letters minimum" : ""}
-                input={lastname}
-                handleInputChange={setLastname}
-                isError={lastname.length < 2}
-              />
-            </Stack>
-            <Stack direction={"row"} alignItems='center' mt={"10"}>
-              <CustomInput
-                isDisabled={isLoading}
-                title={"DOB"}
-                type="date"
-                textHelper={"You should at least have 18 yo"}
-                input={dob}
-                handleInputChange={setDob}
-                isError={!isUserAtLeast18YearsOld(dob)}
-              />
-              <CustomInput
-                isDisabled={isLoading}
-                title={"Email"}
-                type="email"
-                textHelper={"example@example.com"}
-                input={email}
-                handleInputChange={setEmail}
-                isError={isEmail(email)}
-                defaultCase={true}
-              />
-            </Stack>
-            <Stack direction={"row"} alignItems='center' mt={"10"}>
-              <CustomInput
-                isDisabled={isLoading}
-                title={"Country"}
-                type="text"
-                input={country}
-                textHelper={!isCountry(country) ? "This country does not exist" : ""}
-                handleInputChange={setCountry}
-                isError={!isCountry(country)}
-                defaultCase={true}
-              />
-              <CustomInput
-                isDisabled={isLoading}
-                title={"Postal Code / Zip Code"}
-                type="number"
-                textHelper={"75001"}
-                input={postalCode}
-                handleInputChange={setPostalCode}
-                isError={postalCode.toString().length < 5}
-              />
-            </Stack>
-          </CardBody>
-          <Divider />
-          <CardFooter justifyContent="center">
-            <Button
-              isDisabled={!isError}
-              p={"8"} w="25vh"
-              fontSize={"2xl"}
-              variant='solid'
-              colorScheme='red'
-              onClick={() =>{ submit(); setCurrentPage('')}}
-            >
-              SUBMIT
-            </Button>
-          </CardFooter>
-        </Card>
-      </Flex>
-    )
+    <Flex grow="1" direction="column" justifyContent='center' alignItems="center"  backgroundColor={"red.600"} pb={"20"}>
+      <Text fontWeight="extrabold" mt="2%"> PAGE </Text>
+      <Text fontSize="8xl" fontWeight="extrabold" fontStyle="italic" color={"white"}>JOIN OUR COMMUNITY</Text>
+      <Card w="50%" p="10" shadow={"2xl"}>
+        <CardBody>
+          <Stack direction={"row"} alignItems='center'>
+            <CustomInput
+              isDisabled={isLoading}
+              title={"Pseudo"}
+              type={"text"}
+              textHelper={pseudo.length < 2 ? "2 letters minimum" : ""}
+              input={pseudo}
+              handleInputChange={setPseudo}
+              isError={pseudo.length < 2}
+            />
+            <CustomInput
+              isDisabled={isLoading}
+              title={"Last Name"}
+              type={"text"}
+              textHelper={lastname.length < 2 ? "2 letters minimum" : ""}
+              input={lastname}
+              handleInputChange={setLastname}
+              isError={lastname.length < 2}
+            />
+          </Stack>
+          <Stack direction={"row"} alignItems='center' mt={"10"}>
+            <CustomInput
+              isDisabled={isLoading}
+              title={"DOB"}
+              type="date"
+              textHelper={"You should at least have 18 yo"}
+              input={dob}
+              handleInputChange={setDob}
+              isError={!isUserAtLeast18YearsOld(dob)}
+            />
+            <CustomInput
+              isDisabled={isLoading}
+              title={"Email"}
+              type="email"
+              textHelper={"example@example.com"}
+              input={email}
+              handleInputChange={setEmail}
+              isError={isEmail(email)}
+              defaultCase={true}
+            />
+          </Stack>
+          <Stack direction={"row"} alignItems='center' mt={"10"}>
+            <CustomInput
+              isDisabled={isLoading}
+              title={"Country"}
+              type="text"
+              input={country}
+              textHelper={!isCountry(country) ? "This country does not exist" : ""}
+              handleInputChange={setCountry}
+              isError={!isCountry(country)}
+              defaultCase={true}
+            />
+            <CustomInput
+              isDisabled={isLoading}
+              title={"Postal Code / Zip Code"}
+              type="number"
+              textHelper={"75001"}
+              input={postalCode}
+              handleInputChange={setPostalCode}
+              isError={postalCode.toString().length < 5}
+            />
+          </Stack>
+        </CardBody>
+        <Divider />
+        <CardFooter justifyContent="center">
+          <Button
+            isLoading={isLoading}
+            isDisabled={!isError}
+            p={"8"} w="25vh"
+            fontSize={"2xl"}
+            variant='solid'
+            colorScheme='red'
+            onClick={() =>{ submit(); setCurrentPage('')}}
+          >
+            SUBMIT
+          </Button>
+        </CardFooter>
+      </Card>
+    </Flex>
+  )
 }
