@@ -19,7 +19,6 @@ contract User is IERC721Receiver {
   Participant participant;
   mapping(uint256 => uint256) tokenIds;
 
-  event UserCreated(address indexed _userAddress, string _pseudo);
   event ERC721ContractAddressEmitterUpdated(address indexed previousERC721ContractAddressEmitter, address indexed newERC721ContractAddressEmitter);
 
   /**

@@ -30,34 +30,19 @@ const { developmentChains } = require("../helper-hardhat-config")
       describe("Create", function() {
         it("should CREATE a user", async function(){
           await expect(
-            user.create("Jason", "Tyson", "jason@tyson.com", "trinidad and tobago", 1676376430)).not.to.be.reverted
+            user.create("Jason")).not.to.be.reverted
         })
         it("REVERT - when a same account tries to create a user more than once", async function(){
-          user.create("Jason", "Tyson", "jason@tyson.com", "trinidad and tobago", 1676376430)
+          user.create("Jason")
 
           await expect(
-            user.create("Mike", "Bereal", "mike@bereal.com", "st lucia", 1676376430))
+            user.create("Mike"))
             .to.be.revertedWith("You already have an account")
         })
-        it("REVERT - when firstname is empty", async function(){
+        it("REVERT - when pseudo is empty", async function(){
           await expect(
-            user.create("", "Tyson", "jason@tyson.com", "trinidad and tobago", 1676376430))
-            .to.be.revertedWith("firstname cant be empty")
-        })
-        it("REVERT - when lastname is empty", async function(){
-          await expect(
-            user.create("Jason", "", "jason@tyson.com", "trinidad and tobago", 1676376430))
-            .to.be.revertedWith("lastname cant be empty")
-        })
-        it("REVERT - when email is empty", async function(){
-          await expect(
-            user.create("Jason", "Tyson", "", "trinidad and tobago", 1676376430))
-            .to.be.revertedWith("email cant be empty")
-        })
-        it("REVERT - when country is empty", async function(){
-          await expect(
-            user.create("Jason", "Tyson", "jason@tyson.com", "", 1676376430))
-            .to.be.revertedWith("country cant be empty")
+            user.create(""))
+            .to.be.revertedWith("pseudo cant be empty")
         })
       })
 

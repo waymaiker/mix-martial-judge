@@ -23,7 +23,6 @@ const { developmentChains } = require("../helper-hardhat-config")
       })
     })
 
-
     /******************
       * METHODS CREATE *
         *****************/
@@ -38,45 +37,30 @@ const { developmentChains } = require("../helper-hardhat-config")
 
       it("should CREATE a user ", async function(){
         await expect(
-          userFactory.create("Jason", "Tyson", "jason@tyson.com", "trinidad and tobago", 1676376430))
+          userFactory.create("Jason"))
           .not.to.be.reverted
       })
       it("should CREATE a user and EMITS UserCreated event", async function(){
-        const transaction = await userFactory.create("Jason", "Tyson", "jason@tyson.com", "trinidad and tobago", 1676376430)
+        const transaction = await userFactory.create("Jason")
         const userFactoryEvents = await transaction.wait()
         const userContractAddress = userFactoryEvents.events[0].args.userContractAddress
         const userAddress = userFactoryEvents.events[0].args.userAddress
 
         await expect(transaction)
           .to.emit(userFactory, "UserCreated")
-          .withArgs(userContractAddress, userAddress, "Jason", "Tyson", "jason@tyson.com", "trinidad and tobago", 1676376430)
+          .withArgs(userContractAddress, userAddress, "Jason")
       })
       it("REVERT - when the same user wants to create more than one account", async function(){
-        userFactory.create("Jason", "Tyson", "jason@tyson.com", "trinidad and tobago", 1676376430)
+        userFactory.create("Jason")
 
         await expect(
-          userFactory.create("Mike", "Bereal", "mike@bereal.com", "st lucia", 1676376430))
+          userFactory.create("Mike"))
           .to.be.revertedWith("You already have an account")
       })
-      it("REVERT - when firstname is empty", async function(){
+      it("REVERT - when pseudo is empty", async function(){
         await expect(
-          userFactory.create("", "Tyson", "jason@tyson.com", "trinidad and tobago", 1676376430))
-          .to.be.revertedWith("firstname cant be empty")
-      })
-      it("REVERT - when lastname is empty", async function(){
-        await expect(
-          userFactory.create("Jason", "", "jason@tyson.com", "trinidad and tobago", 1676376430))
-          .to.be.revertedWith("lastname cant be empty")
-      })
-      it("REVERT - when email is empty", async function(){
-        await expect(
-          userFactory.create("Jason", "Tyson", "", "trinidad and tobago", 1676376430))
-          .to.be.revertedWith("email cant be empty")
-      })
-      it("REVERT - when country is empty", async function(){
-        await expect(
-          userFactory.create("Jason", "Tyson", "jason@tyson.com", "", 1676376430))
-          .to.be.revertedWith("country cant be empty")
+          userFactory.create(""))
+          .to.be.revertedWith("pseudo cant be empty")
       })
     })
 
