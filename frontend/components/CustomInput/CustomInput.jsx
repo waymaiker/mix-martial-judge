@@ -25,7 +25,9 @@ export const CustomInput = ({title, type, textHelper, input, handleInputChange, 
           {textHelper}
         </FormHelperText>
       ) : (
-        <FormErrorMessage>{title} is required | {textHelper} </FormErrorMessage>
+        textHelper
+          ? <FormErrorMessage>{title} is required | {textHelper} </FormErrorMessage>
+          : <FormErrorMessage>{title} is required</FormErrorMessage>
       )}
     </FormControl>
   )
