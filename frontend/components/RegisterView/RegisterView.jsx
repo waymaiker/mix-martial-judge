@@ -27,11 +27,23 @@ export default function RegisterView() {
   const toast = useToast()
   const { address } = useAccount()
   const { data: signer } = useSigner()
-  const { getData } = useDataProvider()
+  const { getData, users } = useDataProvider()
   const { isRegisteredUserConnected, setCurrentUser } = useWhoIsConnectedProvider()
   const { setIsLoading, isLoading, setCurrentPage, eventIdSelected } = useNavigationProvider()
 
-  const isError = pseudo.length >= 2
+  const isPseudoExist = (val) => {
+    return users.filter(user => user.pseudo.toLowerCase() == val.toLowerCase()).length > 0
+  }
+
+  const PseudoHelper = () => {
+    return <>
+      { pseudo.length < 2 ? "2 letters minimum" : "" }
+      { isPseudoExist(pseudo) ? "This pseudo is already used" : ""}
+    </>
+  }
+
+  const isError = !isPseudoExist(pseudo)
+    && pseudo.length >= 2
     && !isEmail(email)
     && country.length > 3
     && lastname.length >= 2
@@ -73,10 +85,10 @@ export default function RegisterView() {
               isDisabled={isLoading}
               title={"Pseudo"}
               type={"text"}
-              textHelper={pseudo.length < 2 ? "2 letters minimum" : ""}
+              completeCustomTextHelper={PseudoHelper()}
               input={pseudo}
               handleInputChange={setPseudo}
-              isError={pseudo.length < 2}
+              isError={isPseudoExist(pseudo) || pseudo.length < 2}
             />
             <CustomInput
               isDisabled={isLoading}

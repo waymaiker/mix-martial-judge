@@ -6,13 +6,17 @@ import {
   Input,
 } from '@chakra-ui/react';
 
-export const CustomInput = ({title, type, textHelper, input, handleInputChange, isError, isDisabled, defaultCase}) => {
+export const CustomInput = ({title, type, textHelper, completeCustomTextHelper, input, handleInputChange, isError, isDisabled, defaultCase}) => {
+  const showCustomTextHelper = completeCustomTextHelper
+    ? <FormErrorMessage>{completeCustomTextHelper}</FormErrorMessage>
+    : <FormErrorMessage>{title} is required</FormErrorMessage>
 
   return (
     <FormControl isInvalid={isError}>
       <FormLabel fontSize={"2xl"} color={isError ? 'red' : ""}>{title}</FormLabel>
       <Input
         isDisabled={isDisabled}
+        focusBorderColor={isError ? "red.500" : "black"}
         h="6vh"
         title={title}
         type={type}
@@ -27,7 +31,7 @@ export const CustomInput = ({title, type, textHelper, input, handleInputChange, 
       ) : (
         textHelper
           ? <FormErrorMessage>{title} is required | {textHelper} </FormErrorMessage>
-          : <FormErrorMessage>{title} is required</FormErrorMessage>
+          : showCustomTextHelper
       )}
     </FormControl>
   )
