@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ethers } from 'ethers';
 import { useState } from 'react';
 import { useAccount, useSigner } from 'wagmi';
@@ -17,8 +18,8 @@ import { EventsModalsCustomContent } from './EventModalsCustomContent';
 import CardButton from './CardButton';
 
 export default function CardEvent({eventId, fightType, marketingImage, title, arena, location }) {
+  const { address } = useAccount()
   const { data: signer } = useSigner()
-  const { address, isConnected } = useAccount()
   const { winners, getData } = useDataProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { setCurrentPage, setIsLoading, setEventIdSelected } = useNavigationProvider()
@@ -120,17 +121,16 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   }
 
   const guestUserButton = () => {
-    return <CardButton
-      title={"REGISTER"}
-      action={onOpen}
-      secondaryAction={
-        isConnected
-        ? () => {
-            setCurrentPage("register");
-            setEventIdSelected(eventId);
-          }
-        : () => showThisModalType("connect")}
-    />
+    return <Link href="#register">
+      <CardButton
+        title={"REGISTER"}
+        action={onOpen}
+        secondaryAction={() => {
+          setCurrentPage("register");
+          setEventIdSelected(eventId)
+        }}
+      />
+    </Link>
   }
 
   return (

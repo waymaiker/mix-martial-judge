@@ -15,6 +15,7 @@ import { dateToTimeStamp, isEmail, isUserAtLeast18YearsOld, toastError, toastSuc
 import { isCountry } from '@/utils/cities';
 
 import { CustomInput } from '../CustomInput/CustomInput';
+import { AnimationContentFadeIn } from '@/utils/animations';
 
 export default function RegisterView() {
   const [dob, setDob] = useState("")
@@ -75,9 +76,11 @@ export default function RegisterView() {
   }
 
   return (
-    <Flex grow="1" direction="column" justifyContent='center' alignItems="center"  backgroundColor={"red.600"} pb={"20"}>
+    <Flex id='register' grow="1" direction="column" justifyContent='center' alignItems="center"  backgroundColor={"red.600"} pb={"20"}>
       <Text fontWeight="extrabold" mt="2%"> PAGE </Text>
-      <Text fontSize="8xl" fontWeight="extrabold" fontStyle="italic" color={"white"}>JOIN OUR COMMUNITY</Text>
+      <AnimationContentFadeIn>
+        <Text fontSize="8xl" fontWeight="extrabold" fontStyle="italic" color={"white"}>JOIN OUR COMMUNITY</Text>
+      </AnimationContentFadeIn>
       <Card w="50%" p="10" shadow={"2xl"}>
         <CardBody>
           <Stack direction={"row"} alignItems='center'>
