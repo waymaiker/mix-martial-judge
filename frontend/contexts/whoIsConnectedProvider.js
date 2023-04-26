@@ -47,7 +47,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
       const _isSuperAdminConnected = address == superAdmin
       const _isAdminConnected = admins.includes(address)
       const _isRegisteredUserConnected = users.findIndex(user => user.address == address) != -1
-      const _isGuestUserConnected = !_isSuperAdminConnected && !_isAdminConnected && !_isRegisteredUserConnected
+      const _isGuestUserConnected = !_isSuperAdminConnected && !_isAdminConnected && !_isRegisteredUserConnected && isConnected
 
       setIsRegisteredUserConnected(_isRegisteredUserConnected)
       setIsAdminConnected(_isAdminConnected)
