@@ -109,7 +109,7 @@ export default function RegisterView() {
               isDisabled={isLoading}
               title={"DOB"}
               type="date"
-              textHelper={"You should at least have 18 yo"}
+              textHelper={!isUserAtLeast18YearsOld(dob) ?  "You should at least have 18 yo" : ""}
               input={dob}
               handleInputChange={setDob}
               isError={!isUserAtLeast18YearsOld(dob)}
@@ -118,7 +118,7 @@ export default function RegisterView() {
               isDisabled={isLoading}
               title={"Email"}
               type="email"
-              textHelper={"example@example.com"}
+              textHelper={isEmail(email) ? "example@example.com" : ""}
               input={email}
               handleInputChange={setEmail}
               isError={isEmail(email)}
@@ -129,7 +129,6 @@ export default function RegisterView() {
             <InputWithDropdown
               isDisabled={isLoading}
               title={"Country"}
-              type="text"
               input={country}
               textHelper={!isCountry(country) ? "This country does not exist" : ""}
               handleInputChange={setCountry}
@@ -139,7 +138,7 @@ export default function RegisterView() {
               isDisabled={isLoading}
               title={"Area Code"}
               type="number"
-              textHelper={"75001"}
+              textHelper={postalCode.toString().length > 0 ? "" : "example: 75001"}
               input={postalCode}
               handleInputChange={setPostalCode}
               isError={postalCode.toString().length < 5}

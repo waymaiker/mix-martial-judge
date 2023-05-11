@@ -8,11 +8,11 @@ import { ListDropdown } from './components/ListDropdown'
 
 export const InputWithDropdown = ({isRequired, isDisabled, isError, input, handleInputChange, title}) => {
   return (
-    <FormControl isRequired={isRequired}>
+    <FormControl isInvalid={isError} isRequired={isRequired}>
       <FormLabel fontSize={"2xl"} color={isError ? 'red' : ""}>{title}</FormLabel>
       <Input
         isDisabled={isDisabled}
-        focusBorderColor={isError ? "red.500" : "black"}
+        focusBorderColor={isError ? 'red.500' : "black"}
         h="6vh"
         size="lg"
         title={title}
