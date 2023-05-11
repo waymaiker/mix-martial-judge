@@ -13,6 +13,7 @@ export const FightProvider = ({ children }) => {
   const [round, setRound] = useState(1)
   const [isPaused, setIsPaused] = useState(true)
   const [isRoundFinished, setRoundFinished] = useState(false)
+  const [showNotice, setShowNotice] = useState(true)
   const [results, setResults] = useState({
     left: {head:0, body:0, legs:0},
     right: {head:0, body:0, legs:0},
@@ -26,6 +27,8 @@ export const FightProvider = ({ children }) => {
     <FightContext.Provider value={{
       round,
       setRound,
+      showNotice,
+      setShowNotice,
       isRoundFinished,
       setRoundFinished,
       results,

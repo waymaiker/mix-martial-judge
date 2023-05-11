@@ -8,7 +8,7 @@ export default function FightClock({initMinutes, isPaused}) {
 
   useEffect(()=>{
     let myInterval
-    if(isPaused){
+    if(!isPaused){
        myInterval = setInterval(() => {
         if (seconds > 0) {
           setSeconds(seconds - 1);
