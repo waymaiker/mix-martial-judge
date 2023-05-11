@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import { useSigner } from "wagmi";
-import { NFTStorage } from "nft.storage";
 import { Button, Flex, Image, Text, useToast } from "@chakra-ui/react";
 
 import FightContract from '../../../contracts/Fight.json';
@@ -24,13 +23,16 @@ export default function CreateFightToken({onClose}){
   const { events, winners } = useDataProvider()
   const toast = useToast()
 
-  const mintToken = async (fightId, fileName) => {
+  const mintToken = async () => {
     setIsLoading(true);
     try {
       const winnerAddress = winners.findIndex(winner => winner.fightId = fightId)
+      const fightId = events[eventIdSelected-1].fightId
+      const fileName = events[eventIdSelected-1].fighterOne + " vs " + events[eventIdSelected-1].fighterTwo
+
       const NFTmetadata = await storeNFT(image, fileName, tokenDescription)
       const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
-      const transaction = await contract.safeMint(eventIdSelected, winnerAddress, NFTmetadata);
+      const transaction = await contract.safeMint(eventIdSelected-1, winnerAddress, NFTmetadata);
       await transaction.wait()
 
       setIsLoading(false)
@@ -43,66 +45,59 @@ export default function CreateFightToken({onClose}){
   }
 
   return (
-    <>
-      {
-        events.map((event, index) =>{
-          return (
-            <Flex key={index} direction='column'>
-              <Flex>
-                <Text fontSize={"xl"} fontWeight={'bold'}> Fighters: </Text>
-                <Text fontSize={"xl"} ml={"5"}> {event.fighterOne + " vs " + event.fighterTwo} </Text>
-              </Flex>
-              <Flex>
-                <Text fontSize={"xl"} fontWeight={'bold'}> CID: </Text>
-                <Text fontSize={"xl"} ml={"5"}> {event.fileCID} </Text>
-              </Flex>
-              <Text fontSize={"xl"} fontWeight={'bold'}> Image preview: </Text>
-              <Flex direction={"column"} alignItems="center">
-                <Image
-                  objectFit='cover'
-                  maxW="50%"
-                  src={event.fileLink}
-                  alt='ufc-fighters'
-                />
-              </Flex>
-              <CustomInput
-                isDisabled={isLoading}
-                title={"Token description"}
-                type="text"
-                textHelper={""}
-                input={tokenDescription}
-                handleInputChange={setTokenDescription}
-                isError={tokenDescription.length < 4}
-                defaultCase={true}
-              />
-              <BasicDropzone
-                storeNFT={true}
-                setImage={setImage}
-              />
-              <Flex justifyContent={"flex-end"}>
-                <Button
-                  isDisabled={
-                    tokenDescription.length < 4
-                    || image.length == 0
-                    || winners.findIndex(winner => winner.fightId = fightId) == -1
-                  }
-                  colorScheme={"red"}
-                  w={"15vh"}
-                  h="5vh"
-                  mt={"5"}
-                  onClick={() => mintToken(
-                    event.fightId,
-                    event.fighterOne + " vs " + event.fighterTwo
-                  )}
-                >
-                  MINT TOKEN
-                </Button>
-              </Flex>
-            </Flex>
-            )
-          }
-        )
+    <Flex direction='column'>
+      <Flex>
+        <Text fontSize={"xl"} fontWeight={'bold'}> Fighters: </Text>
+        <Text fontSize={"xl"} ml={"5"}> {events[eventIdSelected-1].fighterOne + " vs " + events[eventIdSelected-1].fighterTwo} </Text>
+      </Flex>
+      <Flex>
+        <Text fontSize={"xl"} fontWeight={'bold'}> CID: </Text>
+        <Text fontSize={"xl"} ml={"5"}> {events[eventIdSelected-1].fileCID} </Text>
+      </Flex>
+
+      {/* Use aws s3bucket to preview a picture that we wanna add as an image for the token */}
+      {/*
+        <Text fontSize={"xl"} fontWeight={'bold'}> Image preview: </Text>
+        <Flex direction={"column"} alignItems="center">
+          <Image
+            objectFit='cover'
+            maxW="50%"
+            src={events[eventIdSelected-1].fileLink}
+            alt='ufc-fighters'
+          />
+        </Flex> */
       }
-    </>
+
+      <CustomInput
+        isDisabled={isLoading}
+        title={"Token description"}
+        type="text"
+        textHelper={""}
+        input={tokenDescription}
+        handleInputChange={setTokenDescription}
+        isError={tokenDescription.length < 4}
+        defaultCase={true}
+      />
+      <BasicDropzone
+        storeNFT={true}
+        setImage={setImage}
+      />
+      <Flex justifyContent={"flex-end"}>
+        <Button
+          isDisabled={
+            tokenDescription.length < 4
+            || image.length == 0
+            || winners.findIndex(winner => winner.fightId = fightId) == -1
+          }
+          colorScheme={"red"}
+          w={"15vh"}
+          h="5vh"
+          mt={"5"}
+          onClick={() => mintToken()}
+        >
+          MINT TOKEN
+        </Button>
+      </Flex>
+    </Flex>
   )
 }
