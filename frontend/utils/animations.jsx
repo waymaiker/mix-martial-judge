@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-export const AnimationZoomListItem = ({children}) => { 
+export const AnimationZoomListItem = ({children}) => {
   return <motion.li whileHover={{
     scale: 1.1,
     transition: { duration: .2 }
@@ -9,7 +9,15 @@ export const AnimationZoomListItem = ({children}) => {
   </motion.li>
 }
 
-export const AnimationContentFadeIn = ({children}) => { 
+export const AnimationZoomItem = ({children}) => {
+  return <motion.div whileHover={{
+    scale: 1.1,
+    transition: { duration: .2 }
+  }}>
+    {children}
+  </motion.div>
+}
+export const AnimationContentFadeIn = ({children}) => {
   return <motion.div
     initial='hidden'
     animate='visible'
@@ -26,7 +34,7 @@ export const AnimationContentFadeIn = ({children}) => {
         }
       }
     }}
-  >         
+  >
     {children}
   </motion.div>
 }
