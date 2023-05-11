@@ -20,7 +20,7 @@ import CardButton from './CardButton';
 export default function CardEvent({eventId, fightType, marketingImage, title, arena, location }) {
   const { address } = useAccount()
   const { data: signer } = useSigner()
-  const { winners, getData } = useDataProvider()
+  const { winners, setWinners, events, getData } = useDataProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { setCurrentPage, setIsLoading, setEventIdSelected, isLoading } = useNavigationProvider()
   const { isGuestUserConnected, isAdminConnected, isRegisteredUserConnected, currentUser, setCurrentUser } = useWhoIsConnectedProvider()
@@ -32,6 +32,14 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
 
   const showGetAccessModal = () => {
     showThisModalType("getAccess");
+  }
+
+  const setJudgeWinner = async (userWinnerAddress) => {
+    const winner = {
+      fightId: eventId,
+      winner: userWinnerAddress
+    }
+    setWinners(winners => [winner, ...winners])
   }
 
   const accessPayment = async () => {
@@ -72,6 +80,8 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
 
   /***************************** Widgets ********************************/
   const adminUserButtons = () => {
+    const isWinnerDesignated = winners.findIndex(winner => winner.fightId == parseInt(eventId));
+
     return <Flex direction="column" p="10" w="30vh">
       <Tooltip label={'Wait for the winner to be declared'} color='black'>
         <CardButton
@@ -79,15 +89,15 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
           action={onOpen}
           adminBackgroundColor={true}
           secondaryAction={() => showThisModalType("create token")}
-          isDisabled={winners.findIndex(winner => winner.fightId == parseInt(eventId)) == -1}
+          isDisabled={isWinnerDesignated == -1}
         />
       </Tooltip>
       <CardButton
         title={"GET THE WINNER"}
         action={onOpen}
         adminBackgroundColor={true}
-        secondaryAction={() => showThisModalType("")}
-        isDisabled={winners.findIndex(winner => winner.fightId == parseInt(eventId)) == -1}
+        secondaryAction={() => showThisModalType("setWinners")}
+        isDisabled={events[eventId].participants.length > 0 || isWinnerDesignated != -1}
       />
     </Flex>
   }
@@ -176,7 +186,8 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
         type={modalType}
         isOpen={isOpen}
         onClose={onClose}
-        customActionButton={accessPayment}
+        getAccess={accessPayment}
+        setWinner={setJudgeWinner}
       />
     </Flex>
   )
