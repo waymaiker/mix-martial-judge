@@ -9,7 +9,7 @@ export const storeBlob = async (files) => {
 }
 
 export const storeNFT = async (image, name, desc) => {
-  const imageCID = await nftstorage.storeBlob(image)
+  const imageCID = await storeBlob(image)
   const nftName = "UFJ - "+name      
   const nft = {        
     image: "https://"+ imageCID +".ipfs.nftstorage.link/",
@@ -19,7 +19,7 @@ export const storeNFT = async (image, name, desc) => {
   }
   const formatData = JSON.stringify(nft)
   const nftBlob = new Blob([formatData], { type: 'application/json'})
-  const nftCID = await client.storeBlob(nftBlob);
+  const nftCID = await storeBlob(nftBlob);
   
   return "ipfs://"+nftCID
 }

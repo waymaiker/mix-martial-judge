@@ -23,16 +23,13 @@ export default function CreateFightToken({onClose}){
   const { events, winners } = useDataProvider()
   const toast = useToast()
 
-  const mintToken = async () => {
+  const mintToken = async (fileName) => {
     setIsLoading(true);
     try {
-      const winnerAddress = winners.findIndex(winner => winner.fightId = fightId)
-      const fightId = events[eventIdSelected-1].fightId
-      const fileName = events[eventIdSelected-1].fighterOne + " vs " + events[eventIdSelected-1].fighterTwo
-
+      const winnerAddress = winners.filter(winner => winner.fightId == parseInt(eventIdSelected))[0].winnerAddress
       const NFTmetadata = await storeNFT(image, fileName, tokenDescription)
       const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
-      const transaction = await contract.safeMint(eventIdSelected-1, winnerAddress, NFTmetadata);
+      const transaction = await contract.safeMint(parseInt(eventIdSelected), winnerAddress, NFTmetadata);
       await transaction.wait()
 
       setIsLoading(false)
@@ -48,7 +45,7 @@ export default function CreateFightToken({onClose}){
     <Flex direction='column'>
       <Flex>
         <Text fontSize={"xl"} fontWeight={'bold'}> Fighters: </Text>
-        <Text fontSize={"xl"} ml={"5"}> {events[eventIdSelected-1].fighterOne + " vs " + events[eventIdSelected-1].fighterTwo} </Text>
+        <Text fontSize={"xl"} ml={"5"}> {events[eventIdSelected-1].fighterOne}  vs  {events[eventIdSelected-1].fighterTwo} </Text>
       </Flex>
       <Flex>
         <Text fontSize={"xl"} fontWeight={'bold'}> CID: </Text>
@@ -84,16 +81,13 @@ export default function CreateFightToken({onClose}){
       />
       <Flex justifyContent={"flex-end"}>
         <Button
-          isDisabled={
-            tokenDescription.length < 4
-            || image.length == 0
-            || winners.findIndex(winner => winner.fightId = fightId) == -1
-          }
+          isDisabled={tokenDescription.length < 4 || image.length == 0}
+          isLoading={isLoading}
           colorScheme={"red"}
           w={"15vh"}
           h="5vh"
           mt={"5"}
-          onClick={() => mintToken()}
+          onClick={() => mintToken(events[eventIdSelected-1].fighterOne + " vs " + events[eventIdSelected-1].fighterTwo)}
         >
           MINT TOKEN
         </Button>

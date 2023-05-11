@@ -36,10 +36,10 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
 
   const setJudgeWinner = async (userWinnerAddress) => {
     const winner = {
-      fightId: eventId,
-      winner: userWinnerAddress
+      fightId: parseInt(eventId),
+      winnerAddress: userWinnerAddress
     }
-    setWinners(winners => [winner, ...winners])
+    setWinners([winner, ...winners])
   }
 
   const accessPayment = async () => {
@@ -88,7 +88,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
           title={"CREATE TOKEN FIGHT"}
           action={onOpen}
           adminBackgroundColor={true}
-          secondaryAction={() => showThisModalType("create token")}
+          secondaryAction={() => {showThisModalType("create token"), setEventIdSelected(eventId)}}
           isDisabled={isWinnerDesignated == -1}
         />
       </Tooltip>
@@ -187,7 +187,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
         isOpen={isOpen}
         onClose={onClose}
         getAccess={accessPayment}
-        setWinner={setJudgeWinner}
+        setWinner={() => setJudgeWinner(address)}
       />
     </Flex>
   )

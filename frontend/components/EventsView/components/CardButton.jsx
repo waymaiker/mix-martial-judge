@@ -8,7 +8,7 @@ export default function CardButton({title, action, secondaryAction, adminBackgro
   const backgroundColor = adminBackgroundColor == undefined ? "gray.200" : "red"
 
   const customOnClick = () => {
-    onClickAction()
+    onClickAction(),
     onClickAuxAction()
   }
 

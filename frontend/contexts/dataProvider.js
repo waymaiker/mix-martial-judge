@@ -93,7 +93,7 @@ const catchWinnerEvent = (fightEvents, setWinners) => {
   fightEvents.forEach((event) => {
     if(event.event === "UserWinner"){
       setWinners(winners => [{
-        fightId: event.args.fightId,
+        fightId: parseInt(event.args.fightId),
         userAddress: event.args.userAddress,
       }, ...winners])
     }
