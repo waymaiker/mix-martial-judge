@@ -14,18 +14,18 @@ const FirebaseCredentials = {
 const APP = initializeApp(FirebaseCredentials)
 const DB_FIREBASE = getFirestore(APP);
 
-export const addFirstUserFirebase = async (address, pseudo, lastname, email, country, dob, eventId) => {
-  const data = { pseudo:pseudo, lastname:lastname, email:email, country:country, dob:dob, events: [eventId] }
+export const addFirstUserFirebase = async (address, pseudo, lastname, email, country, dob) => {
+  const data = { pseudo:pseudo, lastname:lastname, email:email, country:country, dob:dob, bookedEvents: [] }
   await setDoc(doc(DB_FIREBASE, "users", address), data)
 }
 
-export const addUserFirebase = async (address, pseudo, lastname, email, country, dob, eventId) => {
-  const data = { pseudo:pseudo, lastname:lastname, email:email, country:country, dob:dob, events: [eventId] }
+export const addUserFirebase = async (address, pseudo, lastname, email, country, dob) => {
+  const data = { pseudo:pseudo, lastname:lastname, email:email, country:country, dob:dob, bookedEvents: [] }
   await updateDoc(doc(DB_FIREBASE, "users", address), data)
 }
 
 export const userSubscribeToThisEventFirebase = async (address, events) => {
-  const data = {events: events}
+  const data = {bookedEvents: events}
   await updateDoc(doc(DB_FIREBASE, "users", address), data)
 }
 
@@ -37,7 +37,7 @@ export const getRegisteredUserCurrentlyConnectedFirebase = async (address) => {
       address: address,
       pseudo: docSnapshot.data().pseudo,
       email: docSnapshot.data().email,
-      events: docSnapshot.data().events,
+      bookedEvents: docSnapshot.data().bookedEvents,
     }
   }
 }

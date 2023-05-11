@@ -28,7 +28,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   const [modalType, showThisModalType] = useState("")
   const toast = useToast()
 
-  const isCurrentUserPaidAccessToThisEvent = currentUser.registeredEvents.findIndex((id) => eventId == id) != -1;
+  const isCurrentUserPaidAccessToThisEvent = currentUser.bookedEvents.findIndex((id) => eventId == id) != -1;
 
   const showGetAccessModal = () => {
     showThisModalType("getAccess");
@@ -56,11 +56,11 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
     try {
       setTimeout(async () => {
         //Add this event to the list of event we have paid to access
-        userSubscribeToThisEventFirebase(address, [...currentUser.registeredEvents, parseInt(eventId)])
+        userSubscribeToThisEventFirebase(address, [...currentUser.bookedEvents, parseInt(eventId)])
 
         //Get the data we just added, from the DB
         let user = await getRegisteredUserCurrentlyConnectedFirebase(address)
-        setCurrentUser({pseudo: user.pseudo, address: address, email: user.email, registeredEvents: user.events})
+        setCurrentUser({pseudo: user.pseudo, address: address, email: user.email, bookedEvents: user.bookedEvents})
 
         toast(toastSuccess("Access granted to "+ title + " event", "Transaction validated"))
       }, "3000");

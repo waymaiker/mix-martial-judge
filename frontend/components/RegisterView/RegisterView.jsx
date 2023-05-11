@@ -31,7 +31,7 @@ export default function RegisterView() {
   const { data: signer } = useSigner()
   const { getData, users } = useDataProvider()
   const { isRegisteredUserConnected, setCurrentUser } = useWhoIsConnectedProvider()
-  const { setIsLoading, isLoading, setCurrentPage, eventIdSelected } = useNavigationProvider()
+  const { setIsLoading, isLoading, setCurrentPage } = useNavigationProvider()
 
   const isPseudoExist = (val) => {
     return users.filter(user => user.pseudo.toLowerCase() == val.toLowerCase()).length > 0
@@ -62,12 +62,12 @@ export default function RegisterView() {
       await getData()
 
       if(!isRegisteredUserConnected){
-        addFirstUserFirebase(address, pseudo, lastname, email, country, dateToTimeStamp(dob), parseInt(eventIdSelected))
+        addFirstUserFirebase(address, pseudo, lastname, email, country, dateToTimeStamp(dob))
       } else {
-        addUserFirebase(address, pseudo, lastname, email, country, dateToTimeStamp(dob), parseInt(eventIdSelected))
+        addUserFirebase(address, pseudo, lastname, email, country, dateToTimeStamp(dob))
       }
 
-      setCurrentUser({address: address, pseudo: pseudo, email:email, registeredEvents:[parseInt(eventIdSelected)]})
+      setCurrentUser({address: address, pseudo: pseudo, email:email, bookedEvents:[]})
       setIsLoading(false)
       toast(toastSuccess("UserCreated", "Transaction validated"))
     } catch (error) {
