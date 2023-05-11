@@ -15,19 +15,13 @@ export default function EventsView({events}){
 
   return (
     <>
-      {
-        isLoading
-        ? <Loading />
-        : <>
-            {
-              events.length == 0
-              ? <Flex grow="1" justifyContent="center" alignItems="center" mt="5">
-                  <Text fontWeight="bold" fontSize="7xl" fontStyle="italic"> NO UPCOMING EVENTS PROGRAMMED YET </Text>
-                </Flex>
-              : <EventsContent events={events} />
-            }
-          </>
-      }
+    {
+      events.length == 0
+        ? <Flex grow="1" justifyContent="center" alignItems="center" mt="5">
+            <Text fontWeight="bold" fontSize="7xl" fontStyle="italic"> NO UPCOMING EVENTS PROGRAMMED YET </Text>
+          </Flex>
+        : <EventsContent events={events} />
+    }
     </>
   )
 }

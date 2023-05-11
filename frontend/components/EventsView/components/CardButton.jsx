@@ -1,6 +1,6 @@
 import { Button, Text } from '@chakra-ui/react';
 
-export default function CardButton({title, action, secondaryAction, adminBackgroundColor, isDisabled}){
+export default function CardButton({title, action, secondaryAction, adminBackgroundColor, isDisabled, isLoading}){
   const onClickAction = action == undefined ? () => {} : () => action()
   const onClickAuxAction = secondaryAction == undefined ? () => {} : () => secondaryAction()
   const color = adminBackgroundColor == undefined ? "black" :"white"
@@ -16,6 +16,8 @@ export default function CardButton({title, action, secondaryAction, adminBackgro
     <Button
       mt='1'
       p={"7"}
+      isDisabled={isDisabled}
+      isLoading={isLoading}
       justifyContent="center"
       borderColor="gray.400"
       borderRadius="10"
@@ -23,7 +25,6 @@ export default function CardButton({title, action, secondaryAction, adminBackgro
       backgroundColor= {backgroundColor}
       colorScheme={colorScheme}
       onClick={() => customOnClick()}
-      isDisabled={isDisabled}
     >
       <Text m="2" fontWeight="bold"> {title} </Text>
     </Button>

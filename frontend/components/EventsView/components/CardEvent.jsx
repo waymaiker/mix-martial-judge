@@ -22,7 +22,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   const { data: signer } = useSigner()
   const { winners, getData } = useDataProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { setCurrentPage, setIsLoading, setEventIdSelected } = useNavigationProvider()
+  const { setCurrentPage, setIsLoading, setEventIdSelected, isLoading } = useNavigationProvider()
   const { isGuestUserConnected, isAdminConnected, isRegisteredUserConnected, currentUser, setCurrentUser } = useWhoIsConnectedProvider()
 
   const [modalType, showThisModalType] = useState("")
@@ -96,11 +96,15 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
     return <Flex direction="column" p="10" w="30vh">
       <CardButton
         title={"HOW TO WATCH"}
+        isLoading={isLoading}
+        isDisabled={isLoading}
         action={onOpen}
         secondaryAction={() => showThisModalType("ads")}
       />
       <CardButton
         title={"BE A JUDGE"}
+        isLoading={isLoading}
+        isDisabled={isLoading}
         action={onOpen}
         secondaryAction={() => {
           setCurrentPage("judge")
@@ -114,6 +118,8 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
     return <Flex direction="column" p="10" w="30vh">
       <CardButton
         title={"GET ACCESS"}
+        isLoading={isLoading}
+        isDisabled={isLoading}
         action={onOpen}
         secondaryAction={() => showGetAccessModal()}
       />
@@ -124,6 +130,8 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
     return <Link href="#register">
       <CardButton
         title={"REGISTER"}
+        isLoading={isLoading}
+        isDisabled={isLoading}
         action={onOpen}
         secondaryAction={() => {
           setCurrentPage("register");
