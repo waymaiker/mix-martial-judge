@@ -16,7 +16,7 @@ import { isCountry } from '@/utils/cities';
 import { AnimationContentFadeIn } from '@/utils/animations';
 
 import { CustomInput } from '../CustomInput/CustomInput';
-import { InputWithDropdown } from '../InputWithDropdown/InputWIthDropdown';
+import { InputWithDropdown } from '../InputWithDropdown/InputWithDropdown';
 
 export default function RegisterView() {
   const [dob, setDob] = useState("")
