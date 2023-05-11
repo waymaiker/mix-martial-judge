@@ -13,9 +13,10 @@ import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 
 import { dateToTimeStamp, isEmail, isUserAtLeast18YearsOld, toastError, toastSuccess } from '@/utils/methods';
 import { isCountry } from '@/utils/cities';
+import { AnimationContentFadeIn } from '@/utils/animations';
 
 import { CustomInput } from '../CustomInput/CustomInput';
-import { AnimationContentFadeIn } from '@/utils/animations';
+import { InputWithDropdown } from '../InputWithDropdown/InputWIthDropdown';
 
 export default function RegisterView() {
   const [dob, setDob] = useState("")
@@ -125,7 +126,7 @@ export default function RegisterView() {
             />
           </Stack>
           <Stack direction={"row"} alignItems='center' mt={"10"}>
-            <CustomInput
+            <InputWithDropdown
               isDisabled={isLoading}
               title={"Country"}
               type="text"
@@ -133,11 +134,10 @@ export default function RegisterView() {
               textHelper={!isCountry(country) ? "This country does not exist" : ""}
               handleInputChange={setCountry}
               isError={!isCountry(country)}
-              defaultCase={true}
             />
             <CustomInput
               isDisabled={isLoading}
-              title={"Postal Code / Zip Code"}
+              title={"Area Code"}
               type="number"
               textHelper={"75001"}
               input={postalCode}

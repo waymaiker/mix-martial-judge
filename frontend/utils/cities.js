@@ -9,11 +9,11 @@ export const visibleCities = (val) => {
 
 export const countriesList = [
   {"text": "Afghanistan", "code": "AF"},
-  {"text": "land Islands", "code": "AX"},
+  {"text": "Land Islands", "code": "AX"},
   {"text": "Albania", "code": "AL"},
   {"text": "Algeria", "code": "DZ"},
   {"text": "American Samoa", "code": "AS"},
-  {"text": "AndorrA", "code": "AD"},
+  {"text": "Andorra", "code": "AD"},
   {"text": "Angola", "code": "AO"},
   {"text": "Anguilla", "code": "AI"},
   {"text": "Antarctica", "code": "AQ"},
