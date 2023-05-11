@@ -9,7 +9,6 @@ import EventsContent from './components/EventsContent';
 
 export default function EventsView({events}){
   const { isConnected, address } = useAccount()
-  const { isLoading } = useNavigationProvider()
 
   useEffect(()=>{}, [isConnected, address])
 
@@ -17,10 +16,10 @@ export default function EventsView({events}){
     <>
     {
       events.length == 0
-        ? <Flex grow="1" justifyContent="center" alignItems="center" mt="5">
-            <Text fontWeight="bold" fontSize="7xl" fontStyle="italic"> NO UPCOMING EVENTS PROGRAMMED YET </Text>
-          </Flex>
-        : <EventsContent events={events} />
+      ? <Flex grow="1" justifyContent="center" alignItems="center" mt="5">
+          <Text fontWeight="bold" fontSize="7xl" fontStyle="italic"> NO UPCOMING EVENTS PROGRAMMED YET </Text>
+        </Flex>
+      : <EventsContent events={events} />
     }
     </>
   )
