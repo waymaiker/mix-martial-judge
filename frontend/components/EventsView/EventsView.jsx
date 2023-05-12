@@ -8,8 +8,7 @@ import { useAccount } from 'wagmi';
 
 export default function EventsView({events, closedEvents}){
   //Providers
-  const { address } = useAccount()
-  const { currentUser, isRegisteredUserConnected } = useWhoIsConnectedProvider()
+  const { currentUser } = useWhoIsConnectedProvider()
 
   //States
   const [ selectedView, selectView ] = useState(false)
@@ -20,14 +19,9 @@ export default function EventsView({events, closedEvents}){
   }, [events])
 
   useEffect(()=>{
-    isRegisteredUserConnected
-    ? selectedView
-      ? setListEvent(events.filter((event) => currentUser.finishedEvents.includes(parseInt(event.fightId))))
-      : setListEvent(events.filter((event) => !currentUser.finishedEvents.includes(parseInt(event.fightId))))
-    : selectedView
+    selectedView
       ? setListEvent(events.filter((event) => closedEvents.includes(parseInt(event.fightId))))
       : setListEvent(events.filter((event) => !closedEvents.includes(parseInt(event.fightId))))
-
   }, [selectedView, currentUser, events, closedEvents])
 
   return (
@@ -57,14 +51,14 @@ export default function EventsView({events, closedEvents}){
             </Text>
         }
       </Flex>
-    {
-      listEvent.length > 0
-      ? <EventsContent
-          events={listEvent}
-          closedEvents={closedEvents}
-          currentUser={currentUser}
-        />
-      : <Flex grow="1" justifyContent="center" alignItems="center" mt="5">
+      {
+        listEvent.length > 0
+        ? <EventsContent
+            events={listEvent}
+            closedEvents={closedEvents}
+            currentUser={currentUser}
+          />
+        : <Flex grow="1" justifyContent="center" alignItems="center" mt="5">
         {
           selectedView
           ? <Text fontWeight="bold" fontSize="7xl" fontStyle="italic"> NO PAST EVENTS </Text>

@@ -184,7 +184,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
       {
         isRegisteredUserConnected
         ? isCurrentUserPaidAccessToThisEvent
-          ? isDisabled ? <></> :registeredUserWithAccess()
+          ? registeredUserWithAccess()
           : registeredUserWithNoAccess()
         : <></>
       }
