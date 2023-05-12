@@ -2,7 +2,7 @@ import { AnimationZoomListItem } from "@/utils/animations";
 
 import CardEvent from "./CardEvent";
 
-export default function EventsContent({events, currentUser}){
+export default function EventsContent({events, currentUser, closedEvents}){
   return(
     <>
       {
@@ -10,7 +10,12 @@ export default function EventsContent({events, currentUser}){
           <AnimationZoomListItem key={index}>
             <CardEvent
               key={index}
-              isDisabled={currentUser.finishedEvents.findIndex((finishedEvent) => finishedEvent == event.fightId) != -1}
+              isDisabled={
+                closedEvents.includes(parseInt(event.fightId)) ||
+                (currentUser.finishedEvents
+                  .findIndex((finishedEvent) => finishedEvent == event.fightId) != -1
+                )
+              }
               arena={event.arena}
               eventId={event.fightId}
               location={event.location}

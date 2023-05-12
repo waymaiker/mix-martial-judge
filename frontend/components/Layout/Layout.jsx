@@ -10,7 +10,7 @@ import EventsView from "../EventsView/EventsView";
 
 export default function Layout({children}) {
   const { isConnected } = useAccount()
-  const { events } = useDataProvider()
+  const { events, closedEvents } = useDataProvider()
   const { currentPage } = useNavigationProvider()
 
   return (
@@ -18,7 +18,7 @@ export default function Layout({children}) {
       <Header/>
       <Flex grow="1" direction="column">
         { isConnected && children }
-        { currentPage != "judge" && <EventsView events={events}/> }
+        { currentPage != "judge" && <EventsView events={events} closedEvents={closedEvents}/> }
       </Flex>
       <Footer/>
     </Flex>

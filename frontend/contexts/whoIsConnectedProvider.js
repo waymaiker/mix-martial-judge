@@ -54,10 +54,13 @@ export const WhoIsConnectedProvider = ({ children }) => {
       setIsSuperAdminConnected(_isSuperAdminConnected)
       setIsGuestUserConnected(_isGuestUserConnected)
 
-      if(_isSuperAdminConnected || _isAdminConnected) {
+      if(_isGuestUserConnected && currentUser.address != address){
+        setCurrentUser({address:address, pseudo: '', email:'', bookedEvents:[], finishedEvents: []})
+      }
+      if(_isSuperAdminConnected || _isAdminConnected && currentUser.address != address) {
         toast(toastSuccess("Account connected", _isSuperAdminConnected ? "SUPER ADMIN" : "ADMIN", "top"))
       }
-      if(_isRegisteredUserConnected && currentUser.address.length == 0){
+      if(_isRegisteredUserConnected && currentUser.address != address){
         let user = await getRegisteredUserCurrentlyConnectedFirebase(address)
         setCurrentUser({
           pseudo: user.pseudo,

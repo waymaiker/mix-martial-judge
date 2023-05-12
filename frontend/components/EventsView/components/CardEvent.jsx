@@ -20,7 +20,7 @@ import CardButton from './CardButton';
 export default function CardEvent({eventId, fightType, marketingImage, title, arena, location, isDisabled}) {
   const { address } = useAccount()
   const { data: signer } = useSigner()
-  const { winners, setWinners, events, getData } = useDataProvider()
+  const { winners, setWinners, setClosedEvents, events, getData } = useDataProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { setCurrentPage, setIsLoading, setEventIdSelected, isLoading } = useNavigationProvider()
   const { isGuestUserConnected, isAdminConnected, isRegisteredUserConnected, currentUser, setCurrentUser } = useWhoIsConnectedProvider()
@@ -40,6 +40,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
       winnerAddress: userWinnerAddress
     }
     setWinners([winner, ...winners])
+    setClosedEvents((closedEvents) => [...closedEvents, parseInt(eventId)])
   }
 
   const accessPayment = async () => {

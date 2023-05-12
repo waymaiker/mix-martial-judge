@@ -1,17 +1,15 @@
-import { useAccount } from 'wagmi';
 import { Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 
 import EventsContent from './components/EventsContent';
+import { useAccount } from 'wagmi';
 
-export default function EventsView({events}){
-  //Wagmi
-  const { isConnected, address } = useAccount()
-
+export default function EventsView({events, closedEvents}){
   //Providers
-  const { currentUser } = useWhoIsConnectedProvider()
+  const { address } = useAccount()
+  const { currentUser, isRegisteredUserConnected } = useWhoIsConnectedProvider()
 
   //States
   const [ selectedView, selectView ] = useState(false)
@@ -19,13 +17,18 @@ export default function EventsView({events}){
 
   useEffect(()=>{
     setListEvent(events)
-  }, [isConnected, address])
+  }, [events])
 
   useEffect(()=>{
-    selectedView
-    ? setListEvent(events.filter((event) => currentUser.finishedEvents.includes(parseInt(event.fightId))))
-    : setListEvent(events.filter((event) => !currentUser.finishedEvents.includes(parseInt(event.fightId))))
-  }, [selectedView])
+    isRegisteredUserConnected
+    ? selectedView
+      ? setListEvent(events.filter((event) => currentUser.finishedEvents.includes(parseInt(event.fightId))))
+      : setListEvent(events.filter((event) => !currentUser.finishedEvents.includes(parseInt(event.fightId))))
+    : selectedView
+      ? setListEvent(events.filter((event) => closedEvents.includes(parseInt(event.fightId))))
+      : setListEvent(events.filter((event) => !closedEvents.includes(parseInt(event.fightId))))
+
+  }, [selectedView, currentUser, events, closedEvents])
 
   return (
     <>
@@ -55,14 +58,15 @@ export default function EventsView({events}){
         }
       </Flex>
     {
-      listEvent.length != 0
+      listEvent.length > 0
       ? <EventsContent
           events={listEvent}
+          closedEvents={closedEvents}
           currentUser={currentUser}
         />
       : <Flex grow="1" justifyContent="center" alignItems="center" mt="5">
         {
-          selectedView && listEvent.length == 0
+          selectedView
           ? <Text fontWeight="bold" fontSize="7xl" fontStyle="italic"> NO PAST EVENTS </Text>
           : events.length == 0
             ? <Text fontWeight="bold" fontSize="7xl" fontStyle="italic"> NO UPCOMING EVENTS PROGRAMMED YET </Text>

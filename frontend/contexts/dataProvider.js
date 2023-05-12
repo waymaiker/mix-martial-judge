@@ -14,6 +14,7 @@ export const DataProvider = ({ children }) => {
   const [users, setUsers] = useState([])
   const [events, setEvents] = useState([])
   const [winners, setWinners] = useState([])
+  const [closedEvents, setClosedEvents] = useState([])
 
   const resetDatas = () => {
     setUsers([])
@@ -43,6 +44,8 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider value={{
+      setClosedEvents,
+      closedEvents,
       setWinners,
       getData,
       winners,
