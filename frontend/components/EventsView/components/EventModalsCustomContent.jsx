@@ -11,7 +11,7 @@ export const EventsModalsCustomContent = ({type, isOpen, onClose, getAccess, set
         isOpen={isOpen}
         onClose={onClose}
         title={"Create a token for this fight"}
-        isCustomSize={true}
+        customSize={'6xl'}
         showButtonsActionFooter={false}
         children={<CreateFightToken onClose={onClose} />}
       />
@@ -22,7 +22,7 @@ export const EventsModalsCustomContent = ({type, isOpen, onClose, getAccess, set
         title={"Get access to this fight"}
         mainButtonLabel={"VALIDATE"}
         showButtonsActionFooter={true}
-        customActionButton={getAccess}
+        customMainButtonAction={getAccess}
         children={<FightAccess/>}
       />
     case "ads":
@@ -47,9 +47,9 @@ export const EventsModalsCustomContent = ({type, isOpen, onClose, getAccess, set
         isOpen={isOpen}
         onClose={onClose}
         title={"Who is the Winner ?"}
-        customActionButton={setWinner}
-        showButtonsActionFooter={true}
+        customMainButtonAction={setWinner}
         mainButtonLabel={"OK"}
+        showButtonsActionFooter={true}
         children={<Text fontSize={"xl"}> Come on, let's find out !  </Text>}
       />
     default:
