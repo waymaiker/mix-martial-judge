@@ -15,7 +15,7 @@ const WhoIsConnectedContext = createContext(null)
 
 export const WhoIsConnectedProvider = ({ children }) => {
   const [admins, setAdmins] = useState([])
-  const [currentUser, setCurrentUser] = useState({address:'', pseudo: '', email:'', bookedEvents:[]})
+  const [currentUser, setCurrentUser] = useState({address:'', pseudo: '', email:'', bookedEvents:[], finishedEvents: []})
   const [isRegisteredUserConnected, setIsRegisteredUserConnected] = useState(false)
   const [isSuperAdminConnected, setIsSuperAdminConnected] = useState(false)
   const [isGuestUserConnected, setIsGuestUserConnected] = useState(false)
@@ -59,7 +59,13 @@ export const WhoIsConnectedProvider = ({ children }) => {
       }
       if(_isRegisteredUserConnected && currentUser.address.length == 0){
         let user = await getRegisteredUserCurrentlyConnectedFirebase(address)
-        setCurrentUser({pseudo: user.pseudo, address: address, email: user.email, bookedEvents: user.bookedEvents})
+        setCurrentUser({
+          pseudo: user.pseudo,
+          address: address,
+          email: user.email,
+          bookedEvents: user.bookedEvents,
+          finishedEvents: user.finishedEvents
+        })
       }
     } catch (error) {
       toast(toastError("Connected Account", error.reason))

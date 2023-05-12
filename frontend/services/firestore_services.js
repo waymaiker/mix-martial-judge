@@ -20,12 +20,17 @@ export const addFirstUserFirebase = async (address, pseudo, lastname, email, cou
 }
 
 export const addUserFirebase = async (address, pseudo, lastname, email, country, dob) => {
-  const data = { pseudo:pseudo, lastname:lastname, email:email, country:country, dob:dob, bookedEvents: [] }
+  const data = { pseudo:pseudo, lastname:lastname, email:email, country:country, dob:dob, bookedEvents: [], finishedEvents: [] }
   await updateDoc(doc(DB_FIREBASE, "users", address), data)
 }
 
 export const userSubscribeToThisEventFirebase = async (address, events) => {
   const data = {bookedEvents: events}
+  await updateDoc(doc(DB_FIREBASE, "users", address), data)
+}
+
+export const userSubmitResultToThisEventFirebase = async (address, events) => {
+  const data = {finishedEvents: events}
   await updateDoc(doc(DB_FIREBASE, "users", address), data)
 }
 
@@ -38,6 +43,7 @@ export const getRegisteredUserCurrentlyConnectedFirebase = async (address) => {
       pseudo: docSnapshot.data().pseudo,
       email: docSnapshot.data().email,
       bookedEvents: docSnapshot.data().bookedEvents,
+      finishedEvents: docSnapshot.data().finishedEvents,
     }
   }
 }

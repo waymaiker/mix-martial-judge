@@ -68,7 +68,13 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
 
         //Get the data we just added, from the DB
         let user = await getRegisteredUserCurrentlyConnectedFirebase(address)
-        setCurrentUser({pseudo: user.pseudo, address: address, email: user.email, bookedEvents: user.bookedEvents})
+        setCurrentUser({
+          pseudo: user.pseudo,
+          address: address,
+          email: user.email,
+          bookedEvents: user.bookedEvents,
+          finishedEvents: user.finishedEvents
+        })
 
         toast(toastSuccess("Access granted to "+ title + " event", "Transaction validated"))
       }, "3000");

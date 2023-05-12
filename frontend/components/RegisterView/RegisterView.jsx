@@ -67,7 +67,7 @@ export default function RegisterView() {
         addUserFirebase(address, pseudo, lastname, email, country, dateToTimeStamp(dob))
       }
 
-      setCurrentUser({address: address, pseudo: pseudo, email:email, bookedEvents:[]})
+      setCurrentUser({address: address, pseudo: pseudo, email:email, bookedEvents:[], finishedEvents:[]})
       setIsLoading(false)
       toast(toastSuccess("UserCreated", "Transaction validated"))
     } catch (error) {
