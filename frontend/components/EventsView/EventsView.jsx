@@ -2,9 +2,6 @@ import { Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useAccount } from 'wagmi';
 
-import useNavigationProvider from '@/hooks/useNavigationProvider';
-
-import Loading from '../Loading/Loading';
 import EventsContent from './components/EventsContent';
 
 export default function EventsView({events}){
