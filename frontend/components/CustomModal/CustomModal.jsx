@@ -10,19 +10,24 @@ import {
   Text,
 } from "@chakra-ui/react"
 
-export default function CustomModal({ mainButtonLabel, isOpen, onClose, children, customActionButton, isCustomSize, title, showButtonsActionFooter }) {
-  const customButtonAction = customActionButton == undefined ? () => onClose() : () => onClickCustomButton()
+export default function CustomModal({ mainButtonLabel, isOpen, onClose, children, customMainButtonAction, customCancelButtonAction, customSize, title, titleFontSize, showButtonsActionFooter }) {
+  const customMainButton = customMainButtonAction == undefined ? () => onClose() : () => onClickMainButton()
+  const customCancelButton = customCancelButtonAction == undefined ? () => onClose() : () => onClickCancelCustomButton()
   const buttonLabel = mainButtonLabel === undefined ? <Text>REGISTER</Text> : <Text>{mainButtonLabel}</Text>
-  const onClickCustomButton = () => {
+  const onClickMainButton = () => {
     onClose()
-    customActionButton()
+    customMainButtonAction()
+  }
+  const onClickCancelCustomButton = () => {
+    onClose()
+    customCancelButtonAction()
   }
 
   return (
-    <Modal size={isCustomSize ? '6xl' : 'md'} blockScrollOnMount={true} closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal size={customSize != undefined ? customSize : 'md'} blockScrollOnMount={true} closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{title}</ModalHeader>
+        <ModalHeader  fontSize={titleFontSize != undefined ? titleFontSize : "2xl"}>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {children}
@@ -31,10 +36,10 @@ export default function CustomModal({ mainButtonLabel, isOpen, onClose, children
         {
           showButtonsActionFooter
           ? <ModalFooter>
-              <Button colorScheme='red' mr={3} onClick={customButtonAction}>
+              <Button colorScheme='red' mr={3} onClick={customMainButton}>
                 {buttonLabel}
               </Button>
-              <Button onClick={onClose} variant='ghost'>
+              <Button onClick={customCancelButton} variant='ghost'>
                 Cancel
               </Button>
             </ModalFooter>
