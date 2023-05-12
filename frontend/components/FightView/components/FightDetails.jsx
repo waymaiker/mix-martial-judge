@@ -49,7 +49,7 @@ export default function FightDetails (){
       <IconButton
         mb={"5"}
         onClick={() => setIsPaused(!isPaused)}
-        icon={ isPaused ? <FaPause /> : <FaPlay />}
+        icon={ !isPaused ? <FaPause /> : <FaPlay />}
       > Icon </IconButton>
       <Button isDisabled={!isFightInProgress} onClick={
         isFightInProgress
