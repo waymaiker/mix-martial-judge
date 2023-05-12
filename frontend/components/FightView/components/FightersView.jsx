@@ -14,7 +14,8 @@ export default function FightersView() {
     headLeft, setHeadLeft,
     bodyLeft, setBodyLeft,
     legsLeft, setLegsLeft,
-    round, fightType, setResults} = useFightProvider()
+    round, fightType, setUserFightResults
+  } = useFightProvider()
 
   const reset = () => {
     setHeadRight(0)
@@ -35,17 +36,17 @@ export default function FightersView() {
   ])
 
   useEffect(()=>{
-    setResults(results => {
+    setUserFightResults(userFightResults => {
       return  {
         "left": {
-          "head":results.left.head + headLeft,
-          "body":results.left.body + bodyLeft,
-          "legs":results.left.legs + legsLeft
+          "head":userFightResults.left.head + headLeft,
+          "body":userFightResults.left.body + bodyLeft,
+          "legs":userFightResults.left.legs + legsLeft
         },
         "right": {
-          "head":results.right.head + headRight,
-          "body":results.right.body + bodyRight,
-          "legs":results.right.legs + legsRight
+          "head":userFightResults.right.head + headRight,
+          "body":userFightResults.right.body + bodyRight,
+          "legs":userFightResults.right.legs + legsRight
         },
         winner: ""
       }

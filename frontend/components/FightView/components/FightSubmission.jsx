@@ -8,7 +8,7 @@ import useFightProvider from "../hooks/useFightProvider";
 export default function FightSubmission({text, startNextRound, isFightInProgress}) {
   const { address } = useAccount()
   const { setCurrentPage, setIsLoading, eventIdSelected } = useNavigationProvider()
-  const { results } = useFightProvider()
+  const { userFightResults } = useFightProvider()
   const toast = useToast()
 
   const submitResults = async () => {
