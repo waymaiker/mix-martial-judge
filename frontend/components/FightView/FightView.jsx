@@ -1,14 +1,17 @@
 import { useEffect } from 'react';
 import { Flex, useDisclosure, Text } from '@chakra-ui/react';
 
+import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useFightProvider from './hooks/useFightProvider';
 
 import Fighters from './components/FightersView';
 import AlertPopup from './components/AlertPopup';
 import FightDetails from './components/FightDetails';
 import CustomModal from '../CustomModal/CustomModal';
+import NoticePopupContent from './components/NoticePopupContent';
 
 export default function FightView(){
+  const { setCurrentPage } = useNavigationProvider()
   const { isRoundFinished, showNotice, setShowNotice, setIsPaused } = useFightProvider()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -25,10 +28,12 @@ export default function FightView(){
             isOpen={isOpen}
             onClose={onClose}
             title={"RULES"}
-            customActionButton={() => {setShowNotice(false), setIsPaused(false)}}
-            showButtonsActionFooter={true}
+            customSize={'3xl'}
+            customMainButtonAction={() => {setShowNotice(false), setIsPaused(false)}}
+            customCancelButtonAction={() => { setCurrentPage("events") }}
             mainButtonLabel={"OK"}
-            children={<Text fontSize={"xl"}> Come on, let's find out !  </Text>}
+            showButtonsActionFooter={true}
+            children={<NoticePopupContent/>}
           />
         : <></>
       }
