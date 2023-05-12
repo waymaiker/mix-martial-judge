@@ -158,7 +158,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   }
 
   return (
-    <Flex opacity={isDisabled ? 0.5 : 1} justifyContent="center" alignItems="center" p="10">
+    <Flex justifyContent="center" alignItems="center" p="10">
       <Image
         src={"/"+fightType+".png"}
         w="7%"
@@ -183,7 +183,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
       {
         isRegisteredUserConnected
         ? isCurrentUserPaidAccessToThisEvent
-          ? registeredUserWithAccess()
+          ? isDisabled ? <></> :registeredUserWithAccess()
           : registeredUserWithNoAccess()
         : <></>
       }
