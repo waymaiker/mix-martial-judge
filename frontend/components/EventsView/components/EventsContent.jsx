@@ -3,8 +3,10 @@ import { Flex, Text } from "@chakra-ui/react";
 import { AnimationZoomListItem } from "@/utils/animations";
 
 import CardEvent from "./CardEvent";
+import useWhoIsConnectedProvider from "@/hooks/useWhoIsConnectedProvider";
 
 export default function EventsContent({events}){
+  const { currentUser } = useWhoIsConnectedProvider()
   return(
     <>
       <Flex justifyContent="center" mt="20">
@@ -18,6 +20,7 @@ export default function EventsContent({events}){
           <AnimationZoomListItem key={index}>
             <CardEvent
               key={index}
+              isDisabled={currentUser.finishedEvents.findIndex((finishedEvent) => finishedEvent == event.fightId) != -1}
               arena={event.arena}
               eventId={event.fightId}
               location={event.location}

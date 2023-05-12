@@ -17,7 +17,7 @@ import { toastError, toastSuccess } from '@/utils/methods';
 import { EventsModalsCustomContent } from './EventModalsCustomContent';
 import CardButton from './CardButton';
 
-export default function CardEvent({eventId, fightType, marketingImage, title, arena, location }) {
+export default function CardEvent({eventId, fightType, marketingImage, title, arena, location, isDisabled}) {
   const { address } = useAccount()
   const { data: signer } = useSigner()
   const { winners, setWinners, events, getData } = useDataProvider()
@@ -113,14 +113,14 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
       <CardButton
         title={"HOW TO WATCH"}
         isLoading={isLoading}
-        isDisabled={isLoading}
+        isDisabled={isLoading || isDisabled}
         action={onOpen}
         secondaryAction={() => showThisModalType("ads")}
       />
       <CardButton
         title={"BE A JUDGE"}
         isLoading={isLoading}
-        isDisabled={isLoading}
+        isDisabled={isLoading || isDisabled}
         action={onOpen}
         secondaryAction={() => {
           setCurrentPage("judge")
@@ -135,7 +135,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
       <CardButton
         title={"GET ACCESS"}
         isLoading={isLoading}
-        isDisabled={isLoading}
+        isDisabled={isLoading || isDisabled}
         action={onOpen}
         secondaryAction={() => showGetAccessModal()}
       />
@@ -147,7 +147,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
       <CardButton
         title={"REGISTER"}
         isLoading={isLoading}
-        isDisabled={isLoading}
+        isDisabled={isLoading || isDisabled}
         action={onOpen}
         secondaryAction={() => {
           setCurrentPage("register");
@@ -158,7 +158,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   }
 
   return (
-    <Flex justifyContent="center" alignItems="center" p="10">
+    <Flex opacity={isDisabled ? 0.5 : 1} justifyContent="center" alignItems="center" p="10">
       <Image
         src={"/"+fightType+".png"}
         w="7%"

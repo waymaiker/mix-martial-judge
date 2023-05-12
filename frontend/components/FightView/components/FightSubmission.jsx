@@ -2,7 +2,7 @@ import { useAccount } from "wagmi";
 import { Button, useToast } from "@chakra-ui/react";
 import { toastError, toastSuccess } from "@/utils/methods";
 
-import { userSubmitResultToThisEventFirebase } from "@/services/firestore_services";
+import { getRegisteredUserCurrentlyConnectedFirebase, userSubmitResultToThisEventFirebase } from "@/services/firestore_services";
 
 import useNavigationProvider from "@/hooks/useNavigationProvider";
 import useWhoIsConnectedProvider from "@/hooks/useWhoIsConnectedProvider";
@@ -12,7 +12,7 @@ export default function FightSubmission({text, startNextRound, isFightInProgress
   const { address } = useAccount()
   const { setCurrentPage, setIsLoading, eventIdSelected } = useNavigationProvider()
   const { userFightResults } = useFightProvider()
-  const { currentUser } = useWhoIsConnectedProvider()
+  const { setCurrentUser, currentUser } = useWhoIsConnectedProvider()
   const toast = useToast()
 
   const submitResults = async () => {
@@ -22,7 +22,15 @@ export default function FightSubmission({text, startNextRound, isFightInProgress
       // const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer)
       // let transaction = await contract.participantSubmitResult(description)
       // await transaction.wait()
-      await userSubmitResultToThisEventFirebase(address, [eventIdSelected, ...currentUser.finishedEvents])
+      await userSubmitResultToThisEventFirebase(address, [parseInt(eventIdSelected), ...currentUser.finishedEvents])
+      let user = await getRegisteredUserCurrentlyConnectedFirebase(address)
+      setCurrentUser({
+        pseudo: user.pseudo,
+        address: address,
+        email: user.email,
+        bookedEvents: user.bookedEvents,
+        finishedEvents: user.finishedEvents
+      })
 
       toast(toastSuccess("Result submitted", "Transaction successful"))
       setIsLoading(false)
