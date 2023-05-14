@@ -31,7 +31,7 @@ If you are familiar with git and the terminal, here are few steps to follow
 
 ### Clone the project
 ```shell
-git clone https://github.com/waymaiker/mix-martial-judge.git
+git clone https://github.com/waymaiker/mix-martial-judge/tree/master/frontend
 ```
 
 ### Install libraries
