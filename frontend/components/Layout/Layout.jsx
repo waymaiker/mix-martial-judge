@@ -18,7 +18,10 @@ export default function Layout({children}) {
       <Header/>
       <Flex grow="1" direction="column">
         { isConnected && children }
-        { currentPage != "judge" && <EventsView events={events} closedEvents={closedEvents}/> }
+        {
+          currentPage != "judge" && currentPage != "marketplace"
+          && <EventsView events={events} closedEvents={closedEvents}/>
+        }
       </Flex>
       <Footer/>
     </Flex>

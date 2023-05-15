@@ -3,12 +3,13 @@ import Layout from '@/components/Layout/Layout'
 
 import useNavigationProvider from '@/hooks/useNavigationProvider';
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
+import { FightProvider } from '@/components/FightView/contexts/fightProvider';
 
 import FightView from '@/components/FightView/FightView';
 import RegisterView from '@/components/RegisterView/RegisterView';
 import SuperAdminView from '@/components/SuperAdminView/SuperAdminView';
+import MarketPlaceView from '@/components/MarketPlaceView/MarketPlaceView';
 import CardAddEvent from '@/components/EventsView/components/CardAddEvent';
-import { FightProvider } from '@/components/FightView/contexts/fightProvider';
 
 export default function Home() {
   const { isSuperAdminConnected, isAdminConnected, isGuestUserConnected } = useWhoIsConnectedProvider()
@@ -27,6 +28,7 @@ export default function Home() {
         { isAdminConnected ? <CardAddEvent/> : <></>}
         { isGuestUserConnected && currentPage == "register" && <RegisterView/> }
         { currentPage == "judge" && <FightProvider> <FightView /> </FightProvider> }
+        { currentPage == "marketplace" && <MarketPlaceView/> }
       </Layout>
     </>
   )

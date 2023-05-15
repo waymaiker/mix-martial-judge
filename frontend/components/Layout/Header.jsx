@@ -2,19 +2,21 @@ import { Flex } from "@chakra-ui/react";
 import { useAccount } from 'wagmi'
 
 import useNavigationProvider from "@/hooks/useNavigationProvider";
+import useWhoIsConnectedProvider from "@/hooks/useWhoIsConnectedProvider";
 
-import HeaderMenu from "./HeaderMenu/HeaderMenu";
 import ConnectWallet from "./ConnectWallet";
+import MenuNavigationButton from "./MenuNavigationButton";
 
 export default function Header() {
   const { isConnected } = useAccount()
-  const { currentPage, setCurrentPage } = useNavigationProvider()
+  const { currentPage } = useNavigationProvider()
+  const { isRegisteredUserConnected } = useWhoIsConnectedProvider()
 
   return (
     isConnected
     ? <ConnectedHeader
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        isRegisteredUserConnected={isRegisteredUserConnected}
       />
     : <NonConnectedHeader />
   )
@@ -28,10 +30,11 @@ const NonConnectedHeader = () => {
   )
 }
 
-const ConnectedHeader = ({currentPage, setCurrentPage}) => {
+const ConnectedHeader = ({currentPage, isRegisteredUserConnected}) => {
   return(
     <Flex position="fixed" top="5%" right="5%">
-      {/* <HeaderMenu currentPage={currentPage} setCurrentPage={setCurrentPage} /> */}
+      { currentPage == "events" && isRegisteredUserConnected && <MenuNavigationButton text={"MarketPlace"} nextPage={"marketplace"}/> }
+      { currentPage == "marketplace" && isRegisteredUserConnected && <MenuNavigationButton text={"Events"} nextPage={"events"}/> }
       <ConnectWallet/>
     </Flex>
   )

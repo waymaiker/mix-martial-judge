@@ -17,6 +17,7 @@ export const AnimationZoomItem = ({children}) => {
     {children}
   </motion.div>
 }
+
 export const AnimationContentFadeIn = ({children}) => {
   return <motion.div
     initial='hidden'
