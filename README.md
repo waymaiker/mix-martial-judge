@@ -31,8 +31,8 @@ Few rules:
 
 ## Important
 
-- [App demo on loom - part 1](https://www.loom.com/share/3d0f4bbd0c8e44df8eeca8087dc450eb)
-- [App demo on loom - part 2](https://www.loom.com/share/5364328a7ec641cfb86411cfc52961b7)
+- [App demo - part 1]()
+- [App demo - part 2]()
 - [Vercel app](https://mix-martial-judge.vercel.app/)
 - [Backend code base - Smart Contracts, Tests, Deployment ...](https://github.com/waymaiker/mix-martial-judge/tree/master/backend)
 
