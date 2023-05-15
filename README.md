@@ -31,9 +31,9 @@ Few rules:
 
 ## Important
 
-- [App demo - part 1]()
-- [App demo - part 2]()
-- [Vercel app](https://mix-martial-judge.vercel.app/)
+- [App demo - part 1 / UNDER UPDATE]()
+- [App demo - part 2 / UNDER UPDATE]()
+- [Vercel app - Not reflecting the last version of the app](https://mix-martial-judge.vercel.app/)
 - [Backend code base - Smart Contracts, Tests, Deployment ...](https://github.com/waymaiker/mix-martial-judge/tree/master/backend)
 
 ## Contracts Addresses
