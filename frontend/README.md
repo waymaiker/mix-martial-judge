@@ -39,7 +39,13 @@ yarn dev
 
 ## Resources
 
-* https://chakra-ui.com/
-* https://firebase.google.com/docs/build?hl=en
 * https://nextjs.org/
+* https://chakra-ui.com/
+* https://react-dropzone.js.org/
+* https://www.framer.com/motion/
+* https://www.rainbowkit.com/
+* https://wagmi.sh/
+* https://nft.storage/
+* https://firebase.google.com/docs/build?hl=en
 * https://vercel.com/home
+
