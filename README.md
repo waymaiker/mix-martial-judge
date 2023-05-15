@@ -31,9 +31,10 @@ Few rules:
 
 ## Important
 
-- [My App demo on loom](https://www.loom.com/share/2df1c07a70cd42c6abd4d19e9b214e01)
-- [Vercel app](https://nextjs-voting-system-mdczrnyz7-wdevblockchain-gmailcom.vercel.app/)
-- [Backend code base - Smart Contracts, Tests, Deployment ...](https://github.com/waymaiker/dapps-voting-system/blob/master/README.md#need-to-deploy-the-contract-on-goerli)
+- [App demo on loom - part 1](https://www.loom.com/share/3d0f4bbd0c8e44df8eeca8087dc450eb)
+- [App demo on loom - part 2](https://www.loom.com/share/5364328a7ec641cfb86411cfc52961b7)
+- [Vercel app](https://mix-martial-judge.vercel.app/)
+- [Backend code base - Smart Contracts, Tests, Deployment ...](https://github.com/waymaiker/mix-martial-judge/tree/master/backend)
 
 ## Contracts Addresses
 User - 0xF576558Cb8404FEd1443f18D4F7e9A9e84e0B2C9
