@@ -1,13 +1,6 @@
 # Mix Martial Art 
 
-Alyra final project
-
-
-Few rules:  
-✔️ Voting is not secret for users added to the Whitelist.  
-✔️ Each voter can see the votes of others.  
-✔️ The winner is determined by simple majority.  
-✔️ The proposal that gets the most votes wins.  
+Alyra final project - frontend part
 
 ## Contents
 - [Important](#important)
