@@ -1,14 +1,12 @@
-import { useState } from 'react';
 import Head from 'next/head'
-import { Flex, Image, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, Text } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Flex, Image } from '@chakra-ui/react';
 
 import MarketPlaceContent from './components/MarketPlaceContent';
-import CloseFilterPanel from './components/CloseFilterPanel';
+import FiltersPanelView from './components/FiltersPanel/FiltersPanelView';
 
 export default function MarketPlaceView() {
   const [ isFilterPanelVisible, showFilterPanel ] = useState(true)
-  const [ startPrice, onChangePrice ] = useState(0)
-
 
   const items = [
     {
@@ -87,41 +85,8 @@ export default function MarketPlaceView() {
           src="/arena.png"
           shadow={"2xl"}
         />
-        <Flex justifyContent="center">
-          {
-            isFilterPanelVisible
-            && <Flex
-                direction='column'
-                w="15%"
-                mr='7px'
-                p="10px"
-                pr="0px"
-                borderRight="1px"
-                borderColor="gray.300"
-              >
-                <CloseFilterPanel showFilterPanel={showFilterPanel} />
-                <Flex direction='column' p="5px">
-                  <Text fontSize="md" cursor="default" mt="10px"> Price </Text>
-                  <Flex>
-                    <Text fontSize="xs" cursor="default" mr="5"> Start: {startPrice.toString().slice(0,startPrice.toString().length/2).replace(',', '')} </Text>
-                    <Text fontSize="xs" cursor="default"> End: {startPrice.toString().slice(startPrice.toString().length/2, startPrice.toString().length).replace(',', '')}</Text>
-                  </Flex>
-                  <RangeSlider
-                    aria-label={['min', 'max']}
-                    min={0}
-                    max={100}
-                    defaultValue={[10, 50]}
-                    onChange={(val, val2) => onChangePrice(val)}
-                  >
-                    <RangeSliderTrack>
-                      <RangeSliderFilledTrack />
-                    </RangeSliderTrack>
-                    <RangeSliderThumb index={0} />
-                    <RangeSliderThumb index={1} />
-                  </RangeSlider>
-                </Flex>
-              </Flex>
-          }
+        <Flex justifyContent="center" p="10px">
+          { isFilterPanelVisible && <FiltersPanelView showFilterPanel={showFilterPanel}/> }
           <MarketPlaceContent
             items={items}
             showFilterPanel={showFilterPanel}

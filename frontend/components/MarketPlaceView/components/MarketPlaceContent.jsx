@@ -4,7 +4,7 @@ import { Flex, Grid, Text } from "@chakra-ui/react";
 import ItemMarketPlace from "./ItemMarketPlace";
 import {SearchInput} from "./SearchInput";
 import SelectViewMarketPlaceButton from "./SelectViewMarketPlaceButton";
-import OpenFiltersPanel from "./OpenFiltersPanel";
+import OpenFiltersPanel from "./FiltersPanel/OpenFiltersPanel";
 
 export default function MarketPlaceContent({items, showFilterPanel, isFilterPanelVisible}){
   const [ view, selectView ] = useState(true)

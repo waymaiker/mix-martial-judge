@@ -15,7 +15,7 @@ export const SearchInput = ({title, input, handleInputChange}) => {
           value={input}
           size='lg'
           h="4vh"
-          borderRadius={"20px"}
+          borderRadius="20px"
           borderColor="blackAlpha.500"
           onChange={(e) => handleInputChange(e.target.value)}
         />

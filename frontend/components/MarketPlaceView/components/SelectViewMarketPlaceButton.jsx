@@ -9,8 +9,8 @@ export default function SelectViewMarketPlaceButton ({view, selectView}){
       direction='column'
       border="1px"
       borderRight="0px"
-      borderColor={view ? "blue.300" : "gray.400"}
-      backgroundColor={view ? "blue.300" : "white"}
+      borderColor={view ? "blue.100" : "gray.400"}
+      backgroundColor={view ? "blue.100" : "white"}
       borderLeftRadius="20px"
       p="10px"
       onClick={()=>selectView(true)}
@@ -31,8 +31,8 @@ export default function SelectViewMarketPlaceButton ({view, selectView}){
       direction={'column'}
       border={"1px"}
       borderLeft={"0px"}
-      borderColor={!view ? "blue.300" : "gray.400"}
-      backgroundColor={!view ? "blue.300" : "white"}
+      borderColor={!view ? "blue.100" : "gray.400"}
+      backgroundColor={!view ? "blue.100" : "white"}
       borderRightRadius={"20px"}
       p={"10px"}
       onClick={()=>selectView(false)}

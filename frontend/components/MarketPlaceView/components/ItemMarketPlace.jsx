@@ -37,8 +37,8 @@ export default function ItemMarketPlace({
       <GridItem p="15px" borderRadius="15px">
         <Flex direction="column">
           <Image
-            h={"20vh"}
-            objectFit='cover'
+            borderTopRadius={"15px"}
+            objectFit='contain'
             src={nftImage}
             alt='ufc-fighters'
           />
