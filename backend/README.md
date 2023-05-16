@@ -1,13 +1,50 @@
 # Sample Hardhat Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+## How to use this project
+This project will require that you have already installed
+* Yarn
+* Node
+* Git
 
-Try running some of the following tasks:
+If you are familiar with git and the terminal, here are few steps to follow
 
+### Clone the project
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
+git clone https://github.com/waymaiker/voting-system.git
+```
+
+### Install libraries
+```shell
+cd voting-system
+yarn install
+```
+### hardhat commands
+```shell
+# Start the local Blockchain
+yarn hardhat node
+```
+
+#### In an other terminal tab
+```shell
+# Deploy your smart contract on localhost hardhat
+yarn hardhat deploy
+```
+
+#### If you want to deploy on an other network
+
+1- Add the network name and Id into this [helper-hardhat-config.js](https://github.com/waymaiker/dapps-voting-system/blob/master/helper-hardhat-config.js) <br/>
+2- Make sur your .env file is all set with you RPC nodes Api Key, Private Key and the Etherscan Api Key <br/>
+3- Configure your [hardhat.config.js](https://github.com/waymaiker/dapps-voting-system/blob/master/hardhat.config.js) <br/>
+4- Then execute the next command
+
+#### Need to deploy the contract on Goerli
+```shell
+# Deploy your smart contract on testnet GOERLI
+yarn hardhat deploy --network goerli
+```
+
+#### test commands
+```shell
+yarn hardhat test
+yarn hardhat coverage
 ```
