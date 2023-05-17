@@ -17,7 +17,7 @@ export default function MarketPlaceContent({items, showFilterPanel, isFilterPane
         p="10px"
         w="70%"
         borderLeft="1px"
-        borderColor="gray.300"
+        borderColor="gray.200"
       >
         <Flex alignItems="center">
           {!isFilterPanelVisible  && <OpenFiltersPanel showFilterPanel={showFilterPanel} />}

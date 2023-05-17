@@ -7,11 +7,11 @@ export default function FiltersPanelView ({showFilterPanel}){
   return <Flex
     direction='column'
     w="15%"
-    mr="7px"
+    mr="12px"
     p="10px"
     pr="0px"
     borderRight="1px"
-    borderColor="gray.300"
+    borderColor="gray.200"
   >
     <CloseFilterPanel showFilterPanel={showFilterPanel} />
     <PriceFilter />

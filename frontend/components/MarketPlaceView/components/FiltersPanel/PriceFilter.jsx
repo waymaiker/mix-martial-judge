@@ -14,16 +14,16 @@ export default function PriceFilter ({}){
       alignItems="center"
       justifyContent="space-between"
       borderBottom={visibility ? "0px" : "1px"}
-      borderColor="gray.300"
+      borderColor="gray.200"
       className={styles.filterPanelItem}
       onClick={()=>visibilityChange(!visibility)}
     >
-      <Text cursor="default" fontSize="xl"> Price </Text>
+      <Text cursor="default" fontSize="18"> Price </Text>
       {visibility ? <MdOutlineKeyboardArrowUp size="25px"/> : <MdOutlineKeyboardArrowDown size="25px"/>}
     </Flex>
     {
       visibility
-      ? <Flex p="10px" alignItems='center' justifyContent="space-between" borderBottom="1px" borderColor="gray.300">
+      ? <Flex p="10px" alignItems='center' justifyContent="space-between" borderBottom="1px" borderColor="gray.200">
           <Text mr="5px" fontWeight='bold' fontSize="lg" cursor="default"> $ </Text>
           <Input
             placeholder='Minimum'
