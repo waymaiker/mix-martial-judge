@@ -22,7 +22,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
   const [isAdminConnected, setIsAdminConnected] = useState(false)
 
   const { address, isConnected } = useAccount()
-  const { isLoading } = useNavigationProvider()
+  const { isLoading, setCurrentPage } = useNavigationProvider()
   const { users } = useDataProvider()
   const toast = useToast()
 
@@ -58,6 +58,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
         setCurrentUser({address:address, pseudo: '', email:'', bookedEvents:[], finishedEvents: []})
       }
       if(_isSuperAdminConnected || _isAdminConnected && currentUser.address != address) {
+        setCurrentPage("events")
         toast(toastSuccess("Account connected", _isSuperAdminConnected ? "SUPER ADMIN" : "ADMIN", "top"))
       }
       if(_isRegisteredUserConnected && currentUser.address != address){

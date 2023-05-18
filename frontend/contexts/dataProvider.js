@@ -32,6 +32,7 @@ export const DataProvider = ({ children }) => {
       resetDatas()
       catchWinnerEvent(dataEvents, setWinners)
       catchEventCreatedEvent(dataEvents, setEvents)
+      catchUserHasJoinedAFightEvent(dataEvents, setEvents)
       catchUserCreatedEvent(dataUsers, setUsers)
     } catch (error) {
       toast({ title: "Error - GetData", description: error.reason, status: 'error', duration: 5000, isClosable: true })
@@ -91,6 +92,22 @@ const catchEventCreatedEvent = (eventsEvents, setEvents) => {
     }
   })
 }
+
+const catchUserHasJoinedAFightEvent = (userHasJoinedAFightEvents, setEvents) => {
+  userHasJoinedAFightEvents.forEach((event) => {
+    if(event.event === "UserHasJoinedAFight"){
+      setEvents(events => {
+        events[event.args.fightId] = {
+         ...events[event.args.fightId],
+         nbTicketsSold: parseInt(event.args.fightTicketId),
+         participants: [...events[event.args.fightId].participants, event.args.userAddress]
+        }
+        return events;
+      })
+    }
+  })
+}
+
 
 const catchWinnerEvent = (fightEvents, setWinners) => {
   fightEvents.forEach((event) => {

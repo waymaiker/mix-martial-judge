@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import useWhoIsConnectedProvider from '@/hooks/useWhoIsConnectedProvider';
 
 import EventsContent from './components/EventsContent';
-import { useAccount } from 'wagmi';
 
 export default function EventsView({events, closedEvents}){
   //Providers
