@@ -14,23 +14,17 @@ export default function MarketPlaceContent({items, showFilterPanel, isFilterPane
     <>
       <Flex
         direction='column'
-        p="10px"
-        w="70%"
+        padding="10px"
         borderLeft="1px"
         borderColor="gray.200"
       >
         <Flex alignItems="center">
-          {!isFilterPanelVisible  && <OpenFiltersPanel showFilterPanel={showFilterPanel} />}
+          {!isFilterPanelVisible && <OpenFiltersPanel showFilterPanel={showFilterPanel}/>}
           <SearchInput input={inputSearch} handleInputChange={setInputSearch}/>
           <SelectViewMarketPlaceButton view={view} selectView={selectView} />
         </Flex>
         <Text mt='10px' color="gray.600"> {items.length} Collectibles </Text>
-        <Grid
-          templateColumns={view ? "repeat(4, 1fr)" : "repeat(5, 1fr)"}
-          templateRows={view ? "repeat(5, 1fr)" : "repeat(4, 1fr)"}
-          mt='10px'
-          minW="100%"
-        >
+        <Grid mt='10px' templateColumns={view ? "repeat(4, 1fr)" : "repeat(5, 1fr)"}>
           {
             items.map((item, index) =>
               <ItemMarketPlace

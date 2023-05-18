@@ -25,6 +25,7 @@ export default function ItemMarketPlace({
   const buyButton = () => {
     return <CardButton
       title={"Buy"}
+      customWidth="100%"
       customPadding={typeOfview ? 1 : 0}
       isLoading={isLoading}
       isDisabled={isLoading || isDisabled}
@@ -50,13 +51,7 @@ export default function ItemMarketPlace({
                 <Text color="gray.500" fontSize="sm" mr='10px'> From </Text>
                 <Text fontWeight="extrabold"> {price} </Text>
               </Flex>
-              <Flex
-                mt="2"
-                w={typeOfview ? "45%" : "50%"}
-                justifyContent="space-between"
-                alignItems={'center'}
-              >
-                {addButton()}
+              <Flex mt="2" w="50%" justifyContent="space-between" alignItems="center">
                 {buyButton()}
               </Flex>
             </Flex>

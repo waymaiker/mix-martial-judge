@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import { useState } from 'react';
-import { Flex, Image } from '@chakra-ui/react';
+import { Flex, Grid, Image } from '@chakra-ui/react';
 
 import MarketPlaceContent from './components/MarketPlaceContent';
 import FiltersPanelView from './components/FiltersPanel/FiltersPanelView';
 
 export default function MarketPlaceView() {
+  //State
   const [ isFilterPanelVisible, showFilterPanel ] = useState(true)
 
   const items = [
@@ -85,14 +86,14 @@ export default function MarketPlaceView() {
           src="/arena.png"
           shadow={"2xl"}
         />
-        <Flex justifyContent="center" p="10px">
-          { isFilterPanelVisible && <FiltersPanelView showFilterPanel={showFilterPanel}/> }
+        <Grid mt='10px' p="10px" templateColumns={isFilterPanelVisible ? "1fr 4fr" : ""}>
+          {isFilterPanelVisible && <FiltersPanelView showFilterPanel={showFilterPanel}/>}
           <MarketPlaceContent
             items={items}
             showFilterPanel={showFilterPanel}
             isFilterPanelVisible={isFilterPanelVisible}
           />
-        </Flex>
+        </Grid>
       </Flex>
     </>
   )

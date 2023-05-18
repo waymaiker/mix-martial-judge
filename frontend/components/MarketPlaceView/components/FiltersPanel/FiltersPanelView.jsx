@@ -6,7 +6,6 @@ import PriceFilter from './PriceFilter';
 export default function FiltersPanelView ({showFilterPanel}){
   return <Flex
     direction='column'
-    w="15%"
     mr="12px"
     p="10px"
     pr="0px"
