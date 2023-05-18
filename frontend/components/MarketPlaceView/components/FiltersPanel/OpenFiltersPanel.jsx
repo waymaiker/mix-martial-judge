@@ -1,5 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react';
 
+import styles from '../../styles.module.css'
+
 export default function OpenFiltersPanel ({showFilterPanel}){
   const line = (width) => <hr
     style={{
@@ -21,6 +23,7 @@ export default function OpenFiltersPanel ({showFilterPanel}){
     pr="15px"
     mr='5px'
     onClick={() => showFilterPanel((isFilterPanelVisible) => !isFilterPanelVisible)}
+    className={styles.marketPlaceFilters}
   >
     <Flex direction="column" alignItems='center'>
       {line(16)}

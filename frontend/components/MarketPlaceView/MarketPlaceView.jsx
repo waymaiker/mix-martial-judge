@@ -5,6 +5,8 @@ import { Flex, Grid, Image } from '@chakra-ui/react';
 import MarketPlaceContent from './components/MarketPlaceContent';
 import FiltersPanelView from './components/FiltersPanel/FiltersPanelView';
 
+import styles from './styles.module.css'
+
 export default function MarketPlaceView() {
   //State
   const [ isFilterPanelVisible, showFilterPanel ] = useState(true)
@@ -84,9 +86,9 @@ export default function MarketPlaceView() {
         <Image
           fit="fit"
           src="/arena.png"
-          shadow={"2xl"}
+          shadow="2xl"
         />
-        <Grid mt='10px' p="10px" templateColumns={isFilterPanelVisible ? "1fr 4fr" : ""}>
+        <Grid mt='10px' p="5px" className={isFilterPanelVisible ? styles.marketPlaceView : ""}>
           {isFilterPanelVisible && <FiltersPanelView showFilterPanel={showFilterPanel}/>}
           <MarketPlaceContent
             items={items}

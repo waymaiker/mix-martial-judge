@@ -6,6 +6,8 @@ import {SearchInput} from "./SearchInput";
 import SelectViewMarketPlaceButton from "./SelectViewMarketPlaceButton";
 import OpenFiltersPanel from "./FiltersPanel/OpenFiltersPanel";
 
+import styles from '../styles.module.css'
+
 export default function MarketPlaceContent({items, showFilterPanel, isFilterPanelVisible}){
   const [ view, selectView ] = useState(true)
   const [ inputSearch, setInputSearch ] = useState("")
@@ -24,7 +26,7 @@ export default function MarketPlaceContent({items, showFilterPanel, isFilterPane
           <SelectViewMarketPlaceButton view={view} selectView={selectView} />
         </Flex>
         <Text mt='10px' color="gray.600"> {items.length} Collectibles </Text>
-        <Grid mt='10px' templateColumns={view ? "repeat(4, 1fr)" : "repeat(5, 1fr)"}>
+        <Grid mt='10px' className={view ? styles.marketPlaceContentNormal : styles.marketPlaceContentPlus}>
           {
             items.map((item, index) =>
               <ItemMarketPlace
