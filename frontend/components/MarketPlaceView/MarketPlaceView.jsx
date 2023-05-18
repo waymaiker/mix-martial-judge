@@ -10,6 +10,7 @@ import styles from './styles.module.css'
 export default function MarketPlaceView() {
   //State
   const [ isFilterPanelVisible, showFilterPanel ] = useState(true)
+  const [ borderSearchInputColor, setBorderSearchInputColor ] = useState("gray.300")
 
   const items = [
     {
@@ -87,13 +88,21 @@ export default function MarketPlaceView() {
           fit="fit"
           src="/arena.png"
           shadow="2xl"
+          onClick={() => setBorderSearchInputColor("gray.300")}
         />
         <Grid mt='10px' p="5px" className={isFilterPanelVisible ? styles.marketPlaceView : ""}>
-          {isFilterPanelVisible && <FiltersPanelView showFilterPanel={showFilterPanel}/>}
+          {isFilterPanelVisible &&
+            <FiltersPanelView
+              showFilterPanel={showFilterPanel}
+              setBorderSearchInputColor={setBorderSearchInputColor}
+            />
+          }
           <MarketPlaceContent
             items={items}
             showFilterPanel={showFilterPanel}
             isFilterPanelVisible={isFilterPanelVisible}
+            borderSearchInputColor={borderSearchInputColor}
+            setBorderSearchInputColor={setBorderSearchInputColor}
           />
         </Grid>
       </Flex>

@@ -5,7 +5,7 @@ import PriceFilter from './PriceFilter';
 
 import styles from '../../styles.module.css'
 
-export default function FiltersPanelView ({showFilterPanel}){
+export default function FiltersPanelView ({showFilterPanel, setBorderSearchInputColor}){
   return <Flex
     direction='column'
     mr="12px"
@@ -14,6 +14,7 @@ export default function FiltersPanelView ({showFilterPanel}){
     borderRight="1px"
     borderColor="gray.200"
     className={styles.marketPlaceFilters}
+    onClick={() => setBorderSearchInputColor("gray.300")}
   >
     <CloseFilterPanel showFilterPanel={showFilterPanel} />
     <PriceFilter />

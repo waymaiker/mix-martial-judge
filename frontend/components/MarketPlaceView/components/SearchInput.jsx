@@ -1,13 +1,22 @@
-import { Flex, Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { Flex, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
 import { FaSearch } from 'react-icons/fa';
+import { RxCross1 } from 'react-icons/rx';
 
-export const SearchInput = ({title, input, handleInputChange}) => {
+export const SearchInput = ({title, input, handleInputChange, setColor, borderColor}) => {
   return (
-    <Flex w="100%" mr="5px">
+    <Flex
+      w="100%"
+      mr="5px"
+      p="2px"
+      pl="10px"
+      pr="10px"
+      alignItems="center"
+      border="1px"
+      borderRadius="20px"
+      borderColor={borderColor}
+    >
+      <FaSearch />
       <InputGroup>
-        <InputLeftElement pointerEvents='none'>
-          <FaSearch />
-        </InputLeftElement>
         <Input
           type='text'
           title={title}
@@ -15,11 +24,17 @@ export const SearchInput = ({title, input, handleInputChange}) => {
           value={input}
           size='lg'
           h="4vh"
-          borderRadius="20px"
-          borderColor="blackAlpha.500"
+          focusBorderColor="whiteAlpha.100"
+          border="0xp"
+          onClick={() => setColor("blue.500")}
           onChange={(e) => handleInputChange(e.target.value)}
         />
       </InputGroup>
+      {
+        input.length == 0 && input == ""
+          ? <></>
+          : <RxCross1 onClick={() => {handleInputChange(""), setColor("gray.300")}}/>
+      }
     </Flex>
   )
 }
