@@ -57,8 +57,8 @@ export default function SuperAdminView(){
   return (
     <Flex direction='column' justifyContent="center" alignItems='center' backgroundColor="red.600" shadow='xl' pb='20'>
       <Text fontWeight="extrabold" mt="2%"> PAGE </Text>
-      <Text fontWeight="bold" fontSize="7xl" fontStyle="italic" color={"white"}> ADD A PLATFORM ADMINISTRATOR </Text>
-      <Stack direction='column' alignItems={"center"} shadow={"xl"} backgroundColor={"white"} borderRadius="10" w="100vh" p="20" mt="5" mb="5">
+      <Text fontWeight="bold" fontSize="7xl" fontStyle="italic" color="white" textAlign="center"> ADD A PLATFORM ADMINISTRATOR </Text>
+      <Stack direction='column' alignItems="center" shadow="xl" backgroundColor="white" borderRadius="10" w="100vh" p="20" mt="5" mb="5">
         <Flex w="100%" alignItems="flex-start">
           <Stat>
             <StatLabel>Money generated accross all events: </StatLabel>

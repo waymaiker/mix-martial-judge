@@ -80,7 +80,7 @@ export default function RegisterView() {
     <Flex id='register' grow="1" direction="column" justifyContent='center' alignItems="center"  backgroundColor={"red.600"} pb={"20"}>
       <Text fontWeight="extrabold" mt="2%"> PAGE </Text>
       <AnimationContentFadeIn>
-        <Text fontSize="8xl" fontWeight="extrabold" fontStyle="italic" color={"white"}>JOIN OUR COMMUNITY</Text>
+        <Text fontSize="8xl" fontWeight="extrabold" fontStyle="italic" color={"white"} textAlign="center">JOIN OUR COMMUNITY</Text>
       </AnimationContentFadeIn>
       <Card w="50%" p="10" shadow={"2xl"}>
         <CardBody>
