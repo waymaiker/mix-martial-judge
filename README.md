@@ -1,8 +1,6 @@
-# mix-martial-judge
+# MMJ - Mix Martial Judge
 
-Alyra final project
-
-I created a platform allowing an ufc fan, to enter in the skin of a referee.
+MMJ is a platform allowing an ufc fan, to enter in the skin of a referee.
 During each fight, a spectator will be able to count the number of hits received by each fighter, the winner of each round and finally of the fight.
 
 At the end, the spectator who has scored a number of hits similar (or the closest), of the tally of the referees, will earn an NFT. 
