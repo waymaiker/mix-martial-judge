@@ -11,7 +11,9 @@
     "@openzeppelin/contracts": "^4.8.1",
     "firebase": "9.21.0",
     "hardhat": "^2.12.6",
-    "hardhat-deploy": "^0.11.23"
+    "hardhat-deploy": "^0.11.23",
+    "update": "^0.7.4",
+    "webpack": "5.76.0"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",

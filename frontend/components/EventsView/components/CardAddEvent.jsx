@@ -46,7 +46,7 @@ export default function CardAddEvent() {
   const submit = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_GOERLI, FightContract.abi, signer);
       const transaction = await contract.createFight(fighterOne, fighterTwo, arena, location, fightType, fileData.Link, fileData.CID);
       await transaction.wait()
 

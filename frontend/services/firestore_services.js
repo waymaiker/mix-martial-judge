@@ -1,5 +1,5 @@
-import {initializeApp} from 'Firebase/app';
-import {setDoc, getDoc, doc, updateDoc, getFirestore} from 'Firebase/firestore';
+import {setDoc, getDoc, doc, updateDoc, getFirestore} from 'Firebase/compat/firestore';
+import {initializeApp} from 'Firebase/compat/app';
 
 const FirebaseCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
@@ -11,7 +11,7 @@ const FirebaseCredentials = {
   appId:process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
-const APP = initializeApp(FirebaseCredentials)
+const APP = getApps().length  === 0 ? initializeApp(FirebaseCredentials) : getApps()[0];
 const DB_FIREBASE = getFirestore(APP);
 
 export const addFirstUserFirebase = async (address, pseudo, lastname, email, country, dob) => {

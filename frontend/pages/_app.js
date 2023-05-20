@@ -15,7 +15,7 @@ import { DataProvider } from '@/contexts/dataProvider';
 import theme from '@/utils/theme';
 
 const { chains, provider } = configureChains(
-  [hardhat],
+  [goerli],
   [
     publicProvider()
   ]

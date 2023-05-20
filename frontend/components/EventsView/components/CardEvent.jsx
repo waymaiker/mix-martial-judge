@@ -46,7 +46,7 @@ export default function CardEvent({eventId, fightType, marketingImage, title, ar
   const accessPayment = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_GOERLI, FightContract.abi, signer);
       const transaction = await contract.userJoinAFightAsJudgeEnthusiast(eventId, address, {value: ethers.utils.parseEther("0.059")});
       await transaction.wait()
 

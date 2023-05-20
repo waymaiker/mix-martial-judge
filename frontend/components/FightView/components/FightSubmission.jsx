@@ -19,7 +19,7 @@ export default function FightSubmission({text, startNextRound, isFightInProgress
     setIsLoading(true)
     try {
       setCurrentPage("events")
-      // const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer)
+      // const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_GOERLI, FightContract.abi, signer)
       // let transaction = await contract.participantSubmitResult(description)
       // await transaction.wait()
       await userSubmitResultToThisEventFirebase(address, [parseInt(eventIdSelected), ...currentUser.finishedEvents])

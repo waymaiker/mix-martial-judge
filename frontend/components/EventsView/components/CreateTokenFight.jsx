@@ -28,7 +28,7 @@ export default function CreateFightToken({onClose}){
     try {
       const winnerAddress = winners.filter(winner => winner.fightId == parseInt(eventIdSelected))[0].winnerAddress
       const NFTmetadata = await storeNFT(image, fileName, tokenDescription)
-      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_GOERLI, FightContract.abi, signer);
       const transaction = await contract.safeMint(parseInt(eventIdSelected), winnerAddress, NFTmetadata);
       await transaction.wait()
 

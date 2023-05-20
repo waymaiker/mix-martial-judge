@@ -42,7 +42,7 @@ export default function SuperAdminView(){
   const submit = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_LOCALHOST, FightContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FIGHT_SCADDRESS_GOERLI, FightContract.abi, signer);
       const transaction = await contract.addAdmin(adminAddressProvided);
       await transaction.wait()
 

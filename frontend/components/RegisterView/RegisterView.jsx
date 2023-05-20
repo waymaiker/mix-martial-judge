@@ -55,7 +55,7 @@ export default function RegisterView() {
   const submit = async () => {
     setIsLoading(true);
     try {
-      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_USERFACTORY_SCADDRESS_LOCALHOST, UserFactoryContract.abi, signer);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_USERFACTORY_SCADDRESS_GOERLI, UserFactoryContract.abi, signer, {gasLimit: 100000});
       const transaction = await contract.create(pseudo);
       await transaction.wait()
 

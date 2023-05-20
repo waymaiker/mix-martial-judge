@@ -31,6 +31,7 @@ export const ListDropdown = ({input, setInput}) => {
         e.text == input && list.length == 1
         ? <></>
         : <DropdownItem
+            key={index}
             index={index}
             last={index == list.length-1}
             text={e.text}

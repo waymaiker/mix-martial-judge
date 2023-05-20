@@ -8,22 +8,22 @@ module.exports = async({ getNamedAccounts, deployments }) => {
 
   log("Deployment in progress ...");
 
-  arguments = [process.env.SUPERADMIN_WALLET_ADDRESS_LOCALHOST]
+  arguments = [process.env.SUPERADMIN_WALLET_ADDRESS_GOERLI]
   const Fight = await deploy("Fight", {
     from: deployer,
     args: arguments,
     log: true,
-    waitConfirmations: 0
+    waitConfirmations: 4
   })
 
   log("Deployment done !")
   log("Contract address :", Fight.address)
 
   //Verify the smart contract
-  // if(!developmentChains.includes(network.name) && process.env.ETHERSCAN) {
-  //   log("Verifying...")
-  //   await verify(Fight.address, arguments)
-  // }
+  if(!developmentChains.includes(network.name) && process.env.ETHERSCAN) {
+    log("Verifying...")
+    await verify(Fight.address, arguments)
+  }
 }
 
 module.exports.tags = ["all", "fight", "main"]

@@ -3,6 +3,7 @@ import { Flex } from "@chakra-ui/react"
 export const DropdownItem = ({index, last, text, setInput, closeDropdownList}) => {
   return (
     <Flex
+      key={index}
       id={index}
       borderBottom={'1px'}
       borderColor={'gray.200'}
