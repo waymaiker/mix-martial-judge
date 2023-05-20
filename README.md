@@ -12,7 +12,9 @@ MMJ is a platform allowing an ufc fan, to enter in the skin of a referee.
 During each fight, a spectator will be able to count the number of hits received by each fighter, the winner of each round and finally of the fight.
 
 At the end, the spectator who has scored a number of hits similar (or the closest), of the tally of the referees, will earn an NFT. 
-This token, will giving him/her access to privileges. For example, to meet the fighters, to participate in a training session, to have a full access to the preparation of the athletes during 1 week, to be in a dressing room at the beginning of a fight and why not, to be totally taken care of during a main event.
+This token, will giving him/her access to privileges. For example, to meet the fighters, to participate in a training session, to have a full access to the preparation of the athletes during 1 week, to be in a dressing room at the beginning of a fight and why not, to be totally taken care of during a main event.  
+
+Via a marketplace, each registered user will be able to buy or sell a generated nft.
 
 Use cases - Super Admin  
 ✔️ Can give admin priviledge to an address.  
