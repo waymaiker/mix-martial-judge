@@ -47,6 +47,8 @@ Use cases - User
 - [Backend code base - Smart Contracts, Tests, Deployment ...](https://github.com/waymaiker/mix-martial-judge/tree/master/backend)
 
 ## Contracts Addresses
+Find these contrats on [etherscan testnet](https://goerli.etherscan.io/)   
+
 User - 0xF9702F05bF092447B435775e5da11937DE5bC8cb  
 UserFactory - 0xa2Cf755aD51Cf6C55C5190EF3dc3438AfE3aA5E7  
 Fight - 0x981D600E65c4c17B0E74D30823573903301F49bA  
