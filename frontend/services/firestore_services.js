@@ -1,5 +1,5 @@
-import {setDoc, getDoc, doc, updateDoc, getFirestore} from 'Firebase/compat/firestore';
-import {initializeApp} from 'Firebase/compat/app';
+import {initializeApp} from 'Firebase/app';
+import {setDoc, getDoc, doc, updateDoc, getFirestore} from 'Firebase/firestore';
 
 const FirebaseCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
