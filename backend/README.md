@@ -1,4 +1,4 @@
-# Sample Hardhat Project
+# MMJ - Backend part
 
 ## How to use this project
 This project will require that you have already installed
@@ -10,12 +10,12 @@ If you are familiar with git and the terminal, here are few steps to follow
 
 ### Clone the project
 ```shell
-git clone https://github.com/waymaiker/voting-system.git
+git clone https://github.com/waymaiker/mix-martial-judge.git
 ```
 
 ### Install libraries
 ```shell
-cd voting-system
+cd backend
 yarn install
 ```
 ### hardhat commands
@@ -33,7 +33,7 @@ yarn hardhat deploy
 #### If you want to deploy on an other network
 
 1- Add the network name and Id into this [helper-hardhat-config.js](https://github.com/waymaiker/mix-martial-judge/blob/master/backend/helper-hardhat-config.js) <br/>
-2- Make sur your .env file is all set with you RPC nodes Api Key, Private Key and the Etherscan Api Key <br/>
+2- Make sur your .env file is all set with your RPC nodes Api Key, Private Key and the Etherscan Api Key <br/>
 3- Configure your [hardhat.config.js](https://github.com/waymaiker/mix-martial-judge/blob/master/backend/hardhat.config.js) <br/>
 4- Then execute the next command
 
