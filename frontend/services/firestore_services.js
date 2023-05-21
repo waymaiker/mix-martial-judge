@@ -1,4 +1,4 @@
-import {initializeApp} from 'Firebase/app';
+import {initializeApp, getApps} from 'Firebase/app';
 import {setDoc, getDoc, doc, updateDoc, getFirestore} from 'Firebase/firestore';
 
 const FirebaseCredentials = {
