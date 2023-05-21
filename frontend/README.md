@@ -1,4 +1,4 @@
-# Mix Martial Art 
+# Mix Martial Art - Frontend part
 
 ## Contents
 - [Important](#important)
