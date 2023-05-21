@@ -48,3 +48,16 @@ yarn hardhat deploy --network goerli
 yarn hardhat test
 yarn hardhat coverage
 ```
+
+
+## Resources
+Backend
+* https://docs.soliditylang.org/en/latest/
+* [https://hardhat.org/](https://github.com/NomicFoundation/hardhat)
+* https://github.com/wighawag/hardhat-deploy
+* https://github.com/ethers-io/ethers.js/
+* https://www.chaijs.com/
+* https://www.dotenv.org/docs/
+* https://github.com/ItsNickBarry/hardhat-docgen
+* https://github.com/cgewecke/hardhat-gas-reporter
+* https://github.com/sc-forks/solidity-coverage
