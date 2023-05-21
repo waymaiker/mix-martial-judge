@@ -1,4 +1,4 @@
-# Mix Martial Art - Frontend part
+# Mix Martial Judge - Frontend part
 
 ## Contents
 - [Important](#important)
