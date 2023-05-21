@@ -32,9 +32,9 @@ yarn hardhat deploy
 
 #### If you want to deploy on an other network
 
-1- Add the network name and Id into this [helper-hardhat-config.js](https://github.com/waymaiker/dapps-voting-system/blob/master/helper-hardhat-config.js) <br/>
+1- Add the network name and Id into this [helper-hardhat-config.js](https://github.com/waymaiker/mix-martial-judge/blob/master/backend/helper-hardhat-config.js) <br/>
 2- Make sur your .env file is all set with you RPC nodes Api Key, Private Key and the Etherscan Api Key <br/>
-3- Configure your [hardhat.config.js](https://github.com/waymaiker/dapps-voting-system/blob/master/hardhat.config.js) <br/>
+3- Configure your [hardhat.config.js](https://github.com/waymaiker/mix-martial-judge/blob/master/backend/hardhat.config.js) <br/>
 4- Then execute the next command
 
 #### Need to deploy the contract on Goerli
