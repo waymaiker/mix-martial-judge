@@ -1,5 +1,10 @@
-# MMJ - Backend part
+# Mix Martial Judge - Backend part
 
+## Contents
+- [Important](#important)
+- [How to use this project](#how-to-use-this-project)
+- [Resources](#resources)
+- 
 ## How to use this project
 This project will require that you have already installed
 * Yarn
