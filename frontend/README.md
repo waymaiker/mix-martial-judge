@@ -1,7 +1,5 @@
 # Mix Martial Art 
 
-Alyra final project - frontend part
-
 ## Contents
 - [Important](#important)
 - [How to use this project](#how-to-use-this-project)
