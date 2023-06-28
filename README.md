@@ -38,6 +38,12 @@ Use cases - User
 ✔️ After each round, you will submit your round's result.  
 ✔️ Data whose have been submitted can be modified.  
 
+Currently on development
+-> whole market place 
+-> SuperAdmin can sell an NFT
+-> A user can sell an NFT
+-> A user can buy an NFT
+-> A user can mint an NFT from an existing collection
 
 ## Important
 
