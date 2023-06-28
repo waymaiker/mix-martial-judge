@@ -17,11 +17,12 @@ This token, will giving him/her access to privileges. For example, to meet the f
 Via a marketplace, each registered user will be able to buy or sell a generated nft.
 
 Use cases - Super Admin  
-✔️ Can give admin priviledge to an address.  
-✔️ Has access to the list of admins.  
-✔️ Has access to the list of past and upcoming events.  
-✔️ Has access to the information on money generated accross all events by selling tickets.  
-✔️ Has access to the information of number of tickets sold. 
+✔️ Can give admin priviledge to an address   
+✔️ Has access to the list of admins  
+✔️ Has access to the list of past and upcoming events   
+✔️ Has access to the information on money generated accross all events by selling tickets  
+✔️ Has access to the information of number of tickets sold  
+❌ (In progress) SuperAdmin can sell an NFT  
 
 Use cases - Admin  
 ✔️ Need to be registered by the super admin to have his priviledge enabled.  
@@ -37,16 +38,12 @@ Use cases - User
 ✔️ You will be able to count each hit received by each fighter.  
 ✔️ After each round, you will submit your round's result.  
 ✔️ Data whose have been submitted can be modified.  
+❌ (In progress) A user can mint an NFT from an existing collection  
+❌ (In progress) A user can buy an NFT   
+❌ (In progress) A user can sell an NFT  
 
 ## Important
-
-Currently on development  
--> Whole market place    
--> SuperAdmin can sell an NFT  
--> A user can sell an NFT  
--> A user can buy an NFT  
--> A user can mint an NFT from an existing collection  
-
+  
 - [App demo - part 1 / UNDER UPDATE]()
 - [App demo - part 2 / UNDER UPDATE]()
 - [Vercel app - Not reflecting the last version of the app due to an issue with Vercel + Firebase](https://mix-martial-judge.vercel.app/)
