@@ -57,7 +57,7 @@ export const WhoIsConnectedProvider = ({ children }) => {
       if(_isGuestUserConnected && currentUser.address != address){
         setCurrentUser({address:address, pseudo: '', email:'', bookedEvents:[], finishedEvents: []})
       }
-      if(_isSuperAdminConnected || _isAdminConnected && currentUser.address != address) {
+      if((_isSuperAdminConnected || _isAdminConnected) && currentUser.address != address) {
         setCurrentPage("events")
         toast(toastSuccess("Account connected", _isSuperAdminConnected ? "SUPER ADMIN" : "ADMIN", "top"))
       }

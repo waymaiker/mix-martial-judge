@@ -3,6 +3,8 @@ import { FaSearch } from 'react-icons/fa';
 import { RxCross1 } from 'react-icons/rx';
 
 export const SearchInput = ({title, input, handleInputChange, setColor, borderColor}) => {
+  const isInputEmpty = input.length == 0 && input == "";
+
   return (
     <Flex
       w="100%"
@@ -31,7 +33,7 @@ export const SearchInput = ({title, input, handleInputChange, setColor, borderCo
         />
       </InputGroup>
       {
-        input.length == 0 && input == ""
+        isInputEmpty
           ? <></>
           : <RxCross1 onClick={() => {handleInputChange(""), setColor("gray.300")}}/>
       }
